@@ -1,23 +1,4 @@
-# Flask-User starter app
-
-This code base serves as a great starting point to write your next Flask application  
-(With or without Flask-User)
-
-## Developer benefits
-* Tested on Python 2.7, 3.3, and 3.4
-* Well organized directories with lots of comments
-  * app/models
-  * app/startup
-  * app/views
-* HTML5 BoilerPlate / jQuery / Bootstrap layout template
-* Few dependencies (Flask-SQLAlchemy, Flask-WTF, Flask-User, Flask-Migrate)
-* Includes Flask-User user management
-  * Register, Confirm email, Login, Logout
-  * Change username/email/password, Forgot password
-* SMTPHandler for error-level log messages -- sends emails on unhandled exceptions
-* Includes `py.test` test framework
-* Includes `alembic` database migration framework
-
+# INcDb User (Prototype) 
 
 ## Cloning the code base
 We assume that you have `git` and `virtualenvwrapper` installed.
@@ -64,6 +45,7 @@ Now edit the /path/to/env_settings.py file.
 
 
 ## Initializing the Database
+
     # Create DB tables and populate the roles and users tables
     python manage.py init_db
 
@@ -98,10 +80,8 @@ You can make use of the following users:
 
 See [the Alembic docs](alembic.readthedocs.org) for more information.
 
-
-## Trouble shooting
+## Troubleshooting
 If you make changes in the Models and run into DB schema issues, delete the sqlite DB file `app/app.sqlite`.
-
 
 ## Acknowledgements
 With thanks to the following Flask extensions:
