@@ -78,6 +78,7 @@ You can make use of the following users:
 ## Troubleshooting
 If you make changes in the Models and run into DB schema issues, delete the sqlite DB file `app/app.sqlite`.
 
+## Acknowledgements
 
 [Flask-User-starter-app](https://github.com/lingthio/Flask-User-starter-app) was used as a starting point for this code repository.
 
