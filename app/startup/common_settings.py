@@ -1,8 +1,5 @@
 import os
 
-
-
-
 # ***********************************
 # Settings common to all environments
 # ***********************************
