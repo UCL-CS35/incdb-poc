@@ -15,7 +15,8 @@ Flask-User
 Flask-WTF==0.12
 
 # Development tools
-pytest==2.7.2
-pytest-flask==0.8.1
-pytest-cov==1.8.1
+pytest
+pytest-flask
+pytest-cov
+selenium
 
