@@ -1,7 +1,3 @@
-# Copyright 2014 SolidBuilds.com. All rights reserved
-#
-# Authors: Ling Thio <ling.thio@gmail.com>
-
 from flask_user import UserMixin
 from flask_user.forms import RegisterForm
 from flask_wtf import Form
@@ -25,6 +21,8 @@ class User(db.Model, UserMixin):
     active = db.Column('is_active', db.Boolean(), nullable=False, server_default='0')
     first_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
     last_name = db.Column(db.Unicode(50), nullable=False, server_default=u'')
+    title = db.Column(db.Unicode(10), nullable=False, server_default=u'')
+    affiliation = db.Column(db.Unicode(10), nullable=False, server_default=u'')
 
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
@@ -50,6 +48,7 @@ class UsersRoles(db.Model):
 # Define the User registration form
 # It augments the Flask-User RegisterForm with additional fields
 class MyRegisterForm(RegisterForm):
+    title = StringField('Title')
     first_name = StringField('First name', validators=[
         validators.DataRequired('First name is required')])
     last_name = StringField('Last name', validators=[
@@ -58,8 +57,10 @@ class MyRegisterForm(RegisterForm):
 
 # Define the User profile form
 class UserProfileForm(Form):
+    title = StringField('Title')
     first_name = StringField('First name', validators=[
         validators.DataRequired('First name is required')])
     last_name = StringField('Last name', validators=[
         validators.DataRequired('Last name is required')])
+    affiliation = StringField('Affiliation')
     submit = SubmitField('Save')
