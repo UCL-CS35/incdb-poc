@@ -8,7 +8,7 @@
 {% if not current_user.is_authenticated %}
 <p>
 To view the User page, you must
-<a href="{{ url_for('user.login') }}">Sign in</a> or
+<a href="{{ url_for('user.login') }}">Login</a> or
 <a href="{{ url_for('user.register') }}">Register</a>.
 </p>
 {% endif %}
