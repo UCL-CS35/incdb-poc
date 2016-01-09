@@ -5,7 +5,7 @@ from app.core.models import User, Role
 
 def create_users():
     """ Create users when app starts """
-    from app.core.models import User, Role
+    from app.core.models import User, Role, Collection
 
     # Create all tables
     db.create_all()
