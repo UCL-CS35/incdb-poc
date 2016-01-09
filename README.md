@@ -10,7 +10,7 @@ Cloning the app
 
     mkdir INcDb
     cd INcDb
-    git clone https://github.com/UCL-CS35/incdb-user.git incdb-user
+    git clone https://github.com/UCL-CS35/incdb-poc.git incdb-poc
 
 Create the 'incdb-user' virtual environment
     
