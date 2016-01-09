@@ -1,6 +1,4 @@
-# INcDb User (Prototype) 
-
-A prototype app for INcDb that focus on implementing User Management functionality using Flask-User.
+# INcDb Proof of Concept
 
 ## Setup
 
