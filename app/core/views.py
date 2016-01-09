@@ -20,12 +20,14 @@ def index():
 
 
 @core_blueprint.route('contribute/new')
+@login_required  # Limits access to authenticated users
 def new_collection():
     form = CollectionForm(request.form)
     return render_template("contribute/new.html", form=form)
 
 
 @core_blueprint.route('collection/create', methods=["POST"])
+@login_required  # Limits access to authenticated users
 def create_collection():
     
     form = CollectionForm(request.form)
@@ -49,6 +51,7 @@ def create_collection():
 
 
 @core_blueprint.route('collection/<collection_name>/')
+@login_required  # Limits access to authenticated users
 def collection(collection_name):
 
     collection = Collection.query.filter_by(name=collection_name).first()
