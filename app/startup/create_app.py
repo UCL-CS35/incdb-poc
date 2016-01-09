@@ -1,13 +1,11 @@
-# Copyright 2014 SolidBuilds.com. All rights reserved
-#
-# Authors: Ling Thio <ling.thio@gmail.com>
-
 from flask_mail import Mail
 from flask_migrate import Migrate, MigrateCommand
 from flask_user import UserManager, SQLAlchemyAdapter
 from flask_wtf.csrf import CsrfProtect
-import os
+
 from app import app, db, manager
+
+import os
 
 
 @app.before_first_request
@@ -18,9 +16,7 @@ def initialize_app_on_first_request():
 
 
 def create_app(extra_config_settings={}):
-    """
-    Initialize Flask applicaton
-    """
+    """ Initialize Flask applicaton """
 
     # ***** Initialize app config settings *****
     # Read common settings from 'app/startup/common_settings.py' file
@@ -56,13 +52,14 @@ def create_app(extra_config_settings={}):
     init_email_error_handler(app)
 
     # Setup Flask-User to handle user account related forms
-    from app.core.models import User, MyRegisterForm
-    from app.core.views import user_profile_page
+    from app.core.models import User
+    from app.core.forms import MyRegisterForm
+    from app.core.views import user_account
 
     db_adapter = SQLAlchemyAdapter(db, User)  # Setup the SQLAlchemy DB Adapter
     user_manager = UserManager(db_adapter, app,  # Init Flask-User and bind to app
                                register_form=MyRegisterForm,  # using a custom register form with UserProfile fields
-                               user_profile_view_function=user_profile_page,
+                               user_profile_view_function=user_account,
     )
 
     # Load all blueprints with their manager commands, models and views
@@ -76,6 +73,7 @@ def init_email_error_handler(app):
     Initialize a logger to send emails on error-level messages.
     Unhandled exceptions will now send an email message to app.config.ADMINS.
     """
+
     if app.debug: return  # Do not send error emails while developing
 
     # Retrieve email settings from app.config
