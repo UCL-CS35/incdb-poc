@@ -56,8 +56,10 @@ Before we deploying this application, we will have to configure the database URL
 Point your web browser to http://localhost:5000/
 
 You can make use of the following users:
-- email `user@example.com` with password `Password1`.
-- email `admin@example.com` with password `Password1`.
+- email `jeremy@incdb.com` with password `Password1`.
+- email `ong@incdb.com` with password `Password1`.
+- email `johnson@incdb.com` with password `Password1`.
+- email `rajind@incdb.com` with password `Password1`.
 
 ## Testing the app
 

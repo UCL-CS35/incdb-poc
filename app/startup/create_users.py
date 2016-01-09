@@ -14,8 +14,10 @@ def create_users():
     admin_role = find_or_create_role('admin', u'Admin')
 
     # Add users
-    user = find_or_create_user(u'Jeremy', u'Skipper', u'Dr', u'admin@example.com', 'Password1', admin_role)
-    user = find_or_create_user(u'User', u'Example', u'Mr', u'user@example.com', 'Password1')
+    jeremy = find_or_create_user(u'Jeremy', u'Skipper', u'Dr', u'jeremy@incdb.com', 'Password1', admin_role)
+    ong = find_or_create_user(u'Yong Lin', u'Ong', u'Mr', u'ong@incdb.com', 'Password1')
+    johnson = find_or_create_user(u'Johnson', u'Cheung', u'Mr', u'johnson@incdb.com', 'Password1')
+    rajind = find_or_create_user(u'Rajind', u'Karunaratne', u'Mr', u'rajind@incdb.com', 'Password1')
 
     # Save to DB
     db.session.commit()
