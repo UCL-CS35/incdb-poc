@@ -1,0 +1,41 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+<h1>Upload your data</h1>
+
+<p>Only the starred fields* are mandatory, but please try to provide as much information as you can. Read the FAQ if you have any doubt.</p>
+
+<form id="upload-form" class="form" action="{{ url_for('core.upload', collection=collection) }}" method="POST" enctype="multipart/form-data">
+
+	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+	<div class="js box">
+		<input type="file" name="file" id="file-picker" class="inputfile inputfile-6" data-multiple-caption="{count} files selected" multiple />
+		<label for="file-picker" id="file-label" >
+			<span id="file-span"></span>
+			<strong>
+				<svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17">
+					<path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/>
+				</svg> 
+				Choose files
+			</strong>
+		</label>
+	</div>
+
+	<fieldset id="progress" style="display: none">
+		<legend>Uploading Progress</legend>
+		<div class="progress-trough">
+			<div id="progress-bar" class="progress-bar">0%</div>
+		</div>
+	</fieldset>
+
+	<hr>
+
+	<div class="form-group">
+		<input type="submit" value="Upload files" id="upload-button" class="btn btn-primary">
+	</div>
+
+</form>
+
+{% endblock %}

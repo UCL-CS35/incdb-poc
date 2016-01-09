@@ -1,0 +1,27 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+<h2>Successful Upload!</h2>
+
+<!-- Table -->
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Status</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for file in files %}
+		<tr>
+			<td>{{ file }}</td>
+			<td>Uploaded</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+View <a href='{{ url_for('core.collection', collection_name=uuid) }}'>Collection {{ uuid }}</a>
+
+{% endblock %}

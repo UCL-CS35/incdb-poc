@@ -1,0 +1,13 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+<h1>My Collections</h1>
+
+<ul>
+{% for collection in collections %}
+<li><a href='{{ url_for('core.collection', collection_name=collection.name) }}'>{{ collection.name }}</a></li>
+{% endfor %}
+</ul>
+
+{% endblock %}

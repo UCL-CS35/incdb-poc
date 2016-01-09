@@ -1,0 +1,27 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+<h2>Collection: {{ collection.name }} </h2>
+
+{% if files|length > 0 %}
+<!-- Table -->
+<table class="table">
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Last Modified Time</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for file, modified in files.iteritems() %}
+		<tr>
+			<td>{{ file }}</td>
+			<td>{{ modified }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+
+{% endblock %}
