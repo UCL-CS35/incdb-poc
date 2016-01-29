@@ -2,8 +2,8 @@
 # Usage: pip install -r requirements.txt
 
 # Heroku environment
-gunicorn==19.3.0
-psycopg2==2.5.4
+# gunicorn==19.3.0
+# psycopg2==2.5.4
 
 # Flask Framework
 Flask==0.10.1
@@ -13,6 +13,15 @@ Flask-Migrate==1.4.0
 Flask-SQLAlchemy==2.0
 Flask-User
 Flask-WTF==0.12
+
+# Neurosynth
+matplotlib
+neurosynth
+nibabel
+nilearn
+numpy>=1.8
+opbeat
+pandas
 
 # Development tools
 pytest

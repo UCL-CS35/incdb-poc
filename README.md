@@ -14,12 +14,12 @@ Cloning the app
 
 Create the 'incdb-user' virtual environment
     
-    mkvirtualenv incdb_user_env
+    mkvirtualenv incdb
 
 Install required Python packages
     
     cd /path/to/incdb-user
-    workon incdb_user_env
+    workon incdb
     pip install -r requirements.txt
     
 ## Configuring the app

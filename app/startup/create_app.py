@@ -7,7 +7,6 @@ from app import app, db, manager
 
 import os
 
-
 @app.before_first_request
 def initialize_app_on_first_request():
     """ Create users and roles tables on first HTTP request """
@@ -19,16 +18,20 @@ def create_app(extra_config_settings={}):
     """ Initialize Flask applicaton """
 
     # ***** Initialize app config settings *****
+
     # Read common settings from 'app/startup/common_settings.py' file
     app.config.from_object('app.startup.common_settings')
+
     # Read environment-specific settings from file defined by OS environment variable 'ENV_SETTINGS_FILE'
     env_settings_file = os.environ.get('ENV_SETTINGS_FILE', 'env_settings_example.py')
     app.config.from_pyfile(env_settings_file)
+
     # Read extra config settings from function parameter 'extra_config_settings'
     app.config.update(extra_config_settings)  # Overwrite with 'extra_config_settings' parameter
-    if app.testing:
-        app.config['WTF_CSRF_ENABLED'] = False  # Disable CSRF checks while testing
 
+    # Disable CSRF checks while testing
+    if app.testing:
+        app.config['WTF_CSRF_ENABLED'] = False
 
     # Setup Flask-Migrate
     migrate = Migrate(app, db)

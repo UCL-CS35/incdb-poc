@@ -5,7 +5,7 @@ import os
 # ***********************************
 
 # Application settings
-APP_NAME = "INcDbUser"
+APP_NAME = "INcDb"
 APP_SYSTEM_ERROR_SUBJECT_LINE = APP_NAME + " system error"
 
 # Flask settings

@@ -1,10 +1,12 @@
 from flask import redirect, render_template, render_template_string, Blueprint
 from flask import request, url_for
 from flask_user import current_user, login_required, roles_accepted
+
 from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
-from uuid import uuid4
 from app.core.models import Collection
+
+from uuid import uuid4
 
 import os, time
 import json
@@ -16,6 +18,8 @@ core_blueprint = Blueprint('core', __name__, url_prefix='/')
 # The Index page is accessible to anyone
 @core_blueprint.route('')
 def index():
+    import neurosynth as ns
+    
     return render_template('index.html')
 
 
