@@ -1,3 +1,4 @@
+import datetime
 from flask_user import UserMixin
 
 from app import db
@@ -91,3 +92,111 @@ class Collection(db.Model):
     echo_time = db.Column(db.String(255), nullable=True, server_default='')
     flip_angle = db.Column(db.String(255), nullable=True, server_default='')
 
+class AnalysisSet(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=False)
+    n_analyses = db.Column(db.Integer, default=0)
+    type = db.Column(db.String(50))
+    description = db.Column(db.Text)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
+                           onupdate=datetime.datetime.now)
+
+class Analysis(db.Model):
+
+    __tablename__ = 'analysis'
+    id = db.Column(db.Integer, primary_key=True)
+    analysis_set_id = db.Column(db.Integer, db.ForeignKey(AnalysisSet.id))
+    name = db.Column(db.String(100), unique=False)
+    n_studies = db.Column(db.Integer, default=0)
+    n_activations = db.Column(db.Integer, default=0)
+    description = db.Column(db.Text)
+    type = db.Column(db.String(50))
+    # images = db.relationship('AnalysisImage', backref=db.backref('analysis', lazy='joined'), lazy='dynamic')
+    analysis_set = db.relationship('AnalysisSet', backref=db.backref(
+        'analyses', cascade='all'))
+    display = db.Column(db.Boolean)
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
+                           onupdate=datetime.datetime.utcnow)
+
+    __mapper_args__ = {
+        'polymorphic_identity': 'analysis',
+        'polymorphic_on': type
+    }
+
+    @property
+    def reverse_inference_image(self):
+        """ Convenience method for accessing the reverse inference image. """
+        return self.images[1]
+
+class TermAnalysis(Analysis):
+    __tablename__ = 'term_analysis'
+    id = db.Column(db.Integer, db.ForeignKey('analysis.id'), primary_key=True)
+    images = db.relationship('TermAnalysisImage', backref=db.backref('analysis',
+                             cascade='all'))
+    cog_atlas = db.Column(db.Text, nullable=True)  # Cognitive Atlas RDF data
+    __mapper_args__ = {
+        'polymorphic_identity': 'term'
+    }
+
+class DecodingSet(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    analysis_set_id = db.Column(db.Integer,
+                                db.ForeignKey(AnalysisSet.id), nullable=True)
+    analysis_set = db.relationship(AnalysisSet,
+                                   backref=db.backref('decoding_set'))
+    name = db.Column(db.String(20))
+    n_images = db.Column(db.Integer)
+    n_voxels = db.Column(db.Integer)
+    is_subsampled = db.Column(db.Boolean)
+
+
+class Decoding(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(200))
+    uuid = db.Column(db.String(32), unique=True)
+    name = db.Column(db.String(200))
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    image_decoded_at = db.Column(db.DateTime,
+                                 onupdate=datetime.datetime.utcnow)
+
+    # Relationships
+    decoding_set_id = db.Column(db.Integer, db.ForeignKey(DecodingSet.id))
+    decoding_set = db.relationship(
+        DecodingSet, backref=db.backref('decodings',
+                                        cascade='all, delete-orphan'))
+
+class Image(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(200))
+    label = db.Column(db.String(200))
+    kind = db.Column(db.String(200))
+    description = db.Column(db.Text)
+    stat = db.Column(db.String(200))
+    image_file = db.Column(db.String(200))
+    type = db.Column(db.String(20))
+    created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
+                           onupdate=datetime.datetime.now)
+
+    __mapper_args__ = {
+        'polymorphic_on': type,
+        'polymorphic_identity': 'image'
+    }
+
+    @property
+    def uncorrected_image_file(self):
+        """ Returns an uncorrected version of the filename if one is found. """
+        if '_FDR' not in self.image_file:
+            return self.image_file
+        return self.image_file.split('_FDR')[0] + '.nii.gz'
+
+
+class TermAnalysisImage(Image):
+    __mapper_args__ = {'polymorphic_identity': 'term'}
+    term_analysis_id = db.Column(db.Integer, db.ForeignKey(TermAnalysis.id), nullable=True)
+    
