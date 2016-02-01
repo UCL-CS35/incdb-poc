@@ -4,7 +4,8 @@ from flask_user import current_user, login_required, roles_accepted
 
 from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
-from app.core.models import Collection
+from app.core.models import *
+from app.startup import settings
 
 from uuid import uuid4
 
@@ -12,14 +13,16 @@ import os, time
 import json
 import glob
 
+from app.core.decode import decode_folder
 
 core_blueprint = Blueprint('core', __name__, url_prefix='/')
 
 # The Index page is accessible to anyone
 @core_blueprint.route('')
 def index():
-    import neurosynth as ns
     
+    decode_folder(settings.DECODED_IMAGE_DIR)
+
     return render_template('index.html')
 
 
