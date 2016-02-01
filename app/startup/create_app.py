@@ -9,9 +9,14 @@ import os
 
 @app.before_first_request
 def initialize_app_on_first_request():
-    """ Create users and roles tables on first HTTP request """
-    from .create_users import create_users
-    create_users()
+    """ Create tables before the first request to this instance of the application """
+
+    # print "First request..."
+    # from .setup_database import setup_database
+    # setup_database()
+
+    # from .create_users import create_users
+    # create_users()
 
 
 def create_app(extra_config_settings={}):

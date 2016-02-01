@@ -5,11 +5,9 @@ from app.core.models import User, Role
 
 def create_users():
     """ Create users when app starts """
-    from app.core.models import User, Role, Collection
 
-    # Create all tables
-    db.create_all()
-
+    print 'Create users...'
+    
     # Adding roles
     admin_role = find_or_create_role('admin', u'Admin')
 
