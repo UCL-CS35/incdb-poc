@@ -3,8 +3,13 @@ from os.path import join, dirname
 import sys
 
 ### SETTINGS THAT SHOULD ALWAYS BE UPDATED ###
+
+# The root location of the app. Should not need to be changed.
+ROOT_DIR = os.path.realpath(
+    join(join(os.path.dirname(__file__), os.path.pardir), os.path.pardir))
+    
 # Root path for generated data
-DATA_DIR = '/Users/yonglin/Desktop/INcDb/incdb-poc/data'
+DATA_DIR = join(ROOT_DIR,'data')
 
 # ***********************************
 # Settings common to all environments
@@ -45,9 +50,6 @@ IMAGE_DIR = join(DATA_DIR, 'images')
 # Path to analysis/location flat filies
 LOCATION_ANALYSIS_DIR = join(DATA_DIR, 'locations', 'analyses')
 
-# The root location of the app. Should not need to be changed.
-ROOT_DIR = os.path.realpath(
-    join(join(os.path.dirname(__file__), os.path.pardir), os.path.pardir))
 
 # Static content
 STATIC_FOLDER = join(ROOT_DIR, 'nsweb', 'static')
