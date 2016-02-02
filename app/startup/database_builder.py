@@ -236,15 +236,11 @@ class DatabaseBuilder:
             image_class(image_file=join(image_dir, name +
                                         '_pAgF_z_FDR_0.01.nii.gz'),
                         label='%s: forward inference' % name,
-                        stat='z-score',
-                        display=1,
-                        download=1),
+                        stat='z-score'),
             image_class(image_file=join(image_dir, name +
                                         '_pFgA_z_FDR_0.01.nii.gz'),
                         label='%s: reverse inference' % name,
-                        stat='z-score',
-                        display=1,
-                        download=1)
+                        stat='z-score')
         ])
 
         self.db.session.add(analysis)
