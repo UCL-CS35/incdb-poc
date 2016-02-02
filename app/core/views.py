@@ -13,14 +13,11 @@ import os, time
 import json
 import glob
 
-from app.core.decode import decode_folder
-
 core_blueprint = Blueprint('core', __name__, url_prefix='/')
 
 # The Index page is accessible to anyone
 @core_blueprint.route('')
 def index():
-    # decode_folder(settings.DECODED_IMAGE_DIR)
     return render_template('index.html')
 
 
