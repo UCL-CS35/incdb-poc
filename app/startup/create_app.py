@@ -25,7 +25,7 @@ def create_app(extra_config_settings={}):
     # ***** Initialize app config settings *****
 
     # Read common settings from 'app/startup/common_settings.py' file
-    app.config.from_object('app.startup.common_settings')
+    app.config.from_object('app.startup.settings')
 
     # Read environment-specific settings from file defined by OS environment variable 'ENV_SETTINGS_FILE'
     env_settings_file = os.environ.get('ENV_SETTINGS_FILE', 'env_settings_example.py')

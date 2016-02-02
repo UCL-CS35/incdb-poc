@@ -6,6 +6,29 @@ import sys
 # Root path for generated data
 DATA_DIR = '/Users/yonglin/Desktop/INcDb/incdb-poc/data'
 
+# ***********************************
+# Settings common to all environments
+# ***********************************
+
+# Application settings
+APP_NAME = "INcDb"
+APP_SYSTEM_ERROR_SUBJECT_LINE = APP_NAME + " system error"
+
+# Flask settings
+CSRF_ENABLED = True
+
+# Flask-User settings
+USER_APP_NAME = APP_NAME
+USER_ENABLE_CHANGE_PASSWORD = True  # Allow users to change their password
+USER_ENABLE_CHANGE_USERNAME = False  # Allow users to change their username
+USER_ENABLE_CONFIRM_EMAIL = True  # Force users to confirm their email
+USER_ENABLE_FORGOT_PASSWORD = True  # Allow users to reset their passwords
+USER_ENABLE_EMAIL = True  # Register with Email
+USER_ENABLE_REGISTRATION = True  # Allow new users to register
+USER_ENABLE_RETYPE_PASSWORD = True  # Prompt for `retype password` in:
+USER_ENABLE_USERNAME = False  # Register and Login with username
+USER_AFTER_LOGIN_ENDPOINT = 'core.index'
+USER_AFTER_LOGOUT_ENDPOINT = 'core.index'
 
 ### SHOULD NOT NEED TO BE UPDATED ###
 
@@ -69,15 +92,7 @@ GENE_IMAGE_DIR = join(IMAGE_DIR, 'genes')
 SQL_ADAPTER = 'sqlite'
 
 # SQLite pat
-SQLALCHEMY_SQLITE_URI = 'sqlite:///' + join(DATA_DIR, 'prod.db')
-
-# MySQL configuration
-MYSQL_USER = 'nsweb'
-MYSQL_PASSWORD = 'changeme'
-MYSQL_PRODUCTION_DB = 'nsweb'
-MYSQL_DEVELOPMENT_DB = 'nsweb_development'
-MYSQL_TEST_DB = 'nsweb_test'
-TEST_URL = 'http://test.neurosynth.org'
+SQLALCHEMY_DATABASE_URI = 'sqlite:///../app.sqlite'
 
 ### Logging ###
 LOGGING_PATH = join(DATA_DIR, 'log.txt')
