@@ -20,9 +20,7 @@ core_blueprint = Blueprint('core', __name__, url_prefix='/')
 # The Index page is accessible to anyone
 @core_blueprint.route('')
 def index():
-    
-    decode_folder(settings.DECODED_IMAGE_DIR)
-
+    # decode_folder(settings.DECODED_IMAGE_DIR)
     return render_template('index.html')
 
 

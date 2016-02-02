@@ -30,3 +30,6 @@ def setup_database():
 
 	print "Memory-mapping key image sets..."
 	builder.memory_map_images(include=['terms'], reset=True)
+
+	from .create_users import create_users
+	create_users()

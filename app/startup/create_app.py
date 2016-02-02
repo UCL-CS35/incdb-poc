@@ -9,14 +9,9 @@ import os
 
 @app.before_first_request
 def initialize_app_on_first_request():
-    """ Create tables before the first request to this instance of the application """
+    """ Before the first request to this instance of the application """
 
     print "First request..."
-    from .setup_database import setup_database
-    setup_database()
-
-    from .create_users import create_users
-    create_users()
 
 
 def create_app(extra_config_settings={}):
@@ -71,7 +66,7 @@ def create_app(extra_config_settings={}):
     )
 
     # Load all blueprints with their manager commands, models and views
-    from app import core
+    from app import core, models
 
     return app
 
