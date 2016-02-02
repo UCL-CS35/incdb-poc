@@ -142,7 +142,15 @@ class DatabaseBuilder:
         #         raise RuntimeWarning("Asset %s doesn't seem to exist, and "
         #             "can't be retrieved automatically. %s" % (asset, desc))
 
-        from nsweb.tasks import MASK_FILES
+        MASK_FILES = {
+            'cortex': 'cortex.nii.gz',
+            'subcortex': 'subcortex_drewUpdated.nii.gz',
+            'hippocampus': 'FSL_BHipp_thr0.nii.gz',
+            'accumbens': 'FSL_BNAcc_thr0.nii.gz',
+            'amygdala': 'FSL_BAmyg_thr0.nii.gz',
+            'putamen': 'FSL_BPut_thr0.nii.gz',
+            'min4': 'voxel_counts_r6.nii.gz'
+        }
         for k, v in MASK_FILES.items():
             if not exists(join(settings.MASK_DIR, v)):
                 raise RuntimeWarning("The image file for the '%s' mask "
