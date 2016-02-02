@@ -4,7 +4,7 @@ from flask_user import current_user, login_required, roles_accepted
 
 from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
-from app.core.models import *
+from app.models import *
 from app.startup import settings
 
 from uuid import uuid4

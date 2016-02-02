@@ -1,14 +1,21 @@
 from app.startup import settings
-from app.core.models import *
+from app.models.users import User, Role, UsersRoles
+from app.models.analysis import AnalysisSet, Analysis, TermAnalysis
+from app.models.collections import Collection
+from app.models.decodings import DecodingSet, DecodingSet
+from app.models.images import Image, TermAnalysisImage
 
 import os
 from os.path import join, basename, exists
+
 from neurosynth import Masker
 from neurosynth.base.dataset import Dataset
 from neurosynth.analysis import meta
 import neurosynth as ns
+
 import numpy as np
 import pandas as pd
+
 import random
 from glob import glob
 import json

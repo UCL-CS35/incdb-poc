@@ -11,12 +11,12 @@ import os
 def initialize_app_on_first_request():
     """ Create tables before the first request to this instance of the application """
 
-    # print "First request..."
-    # from .setup_database import setup_database
-    # setup_database()
+    print "First request..."
+    from .setup_database import setup_database
+    setup_database()
 
-    # from .create_users import create_users
-    # create_users()
+    from .create_users import create_users
+    create_users()
 
 
 def create_app(extra_config_settings={}):
@@ -60,7 +60,7 @@ def create_app(extra_config_settings={}):
     init_email_error_handler(app)
 
     # Setup Flask-User to handle user account related forms
-    from app.core.models import User
+    from app.models.users import User
     from app.core.forms import MyRegisterForm
     from app.core.views import user_account
 

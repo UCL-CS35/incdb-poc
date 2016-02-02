@@ -1,15 +1,9 @@
 from app import app, db
 
-import os
-from os.path import join, dirname
-
-from neurosynth import Masker
-from neurosynth.base.dataset import Dataset
-from neurosynth.analysis import meta
-import neurosynth as ns
-
 from app.startup import database_builder
 from app.startup import settings
+
+import os
 
 def setup_database():
 

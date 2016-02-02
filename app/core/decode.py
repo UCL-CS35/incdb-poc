@@ -1,6 +1,8 @@
 from app import db
 
-from app.core.models import *
+from app.models.decodings import Decoding, DecodingSet
+from app.models.collections import Collection
+from app.models.images import TermAnalysisImage
 from app.startup import settings
 
 from uuid import uuid4
@@ -14,19 +16,21 @@ import pandas as pd
 import nibabel as nb
 
 from datetime import datetime
-from os import unlink, listdir
-from os.path import join, basename, exists
+from os import unlink, listdir, mkdir
+from os.path import join, basename, exists, isdir
 
 import traceback
 from collections import OrderedDict
 
-def load_image(masker, filename, save_resampled=True):
+from nilearn.image import resample_img
+
+def load_image(masker, movie, filename, save_resampled=True):
     """ Load an image, resampling into MNI space if needed. """
     
     f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
     anatomical = nb.load(f)
 
-    filename = join(settings.DECODED_IMAGE_DIR, filename)
+    filename = join(settings.DECODED_IMAGE_DIR, movie, filename)
     img = nb.load(filename)
     if img.shape[:3] != (91, 109, 91):
         img = resample_img(
@@ -61,19 +65,34 @@ class Reference(object):
 
 def decode_folder(directory):
 
-	decoding_set = DecodingSet.query.filter_by(name='terms_20k').first() 
+   decoding_set = DecodingSet.query.filter_by(name='terms_20k').first() 
 
-	for filename in listdir(directory):
-		decoding = Decoding(filename=filename, uuid=uuid4().hex, decoding_set=decoding_set)
-		result = decode_image(decoding_set, filename)
-		if result:
-			decoding.image_decoded_at = datetime.utcnow()
-			db.session.add(decoding)
-			db.session.commit()
+   for folder in listdir(directory):
 
-def decode_image(decoding_set, filename, drop_zeros=False):
+        if isdir(join(directory, folder)):
 
-    print 'Decoding image...'
+            decode_movie_folder = join(settings.DECODING_RESULTS_DIR, folder)
+
+            if not exists(decode_movie_folder):
+                mkdir(decode_movie_folder)
+
+            decodings = Decoding.query.filter_by(movie=folder)
+            for a in decodings:
+                db.session.delete(a)
+            db.session.commit()
+
+            for filename in listdir(join(directory, folder)):
+                decoding = Decoding(filename=filename, uuid=uuid4().hex, 
+                    decoding_set=decoding_set, movie=folder)
+                decoding = decode_image(decoding, decoding_set, folder, filename)
+                if decoding is not None:
+                  decoding.image_decoded_at = datetime.utcnow()
+                  db.session.add(decoding)
+                  db.session.commit()
+
+def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
+
+    print 'Decoding ' + filename + '...'
     mm_dir = settings.MEMMAP_DIR
     try:
         memmaps = {}
@@ -84,7 +103,7 @@ def decode_image(decoding_set, filename, drop_zeros=False):
         ref = memmaps[decoding_set.name]
 
         masker = Masker(join(settings.IMAGE_DIR, 'anatomical.nii.gz'))
-        data = load_image(masker, filename)
+        data = load_image(masker, movie, filename)
 
         # Select voxels in sampling mask if it exists
         if ref.is_subsampled:
@@ -104,13 +123,17 @@ def decode_image(decoding_set, filename, drop_zeros=False):
         # standardize image and get correlation
         data = (data - data.mean()) / data.std()
         r = np.dot(ref.data[voxels].T, data) / ref.n_voxels
-        outfile = join(settings.DECODING_RESULTS_DIR, filename + '.txt')
+        outfile = join(settings.DECODING_RESULTS_DIR, movie, filename + '.txt')
         labels = ref.labels.keys()
-        pd.Series(r, index=labels).to_csv(outfile, sep='\t')
+        series = pd.Series(r, index=labels).sort_values()
+        series.to_csv(outfile, sep='\t')
 
-        print r
-        return True
+        # topFiveTerms = series.tail(5)
+        highestCorrelationTerm = labels[np.argmax(r, axis=0)]
+
+        decoding.term = highestCorrelationTerm
+        return decoding
 
     except Exception, e:
         print traceback.format_exc()
-        return False
+        return None

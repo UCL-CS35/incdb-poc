@@ -1,6 +1,6 @@
 from datetime import datetime
 from app import app, db
-from app.core.models import User, Role
+from app.models.users import User, Role
 
 
 def create_users():
