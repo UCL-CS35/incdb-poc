@@ -1,8 +1,12 @@
 from app import manager
-
+from app.core.decode import decode_folder
+from app.startup import settings
 
 @manager.command
 def init_db():
-    from app.startup.create_users import create_users
+	from app.startup.setup_database import setup_database
+	setup_database()
 
-    create_users()
+@manager.command
+def decode():
+	decode_folder(settings.DECODED_IMAGE_DIR)

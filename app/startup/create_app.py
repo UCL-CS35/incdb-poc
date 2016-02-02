@@ -9,9 +9,9 @@ import os
 
 @app.before_first_request
 def initialize_app_on_first_request():
-    """ Create users and roles tables on first HTTP request """
-    from .create_users import create_users
-    create_users()
+    """ Before the first request to this instance of the application """
+
+    print "First request..."
 
 
 def create_app(extra_config_settings={}):
@@ -20,7 +20,7 @@ def create_app(extra_config_settings={}):
     # ***** Initialize app config settings *****
 
     # Read common settings from 'app/startup/common_settings.py' file
-    app.config.from_object('app.startup.common_settings')
+    app.config.from_object('app.startup.settings')
 
     # Read environment-specific settings from file defined by OS environment variable 'ENV_SETTINGS_FILE'
     env_settings_file = os.environ.get('ENV_SETTINGS_FILE', 'env_settings_example.py')
@@ -55,7 +55,7 @@ def create_app(extra_config_settings={}):
     init_email_error_handler(app)
 
     # Setup Flask-User to handle user account related forms
-    from app.core.models import User
+    from app.models.users import User
     from app.core.forms import MyRegisterForm
     from app.core.views import user_account
 
@@ -66,7 +66,7 @@ def create_app(extra_config_settings={}):
     )
 
     # Load all blueprints with their manager commands, models and views
-    from app import core
+    from app import core, models
 
     return app
 
