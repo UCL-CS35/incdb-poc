@@ -5,6 +5,7 @@ from flask_user import current_user, login_required, roles_accepted
 from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
 from app.models import *
+from app.models.decodings import Decoding
 from app.startup import settings
 
 from uuid import uuid4
@@ -20,6 +21,19 @@ core_blueprint = Blueprint('core', __name__, url_prefix='/')
 def index():
     return render_template('index.html')
 
+
+@core_blueprint.route('terms/')
+def all_terms():
+    #terms = Decoding.query.distinct(Decoding.term).all()
+    terms = db.session.query(Decoding.term).distinct()
+
+    return render_template("terms/all_terms.html", terms=terms)
+
+@core_blueprint.route('terms/<selected_term>')
+def selected_term(selected_term):
+    components = Decoding.query.filter_by(term = selected_term).all()
+
+    return render_template("terms/selected_term.html", components = components, selected_term = selected_term)
 
 @core_blueprint.route('contribute/new')
 @login_required  # Limits access to authenticated users
