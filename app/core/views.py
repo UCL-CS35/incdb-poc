@@ -5,6 +5,7 @@ from flask_user import current_user, login_required, roles_accepted
 from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
 from app.models import *
+from app.models.decodings import Decoding
 from app.startup import settings
 
 from uuid import uuid4
@@ -19,6 +20,20 @@ core_blueprint = Blueprint('core', __name__, url_prefix='/')
 @core_blueprint.route('')
 def index():
     return render_template('index.html')
+
+@core_blueprint.route('movies/')
+def movies():
+    movies = db.session.query(Decoding.movie).distinct()
+    return render_template("movies/index.html", movies=movies)
+
+@core_blueprint.route('movies/<selected_movie>')
+def select_movie(selected_movie):
+    components = Decoding.query.filter_by(movie = selected_movie).all()
+    return render_template("movies/select_movie.html", components = components, selected_movie = selected_movie)
+
+def movies():
+    movies = db.session.query(Decoding.movie).distinct()
+    return render_template("movies/index.html")
 
 
 @core_blueprint.route('contribute/new')

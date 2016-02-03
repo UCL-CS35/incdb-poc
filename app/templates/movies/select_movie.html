@@ -1,0 +1,15 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+<h2>Movie: {{selected_movie}} </h2>
+
+<ul>
+	{% for component in components %}
+	<a href="/component/{{component.uuid}}">
+		<li>{{ component.filename }}</li>
+	</a>
+	{% endfor %}
+</ul>
+
+{% endblock %}
