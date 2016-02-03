@@ -30,10 +30,16 @@ def all_terms():
     return render_template("terms/all_terms.html", terms=terms)
 
 @core_blueprint.route('terms/<selected_term>')
-def selected_term(selected_term):
+def select_term(selected_term):
     components = Decoding.query.filter_by(term = selected_term).all()
 
     return render_template("terms/selected_term.html", components = components, selected_term = selected_term)
+
+@core_blueprint.route('component/<component_uuid>')
+def select_component(component_uuid):
+    component = Decoding.query.filter_by(uuid=component_uuid).first()
+
+    return render_template("components/selected_component.html", selected_component = component)
 
 @core_blueprint.route('contribute/new')
 @login_required  # Limits access to authenticated users

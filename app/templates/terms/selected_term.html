@@ -6,7 +6,7 @@
 
 <ul>
 	{% for component in components %}
-	<a href="">
+	<a href="/component/{{component.uuid}}">
 		<li>{{ component.filename }}</li>
 	</a>
 	{% endfor %}
