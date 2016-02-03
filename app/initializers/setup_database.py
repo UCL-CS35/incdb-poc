@@ -1,7 +1,7 @@
 from app import app, db
 
-from app.startup import database_builder
-from app.startup import settings
+from app.initializers import database_builder
+from app.initializers import settings
 
 import os
 

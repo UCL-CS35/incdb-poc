@@ -1,4 +1,4 @@
-from app.startup import settings
+from app.initializers import settings
 from app.models.users import User, Role, UsersRoles
 from app.models.analysis import AnalysisSet, Analysis, TermAnalysis
 from app.models.collections import Collection

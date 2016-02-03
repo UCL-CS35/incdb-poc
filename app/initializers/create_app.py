@@ -19,8 +19,8 @@ def create_app(extra_config_settings={}):
 
     # ***** Initialize app config settings *****
 
-    # Read common settings from 'app/startup/common_settings.py' file
-    app.config.from_object('app.startup.settings')
+    # Read common settings from 'app/initializers/common_settings.py' file
+    app.config.from_object('app.initializers.settings')
 
     # Read environment-specific settings from file defined by OS environment variable 'ENV_SETTINGS_FILE'
     env_settings_file = os.environ.get('ENV_SETTINGS_FILE', 'env_settings_example.py')
@@ -57,7 +57,7 @@ def create_app(extra_config_settings={}):
     # Setup Flask-User to handle user account related forms
     from app.models.users import User
     from app.core.forms import MyRegisterForm
-    from app.core.views import user_account
+    from app.controllers.user import user_account
 
     db_adapter = SQLAlchemyAdapter(db, User)  # Setup the SQLAlchemy DB Adapter
     user_manager = UserManager(db_adapter, app,  # Init Flask-User and bind to app
@@ -68,6 +68,7 @@ def create_app(extra_config_settings={}):
     # Load all blueprints with their manager commands, models and views
     from app import core, models
 
+    from app.controllers import components, contribute, home, movies, terms, user
     return app
 
 

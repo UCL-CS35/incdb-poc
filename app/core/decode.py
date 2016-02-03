@@ -3,7 +3,7 @@ from app import db
 from app.models.decodings import Decoding, DecodingSet
 from app.models.collections import Collection
 from app.models.images import TermAnalysisImage
-from app.startup import settings
+from app.initializers import settings
 
 from uuid import uuid4
 

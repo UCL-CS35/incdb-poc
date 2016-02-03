@@ -24,7 +24,7 @@ Install required Python packages
     
 ## Configuring the app
 
-Settings common to all environments are found in app/startup/common_settings.py
+Settings common to all environments are found in app/initializers/common_settings.py
 
 The example environment-specific settings are found in app/env_settings_example.py
 

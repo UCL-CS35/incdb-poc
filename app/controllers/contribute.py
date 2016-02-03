@@ -6,7 +6,7 @@ from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
 from app.models import *
 from app.models.decodings import Decoding
-from app.startup import settings
+from app.initializers import settings
 
 from uuid import uuid4
 
@@ -16,63 +16,16 @@ import glob
 
 from sqlalchemy import *
 
-core_blueprint = Blueprint('core', __name__, url_prefix='/')
+contribute_blueprint = Blueprint('contribute', __name__, url_prefix='/')
 
-# The Index page is accessible to anyone
-@core_blueprint.route('')
-def index():
-    return render_template('index.html')
-
-@core_blueprint.route('movies/')
-def movies():
-    movies = db.session.query(Decoding.movie).distinct()
-    return render_template("movies/index.html", movies=movies)
-
-@core_blueprint.route('movies/<selected_movie>')
-def select_movie(selected_movie):
-    components = Decoding.query.filter_by(movie = selected_movie).all()
-    terms = Decoding.query.filter_by(movie = selected_movie).group_by(Decoding.term)
-    return render_template("movies/select_movie.html", components = components, selected_movie = selected_movie, terms=terms)
-
-@core_blueprint.route('movies/<selected_movie>/<selected_term>')
-def select_movie_term(selected_movie, selected_term):
-    components = Decoding.query.filter(and_(Decoding.movie == selected_movie, Decoding.term == selected_term)).all()
-
-    return render_template("movies/select_term.html", components = components, selected_term = selected_term)
-
-
-def movies():
-    movies = db.session.query(Decoding.movie).distinct()
-    return render_template("movies/index.html")
-
-
-@core_blueprint.route('terms/')
-def all_terms():
-    #terms = Decoding.query.distinct(Decoding.term).all()
-    terms = db.session.query(Decoding.term).distinct()
-
-    return render_template("terms/all_terms.html", terms=terms)
-
-@core_blueprint.route('terms/<selected_term>')
-def select_term(selected_term):
-    components = Decoding.query.filter_by(term = selected_term).all()
-
-    return render_template("terms/selected_term.html", components = components, selected_term = selected_term)
-
-@core_blueprint.route('component/<component_uuid>')
-def select_component(component_uuid):
-    component = Decoding.query.filter_by(uuid=component_uuid).first()
-
-    return render_template("components/selected_component.html", selected_component = component)
-
-@core_blueprint.route('contribute/new')
+@contribute_blueprint.route('contribute/new')
 @login_required  # Limits access to authenticated users
 def new_collection():
     form = CollectionForm(request.form)
     return render_template("contribute/new.html", form=form)
 
 
-@core_blueprint.route('collection/create', methods=["POST"])
+@contribute_blueprint.route('collection/create', methods=["POST"])
 @login_required  # Limits access to authenticated users
 def create_collection():
     
@@ -91,12 +44,12 @@ def create_collection():
         # Save user_profile
         db.session.commit()
 
-        return redirect(url_for("core.upload_files", collection=collection.name))
+        return redirect(url_for("contribute.upload_files", collection=collection.name))
 
     return render_template("contribute/new.html", form=form)
 
 
-@core_blueprint.route('collection/<collection_name>/')
+@contribute_blueprint.route('collection/<collection_name>/')
 @login_required  # Limits access to authenticated users
 def collection(collection_name):
 
@@ -124,14 +77,14 @@ def collection(collection_name):
     return render_template("contribute/collection.html", collection=collection, files=files)
 
 
-@core_blueprint.route('contribute/upload/')
+@contribute_blueprint.route('contribute/upload/')
 @login_required  # Limits access to authenticated users
 def upload_files():
     c = request.args.get('collection')
     return render_template("contribute/upload.html", collection=c)
 
 
-@core_blueprint.route('upload', methods=["POST"])
+@contribute_blueprint.route('upload', methods=["POST"])
 @login_required  # Limits access to authenticated users
 def upload():
     """Handle the upload of a file."""
@@ -179,10 +132,10 @@ def upload():
     if is_ajax:
         return ajax_response(True, uuid)
     else:
-        return redirect(url_for("core.upload_success", uuid=uuid))
+        return redirect(url_for("contribute.upload_success", uuid=uuid))
 
 
-@core_blueprint.route('contribute/success/<uuid>')
+@contribute_blueprint.route('contribute/success/<uuid>')
 def upload_success(uuid):
     """The location we send them to at the end of the upload."""
 
@@ -209,44 +162,4 @@ def ajax_response(status, msg):
         msg=msg,
     ))
 
-
-# The Admin page is accessible to users with the 'admin' role
-@core_blueprint.route('admin/')
-@roles_accepted('admin')  # Limits access to users with the 'admin' role
-def admin_page():
-    return render_template('admin/admin_page.html')
-
-
-@core_blueprint.route('user/profile/', methods=['GET', 'POST'])
-@login_required
-def user_account():
-    # Initialize form
-    form = UserProfileForm(request.form, current_user)
-
-    # Process valid POST
-    if request.method == 'POST' and form.validate():
-        # Copy form fields to user_profile fields
-        form.populate_obj(current_user)
-
-        # Save user_profile
-        db.session.commit()
-
-        # Redirect to home page
-        return redirect(url_for('core.index'))
-
-    # Process GET or invalid POST
-    return render_template('user/user_profile_page.html',
-                           form=form)
-
-
-@core_blueprint.route('user/collections/')
-@login_required  # Limits access to authenticated users
-def user_collections():
-
-    return render_template("user/collections.html",
-        collections=current_user.collections
-    )
-
-
-# Register blueprint
-app.register_blueprint(core_blueprint)
+app.register_blueprint(contribute_blueprint)
