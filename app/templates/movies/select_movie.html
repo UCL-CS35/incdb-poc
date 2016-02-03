@@ -4,6 +4,16 @@
 
 <h2>Movie: {{selected_movie}} </h2>
 
+<h3>Terms related to {{selected_movie}}</h3>
+<ul>
+{% for term in terms %}
+<a href="/movies/{{selected_movie}}/{{term.term}}">
+	<li>{{ term.term }}</li>
+</a>
+{% endfor %}
+</ul>
+
+<h3>Components of {{selected_movie}} ({{components|length}})</h3>
 <ul>
 	{% for component in components %}
 	<a href="/component/{{component.uuid}}">

@@ -14,6 +14,8 @@ import os, time
 import json
 import glob
 
+from sqlalchemy import *
+
 core_blueprint = Blueprint('core', __name__, url_prefix='/')
 
 # The Index page is accessible to anyone
@@ -29,7 +31,15 @@ def movies():
 @core_blueprint.route('movies/<selected_movie>')
 def select_movie(selected_movie):
     components = Decoding.query.filter_by(movie = selected_movie).all()
-    return render_template("movies/select_movie.html", components = components, selected_movie = selected_movie)
+    terms = Decoding.query.filter_by(movie = selected_movie).group_by(Decoding.term)
+    return render_template("movies/select_movie.html", components = components, selected_movie = selected_movie, terms=terms)
+
+@core_blueprint.route('movies/<selected_movie>/<selected_term>')
+def select_movie_term(selected_movie, selected_term):
+    components = Decoding.query.filter(and_(Decoding.movie == selected_movie, Decoding.term == selected_term)).all()
+
+    return render_template("movies/select_term.html", components = components, selected_term = selected_term)
+
 
 def movies():
     movies = db.session.query(Decoding.movie).distinct()
