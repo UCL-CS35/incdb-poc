@@ -4,9 +4,9 @@
 
 <h1>Upload your data</h1>
 
-<p>Only the starred fields* are mandatory, but please try to provide as much information as you can. Read the FAQ if you have any doubt.</p>
+<p>Upload an archive with images (.zip or .tar.gz)</p>
 
-<form id="upload-form" class="form" action="{{ url_for('core.upload', collection=collection) }}" method="POST" enctype="multipart/form-data">
+<form id="upload-form" class="form" action="{{ url_for('contribute.upload', collection=collection) }}" method="POST" enctype="multipart/form-data">
 
 	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
