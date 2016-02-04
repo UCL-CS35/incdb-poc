@@ -4,8 +4,7 @@ from flask_user import current_user, login_required, roles_accepted
 
 from app import app, db
 from app.core.forms import UserProfileForm, CollectionForm
-from app.models import *
-from app.models.decodings import Decoding
+from app.models.collections import Collection
 from app.initializers import settings
 
 from uuid import uuid4
@@ -18,30 +17,24 @@ from sqlalchemy import *
 
 contribute_blueprint = Blueprint('contribute', __name__, url_prefix='/')
 
-@contribute_blueprint.route('contribute/new')
+@contribute_blueprint.route('contribute/new', methods=["POST", "GET"])
 @login_required  # Limits access to authenticated users
 def new_collection():
-    form = CollectionForm(request.form)
-    return render_template("contribute/new.html", form=form)
-
-
-@contribute_blueprint.route('collection/create', methods=["POST"])
-@login_required  # Limits access to authenticated users
-def create_collection():
     
     form = CollectionForm(request.form)
-    collection = Collection()
-
+    
     # Process valid POST
     if request.method == 'POST' and form.validate():
-        # Copy form fields to user_profile fields
+
+        # Copy form fields to collection fields
+        collection = Collection()
         form.populate_obj(collection)
 
         current_user.collections.append(collection)
 
         db.session.add(collection)
 
-        # Save user_profile
+        # Save collection
         db.session.commit()
 
         return redirect(url_for("contribute.upload_files", collection=collection.name))

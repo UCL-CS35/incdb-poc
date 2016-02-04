@@ -7,7 +7,7 @@
 
 <p>Only the starred fields* are mandatory, but please try to provide as much information as you can. Read the FAQ if you have any doubt.</p>
 
-<form class="form" action="{{ url_for('contribute.create_collection') }}" method="POST" enctype="multipart/form-data">
+<form class="form" action="{{ url_for('contribute.new_collection') }}" method="POST" enctype="multipart/form-data">
 
 	<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
 
