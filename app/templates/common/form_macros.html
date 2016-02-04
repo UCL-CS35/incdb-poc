@@ -3,12 +3,16 @@
     <div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
         {% if (field.type != 'HiddenField') and label_visible %}
             {% if not label %}{% set label=field.label.text %}{% endif %}
-            <label for="{{ field.id }}" class="control-label">{{ label|safe }}</label>
+            <label for="{{ field.id }}" class="control-label">{{ label|safe }}{% if field.flags.required %}*{% endif %}</label>
+        {% endif %}
+
+        {% if field.description %}
+            <span class="help-block"><small>{{ field.description }}</small></span>
         {% endif %}
         {{ field(class_='form-control', **kwargs) }}
         {% if field.errors %}
             {% for e in field.errors %}
-                <p class="help-block">{{ e }}</p>
+                <span style="margin-top: 5px;" class="help-block">{{ e }}</span>
             {% endfor %}
         {% endif %}
     </div>
@@ -16,24 +20,43 @@
 {%- endmacro %}
 
 {% macro render_checkbox_field(field, label=None) -%}
-    {% if not label %}{% set label=field.label.text %}{% endif %}
-    <div class="checkbox">
-        <label>
-            {{ field(type='checkbox', **kwargs) }} {{ label }}
-        </label>
+    <div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
+        {% if not label %}{% set label=field.label.text %}{% endif %}
+        <label for="{{ field.id }}" class="control-label">{{ label }}</label>
+        {% if field.description %}
+            <span class="help-block"><small>{{ field.description }}</small></span>
+        {% endif %}
+        <div class="checkbox">
+            <label>
+                {{ field(type='checkbox', **kwargs) }} {{ label }}
+            </label>
+        </div>
+         {% if field.errors %}
+            {% for e in field.errors %}
+                <span style="margin-top: 5px;" class="help-block">{{ e }}</span>
+            {% endfor %}
+        {% endif %}   
     </div>
 {%- endmacro %}
  
 {% macro render_radio_field(field, label=None) -%}
-    <div class="form-group">
-    {% if not label %}{% set label=field.label.text %}{% endif %}
-    <label>{{ label }}</label><br>
-    {% for value, label, checked in field.iter_choices() %}
-        <label class="radio-inline">
-            <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}"{% if checked %} checked{% endif %}>
-            {{ label }}
-        </label>
-    {% endfor %}
+    <div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
+        {% if not label %}{% set label=field.label.text %}{% endif %}
+        <label for="{{ field.id }}" class="control-label">{{ label }}</label><br>
+        {% if field.description %}
+            <span class="help-block"><small>{{ field.description }}</small></span>
+        {% endif %}
+        {% for value, label, checked in field.iter_choices() %}
+            <label class="radio-inline">
+                <input type="radio" name="{{ field.id }}" id="{{ field.id }}" value="{{ value }}"{% if checked %} checked {% endif %}>
+                {{ label }}
+            </label>
+        {% endfor %}
+        {% if field.errors %}
+            {% for e in field.errors %}
+                <span style="margin-top: 5px;" class="help-block">{{ e }}</span>
+            {% endfor %}
+        {% endif %}   
     </div>
 {%- endmacro %}
 
