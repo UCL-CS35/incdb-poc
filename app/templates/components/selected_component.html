@@ -9,6 +9,13 @@
 	<li>{{selected_component.term}}</li>
 </ul>
 
+<h2>Terms</h2>
+
+<ul>
+	{% for term in terms %}
+		<li>Term: {{term[0]}} | Correlation: {{term[1]}}</li>
+	{% endfor %}
+</ul>
 
 
 {% endblock %}

@@ -11,6 +11,8 @@ from app.initializers import settings
 from uuid import uuid4
 
 import os, time
+from os import unlink, listdir, mkdir
+from os.path import join, basename, exists, isdir
 import json
 import glob
 
@@ -21,7 +23,21 @@ components_blueprint = Blueprint('component', __name__, url_prefix='/component')
 @components_blueprint.route('/<component_uuid>')
 def select_component(component_uuid):
     component = Decoding.query.filter_by(uuid=component_uuid).first()
-    return render_template("components/selected_component.html", selected_component = component)
+
+    
+    filename = os.path.join(settings.DECODING_RESULTS_DIR, component.movie, component.filename + '.txt')
+    terms = []
+    with open(filename, 'r') as f:
+    #with f = open(infile, "r") :
+    	for line in f:
+    		
+    		termPair = line.split('\t')
+    		termPair[1] = termPair[1].strip('\n')
+    		terms.append(termPair)
+    print terms
+
+
+    return render_template("components/selected_component.html", selected_component = component, terms=terms)
 
 
 app.register_blueprint(components_blueprint)
