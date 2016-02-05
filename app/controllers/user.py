@@ -25,7 +25,7 @@ def admin_page():
     return render_template('admin/admin_page.html')
 
 
-@user_blueprint.route('profile/', methods=['GET', 'POST'])
+@user_blueprint.route('/account/', methods=['GET', 'POST'])
 @login_required
 def user_account():
     # Initialize form
@@ -47,7 +47,7 @@ def user_account():
                            form=form)
 
 
-@user_blueprint.route('collections/')
+@user_blueprint.route('/collections/')
 @login_required  # Limits access to authenticated users
 def user_collections():
 

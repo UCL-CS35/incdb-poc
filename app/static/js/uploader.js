@@ -1,6 +1,6 @@
 // Constants
 var UPLOAD_URL = "/upload";
-var NEXT_URL   = "/contribute/success/";
+var NEXT_URL   = "/collection/";
 
 // List of pending files to handle when the Upload button is finally clicked.
 var PENDING_FILES  = [];
