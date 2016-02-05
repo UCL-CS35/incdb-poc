@@ -99,7 +99,6 @@ def upload():
     else:
         return redirect(url_for("contribute.collection") + '/' + uuid)
 
-
 def unzip(source_filename, dest_dir):
     with zipfile.ZipFile(source_filename) as zf:
         for member in zf.infolist():
@@ -107,7 +106,7 @@ def unzip(source_filename, dest_dir):
             # http://hg.python.org/cpython/file/tip/Lib/http/server.py#l789
             words = member.filename.split('/')
             if words[0] == '__MACOSX': continue
-            print words[0]
+            path = dest_dir
             for word in words[:-1]:
                 drive, word = os.path.splitdrive(word)
                 head, word = os.path.split(word)

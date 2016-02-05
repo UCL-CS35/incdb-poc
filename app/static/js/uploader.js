@@ -13,8 +13,6 @@ $(document).ready(function() {
     // Set up the handler for the file input box.
     input.on("change", function(e) {
 
-        handleFiles(this.files);
-
         var fileName = '';
 
             if( this.files && this.files.length > 1 )
@@ -22,10 +20,16 @@ $(document).ready(function() {
             else
                 fileName = e.target.value.split( '\\' ).pop();
 
-            if(fileName)
-                $('#file-span').text(fileName);
-            else
+            if(fileName) {
+                var re = /(\.zip|\.tar.gz)$/i;
+                if(!re.exec(fileName))
+                    alert("File extension not supported");
+                else
+                    $('#file-span').text(fileName);
+                    handleFiles(this.files);
+            } else {
                 $("#file-label").innerHTML = labelVal;
+            }
 
     });
 
@@ -36,7 +40,12 @@ $(document).ready(function() {
         // just POST to the upload endpoint directly. However, with JS we'll do
         // the POST using ajax and then redirect them ourself when done.
         e.preventDefault();
-        doUpload();
+        if (PENDING_FILES.length>0) {
+            doUpload();
+        } else {
+            alert("Please select a file to upload");
+        }
+        
     })
 
 });
@@ -139,5 +148,6 @@ function handleFiles(files) {
     // Add them to the pending files list.
     for (var i = 0, ie = files.length; i < ie; i++) {
         PENDING_FILES.push(files[i]);
+        console.log(PENDING_FILES[i]);
     }
 }
