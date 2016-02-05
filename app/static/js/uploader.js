@@ -42,13 +42,16 @@ $(document).ready(function() {
         e.preventDefault();
         if (PENDING_FILES.length>0) {
             doUpload();
+            window.onbeforeunload = function() {
+              return "Upload in progress...";
+            }
         } else {
             alert("Please select a file to upload");
         }
         
     })
-
 });
+
 
 
 function doUpload() {
@@ -79,6 +82,8 @@ function doUpload() {
             var xhrobj = $.ajaxSettings.xhr();
             if (xhrobj.upload) {
                 xhrobj.upload.addEventListener("progress", function(event) {
+
+
                     var percent = 0;
                     var position = event.loaded || event.position;
                     var total    = event.total;
@@ -113,6 +118,7 @@ function doUpload() {
             else {
                 // Ok! Get the UUID.
                 var uuid = data.msg;
+                window.onbeforeunload = null
                 window.location = NEXT_URL + uuid;
             }
         },

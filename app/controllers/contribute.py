@@ -111,7 +111,6 @@ def unzip(source_filename, dest_dir):
                 drive, word = os.path.splitdrive(word)
                 head, word = os.path.split(word)
                 if word in (os.curdir, os.pardir, ''): continue
-                path = os.path.join(path, word)
             zf.extract(member, path)
 
 def ajax_response(status, msg):
