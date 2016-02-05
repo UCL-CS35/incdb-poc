@@ -1,6 +1,6 @@
 // Constants
 var UPLOAD_URL = "/upload";
-var NEXT_URL   = "/contribute/success/";
+var NEXT_URL   = "/collection/";
 
 // List of pending files to handle when the Upload button is finally clicked.
 var PENDING_FILES  = [];
@@ -13,8 +13,6 @@ $(document).ready(function() {
     // Set up the handler for the file input box.
     input.on("change", function(e) {
 
-        handleFiles(this.files);
-
         var fileName = '';
 
             if( this.files && this.files.length > 1 )
@@ -22,10 +20,16 @@ $(document).ready(function() {
             else
                 fileName = e.target.value.split( '\\' ).pop();
 
-            if(fileName)
-                $('#file-span').text(fileName);
-            else
+            if(fileName) {
+                var re = /(\.zip|\.tar.gz)$/i;
+                if(!re.exec(fileName))
+                    alert("File extension not supported");
+                else
+                    $('#file-span').text(fileName);
+                    handleFiles(this.files);
+            } else {
                 $("#file-label").innerHTML = labelVal;
+            }
 
     });
 
@@ -36,10 +40,18 @@ $(document).ready(function() {
         // just POST to the upload endpoint directly. However, with JS we'll do
         // the POST using ajax and then redirect them ourself when done.
         e.preventDefault();
-        doUpload();
+        if (PENDING_FILES.length>0) {
+            doUpload();
+            window.onbeforeunload = function() {
+              return "Upload in progress...";
+            }
+        } else {
+            alert("Please select a file to upload");
+        }
+        
     })
-
 });
+
 
 
 function doUpload() {
@@ -70,6 +82,8 @@ function doUpload() {
             var xhrobj = $.ajaxSettings.xhr();
             if (xhrobj.upload) {
                 xhrobj.upload.addEventListener("progress", function(event) {
+
+
                     var percent = 0;
                     var position = event.loaded || event.position;
                     var total    = event.total;
@@ -104,6 +118,7 @@ function doUpload() {
             else {
                 // Ok! Get the UUID.
                 var uuid = data.msg;
+                window.onbeforeunload = null
                 window.location = NEXT_URL + uuid;
             }
         },
@@ -139,5 +154,6 @@ function handleFiles(files) {
     // Add them to the pending files list.
     for (var i = 0, ie = files.length; i < ie; i++) {
         PENDING_FILES.push(files[i]);
+        console.log(PENDING_FILES[i]);
     }
 }
