@@ -1,0 +1,83 @@
+body {
+  padding-top: 8%;
+}
+
+@font-face{
+	font-family: 'Antic', sans-serif;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+@font-face{
+	font-family: Gill Sans Light;
+	src: url('gillsans.ttf');;
+}
+
+.starter-template {
+  /*padding: 40px 0px;*/
+  text-align: center;
+}
+
+.navbar-inverse{
+	background-color: #2c3e50;
+	font-size: 1.5em;
+	/*min-height: 11%;*/
+}
+
+.navbar{
+	font-family: Gill Sans Light;
+}
+
+#banner{
+	background-image: url(images/banner.jpg);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+	background-size: cover;
+	width: 100vw;
+	height: 30vh;
+}
+
+#heading{
+	padding-top: 5vw;
+	margin: 0;
+	font-size: 5vw;
+}
+
+.header{
+	font-family: Antic;
+	text-align: center;
+	color: #ecf0f1;
+}
+
+#body_content{
+	width: 100%;
+	height: 100vh;
+	background-color: #ecf0f1;
+}
+
+.team{
+	width: 33%;
+	height: 100%;
+	position: relative;
+	display: inline-block;
+	font-family: Titillium Web;
+	font-size: 2em;
+	font-weight: 200;
+}
+
+#the_team{
+	padding-top: 2vh;
+	font-family: Titillium Web;
+	font-size: 3em;
+	font-weight: 200;
+}
+
+.dp{
+	width: 150px;
+	height: 150px;
+}
+
+.description{
+	padding-top: 1vh;
+	font-family: Titillium Web;
+	font-size: 0.6em;
+}

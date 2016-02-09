@@ -69,6 +69,8 @@ def decode_folder(directory):
 
    for folder in listdir(directory):
 
+        print folder
+
         if isdir(join(directory, folder)):
 
             decode_movie_folder = join(settings.DECODING_RESULTS_DIR, folder)

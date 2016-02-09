@@ -9,4 +9,5 @@ def init_db():
 
 @manager.command
 def decode():
+	print "Decode folder " + settings.DECODED_IMAGE_DIR
 	decode_folder(settings.DECODED_IMAGE_DIR)

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <link href='https://fonts.googleapis.com/css?family=Antic' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Titillium+Web:200,300' rel='stylesheet' type='text/css'>
+ <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,200,300,600' rel='stylesheet' type='text/css'>
+ <meta charset="utf-8">
+ <meta http-equiv="X-UA-Compatible" content="IE=edge">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+ <meta name="description" content="">
+ <meta name="author" content="">
+ <link rel="icon" href="../../../favicon.ico">
+
+ <title>Contribute : Neurocinematics</title>
+
+ <!-- Bootstrap core CSS -->
+ <link href="../css/bootstrap.css" rel="stylesheet">
+
+ <!-- Custom styles for this template -->
+ <link href="../iNcDB.css" rel="stylesheet">
+
+ <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+ <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+ <script src="../js/ie-emulation-modes-warning.js"></script>
+ <script type="text/javascript" src="../jquery-2.1.4.min.js"></script>
+
+ <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+      <![endif]-->
+    </head>
+
+    <body>
+
+      <nav class="navbar navbar-inverse">
+        <div class="container" style="margin-left:20px">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <img src="../images/logo.png" height="50px" style="margin-top:25px;margin-right:30px">
+          </div>
+          <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="../index.html">home</a></li>
+              <li><a href="movies.html">movies</a></li>
+              <li><a href="terms.html">terms</a></li>
+              <li class="active"><a href="contribute.html">contribute</a></li>
+              <li><a href="faq.html">faq</a></li>
+            </ul>
+            <ul class="nav navbar-nav" style="position:absolute;right:10px">
+            	<li><a href="login.html">login</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+      <div id="body_contatiner">
+      	<div class="blank_banner" style="padding-bottom:40px">
+          <div class="body_content">
+            <h1 class="header" style="text-align:left;margin-top:0px;padding-top:30px; font-size:4em">Upload your data</h1>
+            <p class="title_banner" style="text-align:left;font-size:1.5em">A collection is a set of images grouped together for some sensible reason.
+              Most commonly, a collection contains all of the images from a single study.
+              Please provide information about this collection. Only the starred fields* are mandatory, but please try to provide as much information as you can. 
+              Read the FAQ if you have any doubt.</p>
+              <form class="form-inline" style="text-align:center;margin-top:30px">
+                <div class="form-group">
+                  <div class="input-group">
+                    <fieldset disabled>
+                      <input type="text" class="form-control input-lg" id="formGroupInputLarge" placeholder="Upload an archive with images (.zip or tar.gz)" style="width:60vw">
+                    </fieldset>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg">upload</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="body_content">
+          <ul class="nav nav-tabs" role="tablist" style="padding-top:30px">
+            <li class="active"><a href="#essentials" data-toggle="tab">essentials</a></li>
+            <li role = "presentation"><a href="#movies" data-toggle="tab">movie</a></li>
+            <li role = "presentation"><a href="#participants" data-toggle="tab">participants</a></li>
+            <li role = "presentation"><a href="#design" data-toggle="tab">design</a></li>
+            <li role = "presentation"><a href="#aquisition" data-toggle="tab">aquisition</a></li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" id="essentials" class="body_text tab-pane fade active in">
+              <form class="form-horizontal">
+                <div class="form-group">
+                  <p class="body_text">Name</p>
+                  <input type="text" class="form-control" id="name_input">
+                  <p class="body_text">Description</p>
+                  <input type="text" class="form-control" id="desc_input">
+                  <p class="body_text">Full Dataset URL</p>
+                  <input type="text" class="form-control" id="dataseturl_input">
+                  <p class="body_text">Contributors</p>
+                  <input type="text" class="form-control" id="contribute_input">
+                  <p class="body_text">Accessibility</p>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="optionRadios" id="public_radio" value="option1" checked>
+                      Public
+                    </label>
+                  </div>
+                  <div class="radio">
+                   <label>
+                    <input type="radio" name="optionRadios" id="private_radio" value="option1" checked>
+                    Private
+                  </label>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div role="tabpanel" id="movies" class="body_text tab-pane fade">
+            <form class="form-horizontal">
+              <div class="form-group">
+                <p class="body_text">Name</p>
+                <input type="text" class="form-control" id="name_movie_input">
+                <p class="body_text">Time previously viewed</p>
+                <input type="text" class="form-control" id="time_prev_view_input">
+                <p class="body_text">Method of video presentation</p>
+                <div class="radio">
+                 <label>
+                  <input type="radio" name="optionRadios" id="project_mirror_radio" value="option1" checked>
+                  Projection and Mirror
+                </label>
+              </div>
+              <div class="radio">
+                <label>
+                  <input type="radio" name="optionRadios" id="goggle_radio" value="option1" checked>
+                  Goggles
+                </label>
+              </div>
+              <p class="body_text">Method of audio presentation</p>
+              <input type="text" class="form-control" id="method_audio_input">
+              <p class="body_text">Size of display window</p>
+              <input type="text" class="form-control" id="display_window_input">
+              <p class="body_text">Visual Angle</p>
+              <input type="text" class="form-control" id="visual_angle_input">
+              <p class="body_text">Triggered?</p>
+              <div class="radio">
+               <label>
+                <input type="radio" name="optionRadios" id="unknown_trigger_radio" value="option1" checked>
+                Unknown
+              </label>
+            </div>
+            <div class="radio">
+             <label>
+              <input type="radio" name="optionRadios" id="no_trigger_radio" value="option1" checked>No</label>
+            </div>
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionRadios" id="yes_trigger_radio" value="option1" checked>
+                Yes
+              </label>
+            </div>
+            <p class="body_text">Video resolution</p>
+            <input type="text" class="form-control" id="vid_resolution_input">
+            <p class="body_text">Audio quality</p>
+            <input type="text" class="form-control" id="audio_qual_input">
+            <p class="body_text">Video codec</p>
+            <input type="text" class="form-control" id="vid_codec_input">
+            <p class="body_text">Audio codec</p>
+            <input type="text" class="form-control" id="audio_codec_input">
+          </div>
+        </form>
+      </div>
+      <div role="tabpanel" id="participants" class="body_text tab-pane fade">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <p class="body_text">Age of Participant</p>
+            <input type="text" class="form-control" id="age_of_participants_input">
+            <p class="body_text">Hardness</p>
+            <div class="radio">
+              <label>
+                <input type="radio" name="optionRadios" id="right_radio" value="option1" checked>
+                Right
+              </label>
+            </div>
+            <div class="radio">
+             <label>
+              <input type="radio" name="optionRadios" id="left_radio" value="option1" checked>
+              Left
+            </label>
+          </div>
+          <div class="radio">
+           <label>
+            <input type="radio" name="optionRadios" id="both_radio" value="option1" checked>
+            Both
+          </label>
+        </div>
+        <p class="body_text">Inclusion/Exclusion Criteria</p>
+        <input type="text" class="form-control" id="incl_excl_input">
+        <p class="body_text">Normal (corrected) vision?</p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="unknown_vision_radio" value="option1" checked>
+            Unknown
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="yes_vision_radio" value="option1" checked>
+            Yes
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="no_vision_radio" value="option1" checked>
+            No
+          </label>
+        </div>
+        <p class="body_text">Normal (corrected) hearing?</p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="unknown_hearing_radio" value="option1" checked>
+            Unknown
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="yes_hearing_radio" value="option1" checked>
+            Yes
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="no_hearing_radio" value="option1" checked>
+            No
+          </label>
+        </div>
+        <p class="body_text">Native Language(s)</p>
+        <input type="text" class="form-control" id="nat_language_input">
+        <p class="body_text">Language Proficiency</p>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="monolingual_radio" value="option1" checked>
+            Monolingual
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="bilingual_radio" value="option1" checked>
+            Bilingual
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionRadios" id="multilingual_radio" value="option1" checked>
+            Multilingual
+          </label>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div role="tabpanel" id="design" class="body_text tab-pane fade">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <p class="body_text">Number of imaging runs</p>
+        <input type="text" class="form-control" id="no_of_imaging_runs_input">
+        <p class="body_text">Length of runs</p>
+        <input type="text" class="form-control" id="length_of_runs_input">
+      </div>
+    </form>
+  </div>
+  <div role="tabpanel" id="aquisition" class="body_text tab-pane fade">
+    <form class="form-horizontal">
+      <div class="form-group">
+        <p class="body_text">Scanner make</p>
+        <input type="text" class="form-control" id="scanner_make_input">
+        <p class="body_text">Scanner model</p>
+        <input type="text" class="form-control" id="scanner_model_input">
+        <p class="body_text">Field Strength</p>
+        <input type="text" class="form-control" id="field_strength_input">
+        <p class="body_text">Pulse Sequence</p>
+        <input type="text" class="form-control" id="pulse_sequence_input">
+        <p class="body_text">Parallel imaging</p>
+        <input type="text" class="form-control" id="parallel_imaging_input">
+        <p class="body_text">Field of view</p>
+        <input type="text" class="form-control" id="field_of_view_input">
+        <p class="body_text">Matrix size</p>
+        <input type="text" class="form-control" id="matrix_size_input">
+        <p class="body_text">Slice thickness</p>
+        <input type="text" class="form-control" id="slice_thickness_input">
+        <p class="body_text">Skip distance</p>
+        <input type="text" class="form-control" id="skip_distance_input">
+        <p class="body_text">Acquisition orientation</p>
+        <input type="text" class="form-control" id="acquisition_orientation_input">
+        <p class="body_text">Order of acquisition</p>
+        <div class="radio">
+          <label>
+          <input type="radio" name="optionRadios" id="ascending_acqui_radio" value="option1" checked>
+            Ascending
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+          <input type="radio" name="optionRadios" id="descending_acqui_radio" value="option1" checked>
+            Descending
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+          <input type="radio" name="optionRadios" id="interleaved_acqui_radio" value="option1" checked>
+            Interleaved
+          </label>
+        </div>
+        <p class="body_text">Repetition time</p>
+        <input type="text" class="form-control" id="repetition_time_input">
+        <p class="body_text">Echo time</p>
+        <input type="text" class="form-control" id="echo_time_input">
+        <p class="body_text">Flip angle</p>
+        <input type="text" class="form-control" id="flip_angle_input">
+      </div>
+    </form>
+  </div>
+  <div style="width:100%;text-align:center;padding-top:30px"><button type="button" class="btn btn-primary btn-lg">upload</button></div>
+</div>
+</div>
+        <div class="footer">
+          <div class="footer_content">
+            <table style="margin-left:auto;margin-right:auto">
+              <tr>
+                <td style="color: #ecf0f1;padding-right:10px"><a href="http://www.lab-lab.org">The LAB lab</a></td>
+                <td style="color: #ecf0f1;padding-right:10px">Github</td>
+                <td style="color: #ecf0f1;padding-right:10px">Contact</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+</div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="../js/bootstrap.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+  </html>
