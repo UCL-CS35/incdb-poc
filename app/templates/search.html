@@ -1,0 +1,20 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+{% if movies|length > 1 %}
+<h2>We have found {{movies|length}} movies that matches your search.</h2>
+{% else %}
+<h2>We have found {{movies|length}} movie that matches your search.</h2>
+{% endif %}
+<ul>
+	{% for movie in movies %}
+	<a href="/movies/{{movie.movie}}">
+		<li>{{ movie.movie }}</li>
+	</a>
+	{% endfor %}
+</ul>
+
+
+
+{% endblock %}
