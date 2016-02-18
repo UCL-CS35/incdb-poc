@@ -19,14 +19,14 @@ jQuery(document).ready(function() {
 	viewer.clear()   // Paint canvas background while images load
 	images = [
 		{
-			'url': 'data/MNI152.nii.gz',
+			'url': '../data/images/decoded/folder/melodic_IC_1_2mm.nii.gz',
 			'name': 'MNI152 2mm',
 			'colorPalette': 'grayscale',
 			'cache': false,
 			'intent': 'Intensity:'
 		},
 		{
-			'url': 'data/language_meta.json',
+			'url': '../data/language_meta.json',
 			'name': 'language meta-analysis',
 			'colorPalette': 'blue',
 			'positiveThreshold': 10.0,
@@ -34,7 +34,7 @@ jQuery(document).ready(function() {
 			'intent': 'z-score:'
 		},
 		{
-			'url': 'data/emotion_meta.nii.gz',
+			'url': '../data/emotion_meta.nii.gz',
 			'name': 'emotion meta-analysis',
 			'colorPalette': 'green',
 			'intent': 'z-score:'

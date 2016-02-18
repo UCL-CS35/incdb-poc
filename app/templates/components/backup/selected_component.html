@@ -1,0 +1,21 @@
+{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+
+{% block content %}
+
+<h2>Component : {{selected_component.filename}} </h2>
+
+<ul>
+	<li>{{selected_component.movie}}</li>
+	<li>{{selected_component.term}}</li>
+</ul>
+
+<h2>Terms</h2>
+
+<ul>
+	{% for term in terms %}
+		<li>Term: {{term[0]}} | Correlation: {{term[1]}}</li>
+	{% endfor %}
+</ul>
+
+
+{% endblock %}
