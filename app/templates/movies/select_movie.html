@@ -1,25 +1,43 @@
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "brain_viewer.html" %} 
+
+{% block HTMLtitle %}
+<title>Movie : {{selected_movie}}</title>
+{% endblock %}
+
+{% block title %}
+<h2 class = "title_banner">{{selected_movie}} </h2>
+{% endblock %}
 
 {% block content %}
 
-<h2>Movie: {{selected_movie}} </h2>
-
-<h3>Terms related to {{selected_movie}}</h3>
-<ul>
-{% for term in terms %}
-<a href="/movies/{{selected_movie}}/{{term.term}}">
-	<li>{{ term.term }}</li>
-</a>
-{% endfor %}
-</ul>
-
-<h3>Components of {{selected_movie}} ({{components|length}})</h3>
-<ul>
-	{% for component in components %}
-	<a href="/component/{{component.uuid}}">
-		<li>{{ component.filename }}</li>
-	</a>
-	{% endfor %}
-</ul>
+<div class="body_content" style="margin-top:30px">
+	<ul class="nav nav-tabs" role="tablist">
+		<li role = "presentation" class="active"><a href="#terms" data-toggle="tab">terms</a></li>
+		<li role = "presentation"><a href="#components" data-toggle="tab">components</a></li>
+		<li><a href="#details">details</a></li>
+	</ul>
+	<div class="tab-content">
+		<table role="tabpanel" id="terms" class="body_text tab-pane fade active in">
+			<tr>
+				<th style="width:50vw">title</th>
+			</tr>
+			{% for term in terms %}
+			<tr>
+				<td><a href="/movies/{{selected_movie}}/{{term.term}}">{{ term.term }}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		<table role="tabpanel" id="components" class="body_text tab-pane fade in">
+			<tr>
+				<th style="width:50vw">name</th>
+			</tr>
+			{% for component in components %}
+			<tr>
+				<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
+</div>
 
 {% endblock %}
