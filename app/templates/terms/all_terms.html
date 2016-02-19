@@ -1,45 +1,46 @@
 {% extends "layout.html" %}  
 
 {% block HTMLtitle %}
-<title>Terms : Internet Neurocinematics Database</title>
+<title>Terms | Internet Neurocinematics Database</title>
 {% endblock %}
 
 {% block content %}
 
-<div class="blank_banner" style="padding-bottom:40px">
-	<h1 class="title_banner">Terms</h1>
-	<form class="form-inline" style="text-align:center;margin-top:30px">
-		<div class="form-group">
+<div class="jumbotron">
+	<div class="container">
+
+		<h2>Terms</h2>
+
+		<form action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data">
 			<div class="input-group">
-				<input type="text" class="form-control input-lg" id="formGroupInputLarge" placeholder="Search for a specific term (e.g : happy)" style="width:50vw">
+				<input type="text" class="form-control input-lg" name="movie" placeholder="Search for term (e.g: angry)" required>
+				<span class="input-group-btn">
+	      	<button class="btn btn-primary btn-lg" type="submit" name="action">Search</button>
+	      </span>
 			</div>
-		</div>
-		<button type="button" class="btn btn-primary btn-lg">search</button>
-		<div style="display:inline-block;margin-left:20px">
-			<p class = "sub_banner" style="display:inline;margin-right:10px">Display:</p>
-			<select class="form-control">
-				<option>10 entries</option>
-				<option>25 entries</option>
-				<option>50 entries</option>
-				<option>100 entries</option>
-			</select>
-		</div>
-	</form>
+		</form>
+
+	</div>
+
 </div>
-<div class="body_content" style="height:60vh">
-	<h2 class="title_body">all terms</h2>
+
+<div class="container body_container">
+	<h2>all terms</h2>
 	<hr>
-	<table class="body_text" style="margin-top:30px">
+	<table class="table">
+	<thead>
 		<tr>
-			<th style="width:75vw">title</th>
+			<th>title</th>
 		</tr>
-		{% for term in terms %}
-		<tr>
-			<td><a href="{{term.term}}">{{ term.term }}</a></td>
-		</tr>
-		{% endfor %}
+	</thead>
+	<tbody>
+	{% for term in terms %}
+	<tr>
+		<td><a href="{{term.term}}">{{ term.term }}</a></td>
+	</tr>
+	{% endfor %}
+	</tbody>
 	</table>
-</div>
 </div>
 
 {% endblock %}

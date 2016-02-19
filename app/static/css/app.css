@@ -1,3 +1,186 @@
+@font-face{
+    font-family: 'Antic', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
+}
+
+@font-face{
+    font-family: Gill Sans Light;
+    src: url('GillSans.ttc');;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+    font-family: Titillium Web;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+.body_container {
+    padding-bottom: 60px;
+}
+.navbar-collapse {
+    background-color: #2c3e50;
+}
+.navbar-inverse{
+    background-color: #2c3e50;
+    font-size: 1.2em;
+}
+
+.navbar-static-top{
+    font-weight: 200;
+    margin-bottom: 0;
+    padding-top: 2px;
+    height: 55px;
+}
+
+.navbar-inverse .navbar-nav>li>a{
+    color: white;
+    background-color: #2c3e50;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    text-decoration: underline;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #34495e;
+}
+.footer .container {
+    padding-top: 20px;
+    color: #fff;
+    text-align: center;
+}
+.footer .container a{
+    color: #fff;
+    margin: 0 10px;
+}
+.index_jumbotron {
+    background: #000 url(../images/banner.jpg) center center;
+    background-size: cover;
+}
+.jumbotron {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+    background: #34495e;
+}
+.jumbotron h3 {
+    margin: 0;
+}
+.jumbotron h1 {
+    margin: 0 0 10px;
+}
+.index_help{
+    margin-top: 20px;
+}
+.index_help a{
+    font-weight: 400;
+    text-align: center;
+    color: #ecf0f1;
+}
+
+
+
+.blank_side_banner{
+    background-color: #34495e;
+    width: 50%;
+    height: 100vh;
+}
+
+
+
+
+
+.title_banner{
+    font-family: Titillium Web;
+    font-weight: 400;
+    text-align: center;
+    color: #ecf0f1;
+    margin-top: 0;
+    padding-top: 3vh;
+}
+
+
+
+.brain_scans{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 10%;
+    padding-right: 10%;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    display: inline-block;
+}
+
+.brain_section{
+    width:33%;
+    float: right;
+}
+
+.title_body{
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    font-family: Titillium Web;
+    font-size: 4vh;
+    font-weight: 400;
+}
+
+.name{
+    font-size: 2vw;
+}
+.sub_title{
+    font-family: Titillium Web;
+    font-size: 1.5vw;
+}
+
+.body_text{
+    font-family: Titillium Web;
+    font-size: 2.5vh;
+    font-weight: 400;
+    line-height: 1.5;
+    padding-top: 30px;
+}
+
+.body_text_white{
+    font-family: Titillium Web;
+    font-size: 2.5vh;
+    font-weight: 400;
+    line-height: 1.5;
+    padding-top: 30px;
+    color: #ecf0f1;
+}
+
+.dp{
+    width: 15vw;
+    height: 15vw;
+}
+
+.description{
+    padding-top: 1vh;
+    font-family: Titillium Web;
+    font-size: 0.6em;
+}
+
+table{
+    font-family: Titillium Web;
+    font-weight: 200;
+    font-size: 20px;
+}
+
+.form-horizontal .form-group{
+    margin: 0;
+}
 .ui-autocomplete {
     position: absolute;
     z-index: 1000;
@@ -8,8 +191,8 @@
     background-color: #ffffff;
     border: 1px solid #000
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-       -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
 .ui-autocomplete > li {
   padding: 6px 10px;
