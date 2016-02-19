@@ -53,7 +53,7 @@ h3{
 }
 
 #banner{
-	background-image: url(images/banner.jpg);
+	background-image: url(../images/banner.jpg);
 	background-repeat: no-repeat;
 	background-position: 0 0;
 	background-size: cover;

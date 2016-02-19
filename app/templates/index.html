@@ -1,33 +1,26 @@
-{% extends "common/page_base.html" %}  
-{# common/page_base.html extends layout.html #}
+{% extends "layout.html" %}  
+
+{% block HTMLtitle %}
+<title>Internet Neurocinematics Database</title>
+{% endblock %}
 
 {% block content %}
-
-<p>1. Large search bar</p>
-<p>2. Recently added Movies</p>
-
-
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
-<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-
 <script type=text/javascript>
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
  </script>
 
-<form id="search-form" class="form" action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data">
-<!-- <div class="ui-widget">
-	<input id="movie" class="form-control" name="movie" />
+<div id="banner">
+	<h3 id = "sub_title" class = "header">Welcome to the...</h3>
+	<h1 id = "heading" class="header">Internet Neurocinematics Database</h1>
+	<form class="form-inline" style="text-align:center;margin-top:30px" action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="text" class="form-control input-lg" id="formGroupInputLarge" name="movie" placeholder="Search for movie name (e.g : The Avengers)" style="width:50vw" required>
+			</div>
+		</div>
+		<button type="button" class="btn btn-primary btn-lg">search</button>
+	</form>
+	<p class="sub_banner">Not sure where to start?</a>
+	</p>
 </div>
-<div class="form-group">
-	<input type="submit" value="Search" class="btn btn-primary">
-</div> -->
-<div class="input-group">
-    <input type="text" class="form-control" placeholder="Search for movie name" id="movie" name="movie" required>
-      <span class="input-group-btn">
-        <button class="btn btn-default" type="submit">Search</button>
-      </span>
-</div><!-- /input-group -->
-</form>
-
-
 {% endblock %}
