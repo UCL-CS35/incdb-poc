@@ -1,17 +1,33 @@
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "brain_viewer.html" %} 
 
+{% block HTMLtitle %}
+<title>{{selected_term}} | Term </title>
+{% endblock %}
+
+{% block title %}
+<h2 class = "title_banner">{{selected_term}} </h2>
+{% endblock %}
 {% block content %}
 
-<h2>Term: {{selected_term}} ({{ components|length }}) </h2>
+<div class="container body_container">
 
-<ul>
-	{% for component in components %}
-	<a href="/component/{{component.uuid}}">
-		<li>{{ component.filename }}</li>
-	</a>
-	{% endfor %}
-</ul>
+	<h2>Term: {{selected_term}} ({{ components|length }}) </h2>
 
-
+	<table class="table">
+		<thead>
+		<tr>
+			<th>name</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for component in components %}
+		<tr>
+			<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
+</div>
 
 {% endblock %}
