@@ -19,6 +19,7 @@ body {
 }
 .body_container {
     padding-bottom: 60px;
+    padding-top: 30px;
 }
 .navbar-collapse {
     background-color: #2c3e50;
