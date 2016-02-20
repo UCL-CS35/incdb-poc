@@ -1,8 +1,14 @@
 {% extends 'flask_user/public_base.html' %}
 
+{% block HTMLtitle %}
+<title>Register | Internet Neurocinematics Database</title>
+{% endblock %}
+
 {% block content %}
 {% from "flask_user/_macros.html" import render_field, render_submit_field %}
+
 <h1>{%trans%}Register{%endtrans%}</h1>
+<hr>
 
 <form action="" method="POST" novalidate formnovalidate class="form" role="form">
     {{ form.hidden_tag() }}
@@ -18,7 +24,7 @@
             <div class="col-xs-6 text-right">
                 {% if user_manager.enable_register %}
                     <a href="{{ url_for('user.login') }}" tabindex='290'>
-                        {%trans%}Already registered? Sign in.{%endtrans%}</a>
+                        {%trans%}Already registered? Login.{%endtrans%}</a>
                 {% endif %}
             </div>
         </div>
