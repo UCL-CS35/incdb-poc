@@ -127,7 +127,7 @@ def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
         r = np.dot(ref.data[voxels].T, data) / ref.n_voxels
         outfile = join(settings.DECODING_RESULTS_DIR, movie, filename + '.txt')
         labels = ref.labels.keys()
-        series = pd.Series(r, index=labels).sort_values()
+        series = pd.Series(r, index=labels).sort_values(ascending=False)
         series.to_csv(outfile, sep='\t')
 
         # topFiveTerms = series.tail(5)
