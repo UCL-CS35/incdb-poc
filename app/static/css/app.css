@@ -75,6 +75,9 @@ body {
     text-align: center;
     background: #34495e;
 }
+.jumbotron h2 {
+    margin: 0 0 10px;
+}
 .jumbotron h3 {
     margin: 0;
 }
