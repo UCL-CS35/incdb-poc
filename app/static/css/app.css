@@ -66,10 +66,6 @@ hr {
     color: #fff;
     margin: 0 10px;
 }
-.index_jumbotron {
-    background: #000 url(/images/banner.jpg) center center;
-    background-size: cover;
-}
 .jumbotron {
     position: relative;
     width: 100%;
@@ -80,6 +76,10 @@ hr {
     text-align: center;
     background: #34495e;
     margin-bottom: 0px;
+}
+.index_jumbotron {
+    background: #000 url(/static/images/banner.jpg) center center;
+    background-size: cover;
 }
 .jumbotron h2 {
     margin: 0 0 10px;
