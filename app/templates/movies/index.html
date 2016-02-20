@@ -1,4 +1,4 @@
-{% extends "layout.html" %}  
+{% extends "common/page_base.html" %} 
 
 {% block HTMLtitle %}
 <title>Movies | Internet Neurocinematics Database</title>
@@ -15,7 +15,7 @@
 			<div class="input-group">
 				<input type="text" class="form-control input-lg" name="movie" placeholder="Search for movie name (e.g: The Avengers)" required>
 				<span class="input-group-btn">
-	      	<button class="btn btn-primary btn-lg" type="submit" name="action">Search</button>
+	      	<button class="btn btn-primary btn-lg" type="submit">Search</button>
 	      </span>
 			</div>
 		</form>
