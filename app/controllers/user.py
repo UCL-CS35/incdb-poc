@@ -43,7 +43,7 @@ def user_account():
         return redirect(url_for('home.index'))
 
     # Process GET or invalid POST
-    return render_template('user/user_profile_page.html',
+    return render_template('user/account.html',
                            form=form)
 
 
