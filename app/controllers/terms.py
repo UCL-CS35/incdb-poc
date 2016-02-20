@@ -27,7 +27,7 @@ def index():
 @terms_blueprint.route('/<selected_term>')
 def select_term(selected_term):
     components = Decoding.query.filter_by(term = selected_term).all()
-    return render_template("terms/selected_term.html", components = components, selected_term = selected_term)
+    return render_template("terms/select_term.html", components = components, selected_term = selected_term)
 
 
 app.register_blueprint(terms_blueprint)

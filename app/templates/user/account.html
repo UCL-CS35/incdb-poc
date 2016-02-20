@@ -1,0 +1,40 @@
+{% extends "common/page_base.html" %}
+
+{% block content %}
+
+{% block HTMLtitle %}
+<title>Account | Internet Neurocinematics Database</title>
+{% endblock %}
+
+
+<div class="container body_container">
+
+    <h1>Account</h1>
+    <hr>
+
+    {% from "flask_user/_macros.html" import render_field, render_submit_field %}
+
+    <form action="" method="POST" class="form" role="form">
+      <div class="row">
+        <div class="col-sm-12">
+        {{ form.hidden_tag() }}
+
+        {{ render_field(form.title, tabindex=240) }}
+
+        {{ render_field(form.first_name, tabindex=240) }}
+
+        {{ render_field(form.last_name, tabindex=250) }}
+
+        {{ render_field(form.affiliation, tabindex=250) }}
+
+        {{ render_submit_field(form.submit, tabindex=280) }}
+
+        </div>
+      </div>
+    </form>
+
+    <p style="margin-top: 10px;"><a href="{{ url_for('user.change_password') }}">Change Password</a></p>
+
+</div>
+
+{% endblock %}

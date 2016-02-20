@@ -1,7 +1,7 @@
-{% extends "brain_viewer.html" %}
+{% extends "common/brain_viewer.html" %}
 
 {% block HTMLtitle %}
-<title>Component : {{selected_component.filename}}</title>
+<title>{{selected_component.filename}} | Component</title>
 {% endblock %}
 
 
@@ -11,36 +11,57 @@
 
 {% block content %}
 
-<div class="body_content" style="margin-top:30px">
+<div class="container body_container">
+
   <ul class="nav nav-tabs" role="tablist">
     <li role = "presentation" class="active"><a href="#movies" data-toggle="tab">movies</a></li>
     <li role = "presentation"><a href="#terms" data-toggle="tab">terms</a></li>
-    <li><a href="#">details</a></li>
+    <li role = "presentation"><a href="#details" data-toggle="tab">details</a></li>
   </ul>
+
   <div class="tab-content">
-    <table role="tabpanel" id="movies" class="body_text tab-pane fade active in">
+
+    <div role="tabpanel" id="movies" class="tab-pane active fade in">
+    <table class="table">
+      <thead>
       <tr>
         <th style="width:50vw">title</th>
         <th style="width:25vw">contributor</th>
       </tr>
+      </thead>
+      <tbody>
       <tr>
         <td><a href="/movies/{{selected_component.movie}}">{{selected_component.movie}}</a></td>
-        <td><a href="/terms/{{selected_component.term}}">{{selected_component.term}}</a></td>
+        <td></td>
       </tr>
+      </tbody>
     </table>
-    <table role="tabpanel" id="terms" class="body_text tab-pane fade in">
+    </div>
+
+    <div role="tabpanel" id="terms" class="tab-pane fade in">
+    <table class="table">
+      <thead>
       <tr>
-        <th style="width:50vw">title</th>
+        <th style="width:50vw">term</th>
         <th style="width:25vw">correlation</th>
       </tr>
+      </thead>
+      <tbody>
       {% for term in terms %}
       <tr>
         <td><a href="/terms/{{term[0]}}">{{term[0]}}</a></td>
         <td>{{term[1]}}</td>
       </tr>
       {% endfor %}
+      </tbody>
     </table>
+    </div>
+
+    <div role="tabpanel" id="details" class="tab-pane fade in">
+    </div>
+
   </div>
+
 </div>
 
 {% endblock %}

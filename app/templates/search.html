@@ -1,20 +1,35 @@
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>Search Result | Internet Neurocinematics Database</title>
+{% endblock %}
 
 {% block content %}
 
-{% if movies|length > 1 %}
-<h2>We have found {{movies|length}} movies that matches your search.</h2>
-{% else %}
-<h2>We have found {{movies|length}} movie that matches your search.</h2>
-{% endif %}
-<ul>
-	{% for movie in movies %}
-	<a href="/movies/{{movie.movie}}">
-		<li>{{ movie.movie }}</li>
-	</a>
-	{% endfor %}
-</ul>
+<div class="container body_container">
 
+	{% if movies|length > 1 %}
+	<h1>We have found {{movies|length}} movies that matches your search.</h1>
+	{% else %}
+	<h1>We have found {{movies|length}} movie that matches your search.</h1>
+	{% endif %}
 
+	<hr>
 
+	<table class="table">
+		<thead>
+		<tr>
+			<th>title</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for movie in movies %}
+		<tr>
+			<td><a href="/movies/{{movie.movie}}">{{ movie.movie }}</a></td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+</div>
 {% endblock %}

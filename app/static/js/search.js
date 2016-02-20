@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $("#movie").autocomplete({
+    $("#search_movie").autocomplete({
 
         source: function(request, response) {
             $.getJSON($SCRIPT_ROOT + "/_search_movie", 

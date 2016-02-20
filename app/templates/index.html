@@ -1,4 +1,4 @@
-{% extends "layout.html" %}  
+{% extends "common/page_base.html" %}
 
 {% block HTMLtitle %}
 <title>Internet Neurocinematics Database</title>
@@ -9,18 +9,24 @@
   $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
  </script>
 
-<div id="banner">
-	<h3 id = "sub_title" class = "header">Welcome to the...</h3>
-	<h1 id = "heading" class="header">Internet Neurocinematics Database</h1>
-	<form class="form-inline" style="text-align:center;margin-top:30px" action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data">
-		<div class="form-group">
+<div class="jumbotron index_jumbotron">
+	<div class="container">
+
+		<h3 id="sub_title">Welcome to the</h3>
+		<h1>Internet Neurocinematics Database</h1>
+
+		<form action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data">
 			<div class="input-group">
-				<input type="text" class="form-control input-lg" id="formGroupInputLarge" name="movie" placeholder="Search for movie name (e.g : The Avengers)" style="width:50vw" required>
+				<input type="text" class="form-control input-lg" name="movie" id="search_movie" placeholder="Search for movie name (e.g: The Avengers)" required>
+				<span class="input-group-btn">
+	      	<button class="btn btn-primary btn-lg" type="submit">Search</button>
+	      </span>
 			</div>
-		</div>
-		<button type="button" class="btn btn-primary btn-lg">search</button>
-	</form>
-	<p class="sub_banner">Not sure where to start?</a>
-	</p>
+		</form>
+		<p class="index_help"><a href="">Not sure where to start?</a></p>
+	</div>
+</div>
+
+<div class="container body_container">
 </div>
 {% endblock %}

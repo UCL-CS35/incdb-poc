@@ -1,19 +1,18 @@
 {% extends "common/brain_viewer.html" %} 
 
 {% block HTMLtitle %}
-<title>{{selected_movie}} | Movie </title>
+<title>{{selected_term}} | Term </title>
 {% endblock %}
 
 {% block title %}
-<h2 class = "title_banner">{{selected_movie}} </h2>
+<h2 class = "title_banner">{{selected_term}} </h2>
 {% endblock %}
-
 {% block content %}
 
 <div class="container body_container">
 
 	<ul class="nav nav-tabs" role="tablist">
-		<li role = "presentation" class="active"><a href="#terms" data-toggle="tab">terms</a></li>
+		<li role = "presentation" class="active"><a href="#terms" data-toggle="tab">movies</a></li>
 		<li role = "presentation"><a href="#components" data-toggle="tab">components</a></li>
 		<li role = "presentation"><a href="#details" data-toggle="tab">details</a></li>
 	</ul>
@@ -24,17 +23,13 @@
 			<table class="table">
 				<thead>
 				<tr>
-					<th>terms</th>
-					<th>correlation</th>
+					<th>movie</th>
+					<th>contributor</th>
+					<th>added date</th>
 				</tr>
 				</thead>
 				<tbody>
-				{% for term in terms %}
-				<tr>
-					<td><a href="/movies/{{selected_movie}}/{{term.term}}">{{ term.term }}</a></td>
-					<td></td>
-				</tr>
-				{% endfor %}
+
 				</tbody>
 			</table>
 		</div>

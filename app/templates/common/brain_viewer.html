@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block pre_content %}
+<div class="jumbotron">
+  {% block title %}{% endblock %}
+  <div class="brain_scans">
+    <div id="xImage" class="brain_section">
+      <div class="view" id="view_axial">
+        <canvas id='axial_canvas' width='350px' height='350px'></canvas>
+      </div>
+    </div>
+    <div id="yImage" class="brain_section">
+      <div class="view" id="view_coronal">
+        <canvas id='cor_canvas' width='350px' height='350px'></canvas>
+      </div>
+    </div>
+    <div id="zImage" class="brain_section">
+      <div class="view" id="view_sagittal">
+        <canvas id="sag_canvas" width='350px' height='350px'></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

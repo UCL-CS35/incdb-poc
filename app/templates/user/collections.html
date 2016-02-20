@@ -1,31 +1,41 @@
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>My Collections | Internet Neurocinematics Database</title>
+{% endblock %}
 
 {% block content %}
 
-<h1>My Collections</h1>
+<div class="container body_container">
 
-<table class="table table-bordered table-hover">
-	<thead>
-	<tr>
-		<th>Name of Collection</th>
-		<th>Movie</th>
-		<th>Description</th>
-	</thead>
-	<tbody>
-	{% for collection in collections %}
-	<tr>
-		<td>
-			<a href='{{ url_for('contribute.collection', collection_name=collection.name) }}'>{{ collection.name }}</a>
-		</td>
-		<td>
-			{{ collection.movie_name }}
-		</td>
-		<td>
-			{{ collection.description }}
-		</td>
-	</tr>
-	{% endfor %}
-	</tbody>
-</table>
+	<h1>My Collections</h1>
+	<hr>
+
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Name of Collection</th>
+				<th>Movie</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for collection in collections %}
+		<tr>
+			<td>
+				<a href='{{ url_for('contribute.collection', collection_name=collection.name) }}'>{{ collection.name }}</a>
+			</td>
+			<td>
+				{{ collection.movie_name }}
+			</td>
+			<td>
+				{{ collection.description }}
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+</div>
 
 {% endblock %}

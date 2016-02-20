@@ -1,33 +1,48 @@
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "common/page_base.html" %} 
+
+{% block HTMLtitle %}
+<title>{{ collection.name }} | Internet Neurocinematics Database</title>
+{% endblock %}
+
 {% block content %}
 
-<h3>{{ collection.name }} <br> <small> Contributed by {{ user.first_name + ' ' + user.last_name }} </small></h3>
-<a href="{{ url_for('contribute.upload_files', collection=collection.name)}}" class="btn btn-primary btn-sm">
-	Upload an archive with images (.zip or .tar.gz)
-</a>
-<hr>
-<table class="table table-bordered table-hover">
-	<thead>
-		<tr>
-			<th>Name</th>
-			<th>Last Modified Time</th>
-		</tr>
-	</thead>
-	<tbody>
-{% if files|length > 0 %}
-<!-- Table -->
-	{% for file, modified in files.iteritems() %}
-	<tr>
-		<td>{{ file }}</td>
-		<td>{{ modified }}</td>
-	</tr>
-	{% endfor %}
-{% else %}
-	<tr>
-		<td colspan="2">The collection is empty.</td>
-	</tr>
-{% endif %}
-	</tbody>
-</table>
+<div class="container body_container">
+
+	<h1>{{ collection.name }} <br> <small> Contributed by {{ user.first_name + ' ' + user.last_name }} </small></h1>
+
+	<a href="{{ url_for('contribute.upload_files', collection=collection.name)}}" class="btn btn-primary">
+		Upload an archive with images (.zip or .tar.gz)
+	</a>
+
+	<hr>
+
+	<table class="table table-bordered table-hover">
+
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Last Modified Time</th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{% if files|length > 0 %}
+		<!-- Table -->
+			{% for file, modified in files.iteritems() %}
+			<tr>
+				<td>{{ file }}</td>
+				<td>{{ modified }}</td>
+			</tr>
+			{% endfor %}
+		{% else %}
+			<tr>
+				<td colspan="2">The collection is empty.</td>
+			</tr>
+		{% endif %}
+		</tbody>
+
+	</table>
+
+</div>
 
 {% endblock %}
