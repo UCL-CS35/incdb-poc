@@ -2,12 +2,10 @@
     font-family: 'Antic', sans-serif;
     font-family: 'Titillium Web', sans-serif;
 }
-
 @font-face{
     font-family: Gill Sans Light;
     src: url('GillSans.ttc');;
 }
-
 html {
   position: relative;
   min-height: 100%;
@@ -16,6 +14,16 @@ body {
     font-family: Titillium Web;
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+}
+hr {
+    border-top: 1px solid #ddd;
+}
+.btn-primary{
+    background-color: #205380;
+    border-radius: 0;
+}
+.btn-primary:hover{
+    border: 1px solid #fff;
 }
 .body_container {
     padding-bottom: 60px;
@@ -28,14 +36,12 @@ body {
     background-color: #2c3e50;
     font-size: 1.2em;
 }
-
 .navbar-static-top{
     font-weight: 200;
     margin-bottom: 0;
     padding-top: 2px;
     height: 55px;
 }
-
 .navbar-inverse .navbar-nav>li>a{
     color: white;
     background-color: #2c3e50;
@@ -43,7 +49,6 @@ body {
 .navbar-inverse .navbar-nav>li>a:hover{
     text-decoration: underline;
 }
-
 .footer {
   position: absolute;
   bottom: 0;
@@ -62,7 +67,7 @@ body {
     margin: 0 10px;
 }
 .index_jumbotron {
-    background: #000 url(../images/banner.jpg) center center;
+    background: #000 url(/images/banner.jpg) center center;
     background-size: cover;
 }
 .jumbotron {
@@ -74,6 +79,7 @@ body {
     font-weight: 400;
     text-align: center;
     background: #34495e;
+    margin-bottom: 0px;
 }
 .jumbotron h2 {
     margin: 0 0 10px;
@@ -84,6 +90,9 @@ body {
 .jumbotron h1 {
     margin: 0 0 10px;
 }
+.jumbotron input {
+    border-radius: 0;
+}
 .index_help{
     margin-top: 20px;
 }
@@ -92,30 +101,6 @@ body {
     text-align: center;
     color: #ecf0f1;
 }
-
-
-
-.blank_side_banner{
-    background-color: #34495e;
-    width: 50%;
-    height: 100vh;
-}
-
-
-
-
-
-.title_banner{
-    font-family: Titillium Web;
-    font-weight: 400;
-    text-align: center;
-    color: #ecf0f1;
-    margin-top: 0;
-    padding-top: 3vh;
-}
-
-
-
 .brain_scans{
     padding-top: 20px;
     padding-bottom: 20px;
@@ -128,62 +113,8 @@ body {
 }
 
 .brain_section{
-    width:33%;
+    width: 33%;
     float: right;
-}
-
-.title_body{
-    padding-top: 2vh;
-    padding-bottom: 2vh;
-    font-family: Titillium Web;
-    font-size: 4vh;
-    font-weight: 400;
-}
-
-.name{
-    font-size: 2vw;
-}
-.sub_title{
-    font-family: Titillium Web;
-    font-size: 1.5vw;
-}
-
-.body_text{
-    font-family: Titillium Web;
-    font-size: 2.5vh;
-    font-weight: 400;
-    line-height: 1.5;
-    padding-top: 30px;
-}
-
-.body_text_white{
-    font-family: Titillium Web;
-    font-size: 2.5vh;
-    font-weight: 400;
-    line-height: 1.5;
-    padding-top: 30px;
-    color: #ecf0f1;
-}
-
-.dp{
-    width: 15vw;
-    height: 15vw;
-}
-
-.description{
-    padding-top: 1vh;
-    font-family: Titillium Web;
-    font-size: 0.6em;
-}
-
-table{
-    font-family: Titillium Web;
-    font-weight: 200;
-    font-size: 20px;
-}
-
-.form-horizontal .form-group{
-    margin: 0;
 }
 .ui-autocomplete {
     position: absolute;
@@ -193,16 +124,18 @@ table{
     margin-top: 2px;
     list-style: none;
     background-color: #ffffff;
-    border: 1px solid #000
+    border: 1px solid #000;
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 }
-.ui-autocomplete > li {
-  padding: 6px 10px;
+.ui-autocomplete > li.ui-menu-item {
+  padding: 10px 14px;
 }
 .ui-autocomplete > li.ui-state-focus {
   background-color: #DDD;
+  border: 0;
+  color: #34495e;
 }
 .ui-helper-hidden-accessible {
   display: none;
@@ -274,31 +207,31 @@ table{
     /* 4px */
 }
 
-.inputfile-6 + label {
-    color: #34495e;
+.inputfile-upload + label {
+    color: black;
 }
 
-.inputfile-6 + label {
+.inputfile-upload + label {
     border: 1px solid #34495e;
     padding: 0;
 }
 
-.inputfile-6:focus + label,
-.inputfile-6.has-focus + label,
-.inputfile-6 + label:hover {
+.inputfile-upload:focus + label,
+.inputfile-upload.has-focus + label,
+.inputfile-upload + label:hover {
     border-color: #34495e;
 }
 
-.inputfile-6 + label span {
+.inputfile-upload + label span {
     padding: 1.2rem 2rem;
     /* 10px 20px */
 }
-.inputfile-6 + label strong {
+.inputfile-upload + label strong {
     padding: 1.2rem 4.25rem;
     /* 10px 20px */
 }
 
-.inputfile-6 + label span {
+.inputfile-upload + label span {
     width: 600px;
     min-height: 2em;
     display: inline-block;
@@ -308,22 +241,25 @@ table{
     vertical-align: top;
 }
 
-.inputfile-6 + label strong {
+.inputfile-upload + label strong {
     height: 100%;
-    color: #f1e5e6;
-    background-color: #34495e;
+    color: white;
+    background-color: #205380;
     display: inline-block;
 }
 
-.inputfile-6:focus + label strong,
-.inputfile-6.has-focus + label strong,
-.inputfile-6 + label:hover strong {
+.inputfile-upload:focus + label strong,
+.inputfile-upload.has-focus + label strong,
+.inputfile-upload + label:hover strong {
     background-color: #4f6f8f;
 }
 
 @media screen and (max-width: 50em) {
-	.inputfile-6 + label strong {
+	.inputfile-upload + label strong {
 		display: block;
 	}
 }
 
+#file-picker, #file-label, #file-span {
+    color: black;
+}
