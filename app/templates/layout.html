@@ -68,8 +68,12 @@
     </div>
   </nav>
 
+  {% block pre_content %}{% endblock %}
+
   {% block content %}{% endblock %}
 
+  {% block post_content %}{% endblock %}
+  
   <footer class="footer">
     <div class="container">
       <p><a href="http://www.lab-lab.org/">The LAB Lab</a> | <a href="https://github.com/UCL-CS35">GitHub</a> | <a>Contact</a></p>
