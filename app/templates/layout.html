@@ -70,14 +70,14 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li> <a href="{{ url_for('user.user_collections') }}">My Collections</a></li>
-                <li> <a href="{{ url_for('user.user_account') }}">Account</a></li>
-                <li> <a href="{{ url_for('user.logout') }}">Sign Out</a></li>
+                <li> <a href="{{ url_for('user.user_collections') }}">my collections</a></li>
+                <li> <a href="{{ url_for('user.user_account') }}">account</a></li>
+                <li> <a href="{{ url_for('user.logout') }}">sign out</a></li>
               </ul>
             </li>
           {% else %}
-            <li><a href="{{ url_for('user.register') }}">Register</a></li>
-            <li><a href="{{ url_for('user.login') }}">Sign In</a></li>
+            <li><a href="{{ url_for('user.register') }}">register</a></li>
+            <li><a href="{{ url_for('user.login') }}">sign in</a></li>
           {% endif %}
         </ul>
 
