@@ -4,7 +4,6 @@ from app.models.decodings import Decoding
 
 from app import app, db
 
-
 from sqlalchemy import *
 
 home_blueprint = Blueprint('home', __name__, url_prefix='/')
