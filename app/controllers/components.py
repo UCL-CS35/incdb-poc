@@ -47,3 +47,7 @@ app.register_blueprint(components_blueprint)
 @app.route('/data/images/decoded/<path:movie_name>/<path:file_name>')
 def load_component(movie_name, file_name):
     return send_from_directory(os.path.join(DECODED_IMAGE_DIR,movie_name), file_name, as_attachment=True)
+
+@app.route('/data/images/<path:comp_name>')
+def load_brain_def(comp_name):
+    return send_from_directory(IMAGE_DIR,comp_name, as_attachment=True)
