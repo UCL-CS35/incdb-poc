@@ -25,7 +25,13 @@
 </div>
 
 <div class="container body_container">
-	<h2>all terms</h2>
+
+	{% if terms|length > 1 %}
+	<h2>We have found {{terms|length}} terms that matches your search.</h2>
+	{% else %}
+	<h2>We have found {{terms|length}} term that matches your search.</h2>
+	{% endif %}
+	
 	<hr>
 	<table class="table">
 	<thead>

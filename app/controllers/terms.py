@@ -29,5 +29,10 @@ def select_term(selected_term):
     components = Decoding.query.filter_by(term = selected_term).all()
     return render_template("terms/select_term.html", components = components, selected_term = selected_term)
 
+@terms_blueprint.route('/search_term')
+def search():
+	search = request.args.get('term')
+	results = db.session.query(Decoding.term, Decoding.term).filter(Decoding.term.like('%' + search + '%')).distinct()
+	return render_template('terms/search_term.html', terms=list(results))
 
 app.register_blueprint(terms_blueprint)

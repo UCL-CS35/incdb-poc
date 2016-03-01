@@ -34,4 +34,10 @@ def select_movie_term(selected_movie, selected_term):
     components = Decoding.query.filter(and_(Decoding.movie == selected_movie, Decoding.term == selected_term)).all()
     return render_template("movies/select_term.html", components = components, selected_term = selected_term)
 
+@movies_blueprint.route('/search_movie')
+def search():
+	search = request.args.get('movie')
+	results = db.session.query(Decoding.movie, Decoding.movie).filter(Decoding.movie.like('%' + search + '%')).distinct()
+	return render_template('movies/search_movie.html', movies=list(results))
+
 app.register_blueprint(movies_blueprint)
