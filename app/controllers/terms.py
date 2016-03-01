@@ -27,7 +27,8 @@ def index():
 @terms_blueprint.route('/<selected_term>')
 def select_term(selected_term):
     components = Decoding.query.filter_by(term = selected_term).all()
-    return render_template("terms/select_term.html", components = components, selected_term = selected_term)
+    movies = Decoding.query.filter_by(term = selected_term).group_by(Decoding.movie)
+    return render_template("terms/select_term.html", components = components, selected_term = selected_term, movies = movies)
 
 @terms_blueprint.route('/search_term')
 def search():

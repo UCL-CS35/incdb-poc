@@ -26,7 +26,6 @@ components_blueprint = Blueprint('component', __name__, url_prefix='/component')
 def select_component(component_uuid):
     component = Decoding.query.filter_by(uuid=component_uuid).first()
 
-    
     filename = os.path.join(settings.DECODING_RESULTS_DIR, component.movie, component.filename + '.txt')
     terms = []
     with open(filename, 'r') as f:
