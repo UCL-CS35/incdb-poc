@@ -24,7 +24,6 @@
 				<thead>
 					<tr>
 						<th>movie</th>
-						<th>contributor</th>
 						<th>added date</th>
 					</tr>
 				</thead>
@@ -32,6 +31,7 @@
 					{% for movie in movies %}
 					<tr>
 						<td><a href="/movies/{{movie.movie}}">{{ movie.movie }}</a></td>
+						<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
 					</tr>
 					{% endfor %}
 				</tbody>
