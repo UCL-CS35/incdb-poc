@@ -20,6 +20,7 @@
 			</tr>
 		</thead>
 		<tbody>
+		{% if collections.count() > 0 %}
 		{% for collection in collections %}
 		<tr>
 			<td>
@@ -33,6 +34,11 @@
 			</td>
 		</tr>
 		{% endfor %}
+		{% else %}
+		<tr>
+			<td colspan="3">No collection uploaded</td>
+		</tr>
+		{% endif %}
 		</tbody>
 	</table>
 
