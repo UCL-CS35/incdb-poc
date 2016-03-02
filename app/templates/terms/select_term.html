@@ -19,7 +19,7 @@
 
 	<div class="tab-content">
 
-		<div role="tabpanel" id="movies" class="tab-pane fade active in">
+		<div role="tabpanel" id="movies" class="tab-pane active in">
 			<table class="table">
 				<thead>
 					<tr>
@@ -38,7 +38,7 @@
 			</table>
 		</div>
 
-		<div role="tabpanel" id="components" class="tab-pane fade in">
+		<div role="tabpanel" id="components" class="tab-pane in">
 			<table class="table">
 				<thead>
 					<tr>
@@ -46,16 +46,18 @@
 					</tr>
 				</thead>
 				<tbody>
-					{% for component in components %}
+					{% for component in components.items %}
 					<tr>
 						<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
 					</tr>
 					{% endfor %}
 				</tbody>
 			</table>
+			{% from "common/pagination.html" import render_term_pagination %}
+			{{ render_term_pagination(components, 'terms.select_term', selected_term) }}
 		</div>
 
-		<div role="tabpanel" id="details" class="tab-pane fade in">
+		<div role="tabpanel" id="details" class="tab-pane in">
 		</div>
 
 	</div><!-- tab-content -->
@@ -109,7 +111,6 @@
   }
   ]
   viewer.loadImages(images);
-
 });
 </script>
 {% endblock %}

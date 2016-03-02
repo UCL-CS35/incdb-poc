@@ -1,8 +1,8 @@
 $(document).ready(function() {
     var foo = getParameterByName('page');
     if (foo != null) {
-        var tab-link = $('.nav-tabs a[href="#components"]');
-        if(tab-link != null) {
+        var tablink = $('.nav-tabs a[href="#components"]');
+        if(tablink != null) {
             $('.nav-tabs a[href="#components"]').tab('show');
         }
     }

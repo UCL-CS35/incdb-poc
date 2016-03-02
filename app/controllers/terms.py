@@ -22,9 +22,13 @@ def index(page=1):
       terms=terms)
 
 
-@terms_blueprint.route('/<selected_term>')
-def select_term(selected_term):
-    components = Decoding.query.filter_by(term=selected_term).all()
+@terms_blueprint.route('/<selected_term>/', methods=['GET'])
+def select_term(selected_term, page=1):
+    tmp = request.args.get('page')
+    if tmp is not None:
+        page = int(tmp)
+    components = Decoding.query.filter_by(term=selected_term)
+    components = components.paginate(page, 10, False)
     movies = Decoding.query.filter_by(term=selected_term)
     movies = movies.group_by(Decoding.movie)
     return render_template(
