@@ -282,3 +282,10 @@ hr {
 #file-picker, #file-label, #file-span {
     color: black;
 }
+.pagination {
+    border-radius: 0px;
+    margin: 0;
+}
+.tab-pane {
+    padding: 10px 0 0px;
+}
