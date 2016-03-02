@@ -1,7 +1,6 @@
 from app import db
 
 from app.models.decodings import Decoding, DecodingSet
-from app.models.collections import Collection
 from app.models.images import TermAnalysisImage
 from app.initializers import settings
 
@@ -17,16 +16,16 @@ import nibabel as nb
 
 from datetime import datetime
 from os import unlink, listdir, mkdir
-from os.path import join, basename, exists, isdir
+from os.path import join, exists, isdir
 
 import traceback
 from collections import OrderedDict
 
 from nilearn.image import resample_img
 
+
 def load_image(masker, movie, filename, save_resampled=True):
     """ Load an image, resampling into MNI space if needed. """
-    
     f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
     anatomical = nb.load(f)
 
@@ -40,6 +39,7 @@ def load_image(masker, movie, filename, save_resampled=True):
             unlink(filename)
             img.to_filename(filename)
     return masker.mask(img)
+
 
 class Reference(object):
 
@@ -63,11 +63,11 @@ class Reference(object):
         stat_file = join(settings.MEMMAP_DIR, name + '_stats.txt')
         self.stats = pd.read_csv(stat_file, sep='\t')
 
+
 def decode_folder(directory):
+    decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
-   decoding_set = DecodingSet.query.filter_by(name='terms_20k').first() 
-
-   for folder in listdir(directory):
+    for folder in listdir(directory):
 
         print folder
 
@@ -83,14 +83,20 @@ def decode_folder(directory):
                 db.session.delete(a)
             db.session.commit()
 
+            time = datetime.utcnow()
             for filename in listdir(join(directory, folder)):
-                decoding = Decoding(filename=filename, uuid=uuid4().hex, 
-                    decoding_set=decoding_set, movie=folder)
-                decoding = decode_image(decoding, decoding_set, folder, filename)
+                decoding = Decoding(filename=filename, uuid=uuid4().hex,
+                                    decoding_set=decoding_set, movie=folder)
+                decoding = decode_image(
+                    decoding,
+                    decoding_set,
+                    folder,
+                    filename)
                 if decoding is not None:
-                  decoding.image_decoded_at = datetime.utcnow()
-                  db.session.add(decoding)
-                  db.session.commit()
+                    decoding.image_decoded_at = time
+                    db.session.add(decoding)
+                    db.session.commit()
+
 
 def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
 
@@ -101,7 +107,7 @@ def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
         for f in glob.glob(join(settings.MEMMAP_DIR, '*_metadata.json')):
             md = json.load(open(f))
             memmaps[md['name']] = Reference(**md)
-   
+
         ref = memmaps[decoding_set.name]
 
         masker = Masker(join(settings.IMAGE_DIR, 'anatomical.nii.gz'))
