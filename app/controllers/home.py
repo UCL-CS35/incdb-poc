@@ -53,5 +53,9 @@ def paginate(query, page, per_page=20, error_out=True):
     return sqlalchemy.Pagination(query, page, per_page, total, items)
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 # Register blueprint
 app.register_blueprint(home_blueprint)

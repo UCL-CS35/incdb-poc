@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+
+{% block HTMLtitle %}
+<title>Page Not Found</title>
+{% endblock %}
+
+{% block content %}
+<div class="container body_container">
+  <h1>Page Not Found</h1>
+  <p>What you were looking for is just not there. <a href="{{ url_for('home.index') }}">Go to Home page.</a></p>
+ </div>
+{% endblock %}
