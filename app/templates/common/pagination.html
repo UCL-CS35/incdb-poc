@@ -57,3 +57,23 @@
   </nav>
   {% endif %}
 {% endmacro %}
+
+{% macro render_movie_term_pagination(pagination, endpoint, selected_term, selected_movie) %}
+  {% if pagination.pages > 1 %}
+  <nav>
+  <ul class=pagination>
+  {%- for page in pagination.iter_pages() %}
+    {% if page %}
+      {% if page != pagination.page %}
+        <li><a href="{{ url_for(endpoint, page=page, selected_movie=selected_movie, selected_term=selected_term) }}">{{ page }}</a></li>
+      {% else %}
+        <li class=active><a href="#">{{ page }}</a></li>
+      {% endif %}
+    {% else %}
+      <li class=disabled><a href="#">…</a></li>
+    {% endif %}
+  {%- endfor %}
+  </ul>
+  </nav>
+  {% endif %}
+{% endmacro %}

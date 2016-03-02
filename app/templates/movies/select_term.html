@@ -11,7 +11,8 @@
 
 <div class="container body_container">
 
-	<h2>Term: {{selected_term}} ({{ components|length }}) </h2>
+	<h3>Components</h3>
+	<hr>
 
 	<table class="table">
 		<thead>
@@ -20,14 +21,15 @@
 		</tr>
 		</thead>
 		<tbody>
-		{% for component in components %}
+		{% for component in components.items %}
 		<tr>
 			<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
 		</tr>
 		{% endfor %}
 		</tbody>
 	</table>
-	
+	{% from "common/pagination.html" import render_movie_term_pagination %}
+	{{ render_movie_term_pagination(components, 'movies.select_movie_term', selected_term=selected_term, selected_movie=selected_movie) }}
 </div>
 
 {% endblock %}

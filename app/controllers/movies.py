@@ -39,14 +39,17 @@ def select_movie(selected_movie, page=1):
 
 
 @movies_blueprint.route('/<selected_movie>/<selected_term>')
-def select_movie_term(selected_movie, selected_term):
+@movies_blueprint.route('/<selected_movie>/<selected_term>/<int:page>')
+def select_movie_term(selected_movie, selected_term, page=1):
     condition = Decoding.movie == selected_movie
     condition = and_(condition, Decoding.term == selected_term)
-    components = Decoding.query.filter(condition).all()
+    components = Decoding.query.filter(condition)
+    components = components.paginate(page, 10, False)
     return render_template(
         "movies/select_term.html",
         components=components,
-        selected_term=selected_term)
+        selected_term=selected_term,
+        selected_movie=selected_movie)
 
 
 @movies_blueprint.route('/search_movie')
