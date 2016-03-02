@@ -4,32 +4,40 @@ from flask import request
 from app import app, db
 from app.models import *
 from app.models.decodings import Decoding
+from app.controllers.home import paginate
 
 from sqlalchemy import *
 
 movies_blueprint = Blueprint('movies', __name__, url_prefix='/movies')
 
 
-@movies_blueprint.route('/')
-def index():
-    movies = db.session.query(Decoding.movie, Decoding.image_decoded_at).distinct()
-    return render_template("movies/index.html", movies=movies)
+@movies_blueprint.route('/', methods=['GET', 'POST'])
+@movies_blueprint.route('/<int:page>', methods=['GET', 'POST'])
+def index(page=1):
+    movies = db.session.query(Decoding.movie, Decoding.image_decoded_at)
+    movies = movies.distinct()
+    movies = paginate(movies, page, 10, False)
+    return render_template(
+      "movies/index.html",
+      movies=movies)
 
 
 @movies_blueprint.route('/<selected_movie>')
 def select_movie(selected_movie):
-    components = Decoding.query.filter_by(movie = selected_movie).all()
-    terms = Decoding.query.filter_by(movie = selected_movie).group_by(Decoding.term)
+    components = Decoding.query.filter_by(movie=selected_movie).all()
+    terms = Decoding.query.filter_by(movie=selected_movie)
+    terms = terms.group_by(Decoding.term)
     return render_template(
-      "movies/select_movie.html",
-      components=components,
-      selected_movie=selected_movie,
-      terms=terms)
+        "movies/select_movie.html",
+        components=components,
+        selected_movie=selected_movie,
+        terms=terms)
 
 
 @movies_blueprint.route('/<selected_movie>/<selected_term>')
 def select_movie_term(selected_movie, selected_term):
-    components = Decoding.query.filter(and_(Decoding.movie == selected_movie, Decoding.term == selected_term)).all()
+    condition = and_(Decoding.movie == selected_movie, Decoding.term == elected_term)
+    components = Decoding.query.filter(condtion).all()
     return render_template(
         "movies/select_term.html",
         components=components,
@@ -39,9 +47,12 @@ def select_movie_term(selected_movie, selected_term):
 @movies_blueprint.route('/search_movie')
 def search():
     search = request.args.get('movie')
-    results = db.session.query(Decoding.movie, Decoding.movie).filter(Decoding.movie.like('%' + search + '%')).distinct()
+    results = db.session.query(Decoding.movie, Decoding.movie)
+    results = results.filter(Decoding.movie.like('%' + search + '%'))
+    results = results.distinct()
     return render_template(
         'movies/search_movie.html',
         movies=list(results))
+
 
 app.register_blueprint(movies_blueprint)

@@ -34,13 +34,15 @@
 		</tr>
 	</thead>
 	<tbody>
-	{% for term in terms %}
+	{% for term in terms.items %}
 	<tr>
 		<td><a href="{{term.term}}">{{ term.term }}</a></td>
 	</tr>
 	{% endfor %}
 	</tbody>
 	</table>
+	{% from "common/pagination.html" import render_pagination %}
+	{{ render_pagination(terms, 'terms.index') }}
 </div>
 
 {% endblock %}

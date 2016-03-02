@@ -25,13 +25,13 @@
         <thead>
           <tr>
             <th style="width:50vw">title</th>
-            <th style="width:25vw">contributor</th>
+            <th style="width:25vw">added date</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td><a href="/movies/{{selected_component.movie}}">{{selected_component.movie}}</a></td>
-            <td></td>
+            <td><a href="/movies/{{selected_component.movie}}">{{ selected_component.movie }}</a></td>
+            <td>{{ selected_component.image_decoded_at.strftime('%d-%m-%Y') }}</td>
           </tr>
         </tbody>
       </table>

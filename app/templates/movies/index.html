@@ -37,7 +37,7 @@
 		</tr>
 		</thead>
 		<tbody>
-		{% for movie in movies %}
+		{% for movie in movies.items %}
 		<tr>
 			<td><a href="{{movie.movie}}">{{ movie.movie }}</a></td>
 			<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
@@ -45,7 +45,8 @@
 		{% endfor %}
 		</tbody>
 	</table>
-
+	{% from "common/pagination.html" import render_pagination %}
+	{{ render_pagination(movies, 'movies.index') }}
 </div>
 
 {% endblock %}
