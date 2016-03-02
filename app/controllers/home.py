@@ -36,6 +36,11 @@ def search():
     return render_template('search.html', movies=list(results))
 
 
+@home_blueprint.route('faq')
+def faq():
+    return render_template('faq.html')
+
+
 def paginate(query, page, per_page=20, error_out=True):
     if error_out and page < 1:
         abort(404)
