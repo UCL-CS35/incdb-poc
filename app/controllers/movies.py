@@ -52,7 +52,7 @@ def select_movie_term(selected_movie, selected_term):
 @movies_blueprint.route('/search_movie')
 def search():
     search = request.args.get('movie')
-    results = db.session.query(Decoding.movie, Decoding.movie)
+    results = db.session.query(Decoding.movie, Decoding.image_decoded_at)
     results = results.filter(Decoding.movie.like('%' + search + '%'))
     results = results.distinct()
     return render_template(
