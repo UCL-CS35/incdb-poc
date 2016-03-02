@@ -13,14 +13,14 @@
 <div class="container body_container">
 
 	<ul class="nav nav-tabs" role="tablist">
-		<li role = "presentation" class="active"><a href="#terms" data-toggle="tab">terms</a></li>
-		<li role = "presentation"><a href="#components" data-toggle="tab">components</a></li>
-		<li role = "presentation"><a href="#details" data-toggle="tab">details</a></li>
+		<li role="presentation" class="active"><a href="#terms" data-toggle="tab">terms</a></li>
+		<li role="presentation"><a href="#components" data-toggle="tab">components</a></li>
+		<li role="presentation"><a href="#details" data-toggle="tab">details</a></li>
 	</ul>
 
 	<div class="tab-content">
 
-		<div role="tabpanel" id="terms" class="tab-pane fade active in">
+		<div role="tabpanel" id="terms" class="tab-pane active in">
 			<table class="table">
 				<thead>
 				<tr>
@@ -39,7 +39,7 @@
 			</table>
 		</div>
 
-		<div role="tabpanel" id="components" class="tab-pane fade in">
+		<div role="tabpanel" id="components" class="tab-pane in">
 			<table class="table">
 				<thead>
 				<tr>
@@ -47,16 +47,18 @@
 				</tr>
 				</thead>
 				<tbody>
-				{% for component in components %}
+				{% for component in components.items %}
 				<tr>
 					<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
 				</tr>
 				{% endfor %}
 				</tbody>
 			</table>
+			{% from "common/pagination.html" import render_movie_pagination %}
+			{{ render_movie_pagination(components, 'movies.select_movie', selected_movie) }}
 		</div>
 
-		<div role="tabpanel" id="details" class="tab-pane fade in">
+		<div role="tabpanel" id="details" class="tab-pane in">
 		</div>
 
 	</div><!-- tab-content -->
