@@ -10,12 +10,12 @@
  </script>
 
 <div class="jumbotron index_jumbotron">
-	<div class="container">
+	<div class="container" style="padding-top:30px; padding-bottom:30px">
 
 		<h3 id="sub_title">Welcome to the</h3>
 		<h1>Internet Neurocinematics Database</h1>
 
-		<form action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data">
+		<form action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data" style="padding-top:20px">
 			<div class="input-group">
 				<input type="text" class="form-control input-lg" name="movie" id="search_movie" placeholder="Search for movie name (e.g: The Avengers)" required>
 				<span class="input-group-btn">
