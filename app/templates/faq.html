@@ -5,7 +5,30 @@
 {% endblock %}
 
 {% block content %}
+
 <div class="container body_container">
-  <h1>FAQ</h1>
+  <h1>Frequently Asked Questions</h1>
+  <hr>
+  {% set count = [0] %}
+  {% for s in data['sections'] %}
+	  <h3>{{ s['name'] }}</h3>
+	  <ul>
+	  {% for item in s['questions'] %}
+	  {% set _ = count.append(count.pop()+1) %}
+	  <li><a href="#q{{count[0]|string}}">{{item['q']}}</a></li>
+	  {% endfor %}
+	  </ul>
+  {% endfor %}
+  <hr>
+  {% set count = [0] %}
+  {% for s in data['sections'] %}
+	  <h3>{{ s['name'] }}</h3>
+	  {% for item in s['questions'] %}
+		  {% set _ = count.append(count.pop()+1) %}
+		  <a name="q{{count[0]|string}}">{{ item['q'] }}</a>
+		  <p>{{ item['a'] | safe }}</p>
+	  {% endfor %}
+  {% endfor %}
  </div>
+
 {% endblock %}
