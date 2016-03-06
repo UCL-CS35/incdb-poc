@@ -7,6 +7,10 @@ from app import app, db
 from sqlalchemy import *
 import flask_sqlalchemy as sqlalchemy
 
+from os.path import join
+import simplejson as json
+from app.initializers import settings
+
 home_blueprint = Blueprint('home', __name__, url_prefix='/')
 
 
@@ -36,9 +40,12 @@ def search():
     return render_template('search.html', movies=list(results))
 
 
-@home_blueprint.route('faq')
+@home_blueprint.route('faq/')
 def faq():
-    return render_template('faq.html')
+    data = json.load(open(join(settings.ROOT_DIR, 'data', 'faq.json')))
+    return render_template(
+        'faq.html',
+        data=data)
 
 
 def paginate(query, page, per_page=20, error_out=True):
