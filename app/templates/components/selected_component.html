@@ -57,6 +57,27 @@
     </div>
 
     <div role="tabpanel" id="details" class="tab-pane fade in">
+      <table class = "table">
+        <tbody>
+          <tr>
+            <td>Movie</td>
+            <td><a href="/movies/{{selected_component.movie}}">{{ selected_component.movie }}</td>
+          </tr>
+          <tr>
+            <td>Submitted By</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>Submitted Date</td>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+      <ul>
+        <li>Movie: {{ selected_component.movie }}</li>
+        <li>Submitted By: </li>
+        <li>Submitted Date: </li>
+      </ul>
     </div>
 
   </div>

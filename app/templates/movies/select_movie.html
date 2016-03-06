@@ -40,8 +40,8 @@
 				<tbody>
 				{% for term in terms %}
 				<tr>
-					<td><a href="/movies/{{selected_movie}}/{{term.term}}">{{ term.term }}</a></td>
-					<td></td>
+					<td><a href="/movies/{{selected_movie}}/{{term[0]}}">{{ term[0] }}</a></td>
+					<td>{{term[1]}}</td>
 				</tr>
 				{% endfor %}
 				</tbody>
