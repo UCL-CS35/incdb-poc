@@ -88,10 +88,15 @@
   viewer.clear()   // Paint canvas background while images load
   images = [
   {
-  	'url': "{{ url_for('load_brain_def',comp_name = 'MNI152.json') }}",
-  	'name': 'MNI152 2mm',
-  	'colorPalette': 'grayscale',
-  	'cache': true
+    'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
+    'name': 'anatomical',
+    'colorPalette': 'grayscale',
+    'cache': false,
+  },
+  {
+  	'url': "{{ url_for('load_term',term_name = selected_term + '_pFgA_z_FDR_0.01.nii.gz') }}",
+  	'name': 'selected_term + "_pFgA_z_FDR_0.01"',
+  	'colorPalette': 'blue',
   },
   { 
   	'name': 'spherical ROI',

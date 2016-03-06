@@ -124,17 +124,29 @@ hr {
 .brain_scans{
     padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 10%;
-    width: 100%;
+    padding-left: 7.5%;
+    padding-right: 7.5%;
     height: 100%;
     text-align: center;
     display: inline-block;
 }
 
 .brain_section{
-    width: 33%;
-    float: right;
+    float: left;
 }
+
+#xImage{
+    padding-right: 2em;
+}
+
+#yImage{
+    padding-right: 2em;
+}
+
+#zImage{
+    padding-right: 0;
+}
+
 .ui-autocomplete {
     position: absolute;
     z-index: 1000;

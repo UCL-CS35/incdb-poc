@@ -107,35 +107,33 @@
     viewer.addTextField('image-intent', '#image_intent')
   viewer.clear()   // Paint canvas background while images load
   images = [
-    {
-      'url': "{{ url_for('load_component',movie_name = selected_component.movie, file_name = selected_component.filename) }}",
-      'name': 'MNI152 2mm',
-      'colorPalette': 'yellow',
-      'cache': false,
-      'intent': 'Intensity:'
-    },
-    {
-      'url': "{{ url_for('load_brain_def',comp_name = 'MNI152.json') }}",
-      'name': 'MNI152 2mm',
-      'colorPalette': 'grayscale',
-      'cache': true
-    },
-    { 
-      'name': 'spherical ROI',
-      'colorPalette': 'yellow',
-      'data': {
-        'dims': [91, 109, 91],
-        'peaks': [
-        {
-          'x': -48,
-          'y': 20,
-          'z': 20, 
-          'r': 6, 
-          'value': 1
-        }
-        ]
+  {
+    'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
+    'name': 'anatomical',
+    'colorPalette': 'grayscale',
+    'cache': false,
+  },
+  {
+    'url': "{{ url_for('load_component',movie_name = selected_component.movie, file_name = selected_component.filename) }}",
+    'name': 'selected_component.filename',
+    'colorPalette': 'blue',
+  },
+  { 
+    'name': 'spherical ROI',
+    'colorPalette': 'yellow',
+    'data': {
+      'dims': [91, 109, 91],
+      'peaks': [
+      {
+        'x': -48,
+        'y': 20,
+        'z': 20, 
+        'r': 6, 
+        'value': 1
       }
+      ]
     }
+  }
   ]
   viewer.loadImages(images);
 

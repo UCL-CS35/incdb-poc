@@ -48,8 +48,7 @@ PICKLE_DATABASE = join(ASSET_DIR, 'neurosynth_dataset.pkl')
 IMAGE_DIR = join(DATA_DIR, 'images')
 
 # Path to analysis/location flat filies
-LOCATION_ANALYSIS_DIR = join(DATA_DIR, 'locations', 'analyses')
-
+LOCATION_ANALYSIS_DIR = join(IMAGE_DIR, 'analyses')
 
 # Static content
 STATIC_FOLDER = join(ROOT_DIR, 'nsweb', 'static')
