@@ -2,6 +2,7 @@ import datetime
 from app import db
 from app.models.analysis import TermAnalysis
 
+
 class Image(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200))
@@ -30,4 +31,7 @@ class Image(db.Model):
 
 class TermAnalysisImage(Image):
     __mapper_args__ = {'polymorphic_identity': 'term'}
-    term_analysis_id = db.Column(db.Integer, db.ForeignKey(TermAnalysis.id), nullable=True)
+    term_analysis_id = db.Column(
+        db.Integer,
+        db.ForeignKey(TermAnalysis.id),
+        nullable=True)

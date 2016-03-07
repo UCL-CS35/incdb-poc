@@ -2,6 +2,7 @@ import datetime
 from app import db
 from app.models.analysis import AnalysisSet
 
+
 class DecodingSet(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -30,5 +31,6 @@ class Decoding(db.Model):
     # Relationships
     decoding_set_id = db.Column(db.Integer, db.ForeignKey(DecodingSet.id))
     decoding_set = db.relationship(
-        DecodingSet, backref=db.backref('decodings',
-                                        cascade='all, delete-orphan'))
+        DecodingSet, backref=db.backref(
+            'decodings',
+            cascade='all, delete-orphan'))

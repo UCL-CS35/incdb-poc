@@ -1,6 +1,7 @@
 import datetime
 from app import db
 
+
 class AnalysisSet(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
@@ -11,6 +12,7 @@ class AnalysisSet(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.datetime.utcnow,
                            onupdate=datetime.datetime.now)
+
 
 class Analysis(db.Model):
 
@@ -40,11 +42,13 @@ class Analysis(db.Model):
         """ Convenience method for accessing the reverse inference image. """
         return self.images[1]
 
+
 class TermAnalysis(Analysis):
     __tablename__ = 'term_analysis'
     id = db.Column(db.Integer, db.ForeignKey('analysis.id'), primary_key=True)
-    images = db.relationship('TermAnalysisImage', backref=db.backref('analysis',
-                             cascade='all'))
+    images = db.relationship(
+        'TermAnalysisImage',
+        backref=db.backref('analysis', cascade='all'))
     cog_atlas = db.Column(db.Text, nullable=True)  # Cognitive Atlas RDF data
     __mapper_args__ = {
         'polymorphic_identity': 'term'

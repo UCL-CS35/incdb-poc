@@ -2,7 +2,6 @@ from flask import render_template, Blueprint
 from flask import request, abort
 from flask import send_from_directory
 
-from app.initializers import settings
 from app.initializers.settings import *
 
 from app import app, db
@@ -12,7 +11,6 @@ from app.controllers.home import paginate
 
 from sqlalchemy import *
 
-import os
 
 terms_blueprint = Blueprint('terms', __name__, url_prefix='/terms')
 
@@ -55,10 +53,11 @@ def search():
         'terms/search_term.html',
         terms=list(results))
 
+
 @app.route('/data/images/analyses/<path:term_name>')
 def load_term(term_name):
-  return send_from_directory(
-    LOCATION_ANALYSIS_DIR,term_name,
+    return send_from_directory(
+        LOCATION_ANALYSIS_DIR,term_name,
         as_attachment=True)
 
 

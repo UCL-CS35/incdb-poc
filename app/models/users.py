@@ -1,6 +1,6 @@
-import datetime
 from flask_user import UserMixin
 from app import db
+
 
 # Define the User data model. Make sure to add the flask_user.UserMixin !!
 class User(db.Model, UserMixin):
@@ -25,12 +25,14 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='users_roles', backref=db.backref('users', lazy='dynamic'))
     collections = db.relationship('Collection', backref='users', lazy='dynamic')
 
+
 # Define the Role data model
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)  # for @roles_accepted()
     label = db.Column(db.Unicode(255), server_default=u'')  # for display purposes
+
 
 # Define the UserRoles association model
 class UsersRoles(db.Model):

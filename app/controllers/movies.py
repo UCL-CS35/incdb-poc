@@ -35,20 +35,18 @@ def select_movie(selected_movie, page=1):
     terms = terms.group_by(Decoding.term)
     finalterms = []
     for term in terms:
-        selected_term_decodings = decodings.filter_by(term = term.term)
-        
+        selected_term_decodings = decodings.filter_by(term=term.term)
+
         correlation = 0
         for decoding in selected_term_decodings:
             correlation += decoding.correlation
-        term_count =  selected_term_decodings.count()
-        mean_corr =  correlation / term_count
+        term_count = selected_term_decodings.count()
+        mean_corr = correlation / term_count
         ratio = float(term_count) / total_count
         term_corr = mean_corr * ratio
-        one_term = [term.term,term_corr]
+        one_term = [term.term, term_corr]
         finalterms.append(one_term)
 
-    
-    
     return render_template(
         "movies/select_movie.html",
         components=components,

@@ -7,6 +7,7 @@ from app import app, db, manager
 
 import os
 
+
 @app.before_first_request
 def initialize_app_on_first_request():
     """ Before the first request to this instance of the application """
@@ -22,12 +23,17 @@ def create_app(extra_config_settings={}):
     # Read common settings from 'app/initializers/common_settings.py' file
     app.config.from_object('app.initializers.settings')
 
-    # Read environment-specific settings from file defined by OS environment variable 'ENV_SETTINGS_FILE'
-    env_settings_file = os.environ.get('ENV_SETTINGS_FILE', 'env_settings_example.py')
+    # Read environment-specific settings from file defined
+    # by OS environment variable 'ENV_SETTINGS_FILE'
+    env_settings_file = os.environ.get(
+        'ENV_SETTINGS_FILE',
+        'env_settings_example.py')
     app.config.from_pyfile(env_settings_file)
 
-    # Read extra config settings from function parameter 'extra_config_settings'
-    app.config.update(extra_config_settings)  # Overwrite with 'extra_config_settings' parameter
+    # Read extra config settings from function
+    # parameter 'extra_config_settings'
+    # Overwrite with 'extra_config_settings' parameter
+    app.config.update(extra_config_settings)
 
     # Disable CSRF checks while testing
     if app.testing:
@@ -60,15 +66,17 @@ def create_app(extra_config_settings={}):
     from app.controllers.user import user_account
 
     db_adapter = SQLAlchemyAdapter(db, User)  # Setup the SQLAlchemy DB Adapter
-    user_manager = UserManager(db_adapter, app,  # Init Flask-User and bind to app
-                               register_form=MyRegisterForm,  # using a custom register form with UserProfile fields
-                               user_profile_view_function=user_account,
+    user_manager = UserManager(
+        db_adapter,
+        app,  # Init Flask-User and bind to app
+        register_form=MyRegisterForm,  # using a custom register form with UserProfile fields
+        user_profile_view_function=user_account,
     )
 
     # Load all blueprints with their manager commands, models and views
     from app import core, models
-
     from app.controllers import components, contribute, home, movies, terms, user
+
     return app
 
 
@@ -78,7 +86,8 @@ def init_email_error_handler(app):
     Unhandled exceptions will now send an email message to app.config.ADMINS.
     """
 
-    if app.debug: return  # Do not send error emails while developing
+    if app.debug:
+        return  # Do not send error emails while developing
 
     # Retrieve email settings from app.config
     host = app.config['MAIL_SERVER']
@@ -108,4 +117,3 @@ def init_email_error_handler(app):
     app.logger.addHandler(mail_handler)
 
     # Log errors using: app.logger.error('Some error message')
-

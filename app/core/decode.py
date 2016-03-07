@@ -138,7 +138,7 @@ def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
 
         # topFiveTerms = series.tail(5)
         highestCorrelationTerm = labels[np.argmax(r, axis=0)]
-        highestCorrelation =  series.head(n=1)[0]
+        highestCorrelation = series.head(n=1)[0]
 
         decoding.term = highestCorrelationTerm
         decoding.correlation = highestCorrelation

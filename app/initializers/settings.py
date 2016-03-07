@@ -1,13 +1,12 @@
 import os
-from os.path import join, dirname
-import sys
+from os.path import join
 
 ### SETTINGS THAT SHOULD ALWAYS BE UPDATED ###
 
 # The root location of the app. Should not need to be changed.
 ROOT_DIR = os.path.realpath(
     join(join(os.path.dirname(__file__), os.path.pardir), os.path.pardir))
-    
+
 # Root path for generated data
 DATA_DIR = join(ROOT_DIR,'data')
 

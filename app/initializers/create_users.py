@@ -7,7 +7,7 @@ def create_users():
     """ Create users when app starts """
 
     print 'Create users...'
-    
+
     # Adding roles
     admin_role = find_or_create_role('admin', u'Admin')
 
@@ -45,5 +45,3 @@ def find_or_create_user(first_name, last_name, title, email, password, role=None
             user.roles.append(role)
         db.session.add(user)
     return user
-
-    

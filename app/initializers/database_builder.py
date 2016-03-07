@@ -16,12 +16,12 @@ import neurosynth as ns
 import numpy as np
 import pandas as pd
 
-import random
 from glob import glob
 import json
 import re
 import shutil
 import urllib
+
 
 class DatabaseBuilder:
 
@@ -425,7 +425,6 @@ class DatabaseBuilder:
                             analysis_set=analysis_set))
             self.db.session.commit()
 
-        ### TERMS ###
         if 'terms' in include:
 
             print "\tCreating memmap of term image data..."
@@ -446,7 +445,6 @@ class DatabaseBuilder:
             images = [img.replace('_pFgA_z_FDR_0.01', '_pFgA_given_pF=0.50')
                       for img in images]
             save_memmap('terms_pp', analysis_set, images, labels)
-
 
     def _filter_analyses(self, analyses):
         """ Remove any invalid analysis names """

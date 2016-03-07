@@ -1,22 +1,15 @@
-from flask import redirect, render_template, render_template_string, Blueprint
+from flask import redirect, render_template, Blueprint
 from flask import request, url_for
 from flask_user import current_user, login_required, roles_accepted
 
 from app import app, db
-from app.core.forms import UserProfileForm, CollectionForm
+from app.core.forms import UserProfileForm
 from app.models import *
-from app.models.decodings import Decoding
-from app.initializers import settings
-
-from uuid import uuid4
-
-import os, time
-import json
-import glob
 
 from sqlalchemy import *
 
 user_blueprint = Blueprint('user', __name__, url_prefix='/user')
+
 
 # The Admin page is accessible to users with the 'admin' role
 @user_blueprint.route('admin/')
@@ -51,9 +44,9 @@ def user_account():
 @login_required  # Limits access to authenticated users
 def user_collections():
 
-    return render_template("user/collections.html",
-        collections=current_user.collections
-    )
+    return render_template(
+        "user/collections.html",
+        collections=current_user.collections)
 
 # Register blueprint
 app.register_blueprint(user_blueprint)
