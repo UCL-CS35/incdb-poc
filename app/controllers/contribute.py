@@ -7,7 +7,6 @@ from app.core.forms import CollectionForm
 from app.models.collections import Collection
 from app.models.users import User
 
-
 import os
 import time
 import json
@@ -96,8 +95,10 @@ def upload():
                 return "Couldn't create upload directory: {}".format(target)
 
     for upload in request.files.getlist("file"):
-        # filename = upload.filename.rsplit("/")[0]
-        unzip(upload, target)
+        filename = upload.filename.rsplit("/")[0]
+        destination = "/".join([target, filename])
+        # unzip(upload, target)
+        upload.save(destination)
 
     if is_ajax:
         return ajax_response(True, uuid)
