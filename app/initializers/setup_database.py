@@ -48,3 +48,4 @@ def setup_database():
     print "Clear uploads..."
     import shutil
     shutil.rmtree('uploads', ignore_errors=True)
+    os.mkdir('uploads')
