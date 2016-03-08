@@ -1680,8 +1680,8 @@
       this.min = min;
       this.max = max;
       return $(this.element).slider('option', {
-        min: min,
-        max: max
+        min: this.min,
+        max: this.max
       });
     };
 
