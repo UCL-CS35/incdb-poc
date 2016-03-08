@@ -49,6 +49,13 @@ def new_collection():
 @login_required  # Limits access to authenticated users
 def upload_files():
     c = request.args.get('collection')
+
+    # Only owner can add files to collection
+    collection = Collection.query.filter_by(name=c).first()
+    user = User.query.filter_by(id=collection.user_id).first()
+    if user != current_user:
+        abort(404)
+
     return render_template("contribute/upload.html", collection=c)
 
 
