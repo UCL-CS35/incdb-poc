@@ -61,7 +61,7 @@
 		{% if movies.count() > 0 %}
 		{% for movie in movies %}
 		<tr>
-			<td><a href="{{movie.movie}}">{{ movie.movie }}</a></td>
+			<td><a href="/movies/{{movie.movie}}">{{ movie.movie }}</a></td>
 			<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
 		</tr>
 		{% endfor %}
