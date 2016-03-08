@@ -1,7 +1,8 @@
 from flask import render_template, Blueprint
-from flask import request
+from flask import request, send_from_directory
 from flask_user import roles_accepted
 
+from app.initializers.settings import *
 from app import app
 from app.controllers import contribute
 from app.models.decodings import *
@@ -66,6 +67,24 @@ def unzip(source_filename, dest_dir):
                 if word in (os.curdir, os.pardir, ''):
                     continue
             zf.extract(member, path)
+
+
+@admin_blueprint.route('/download/<path:user_id>/<path:collection_name>')
+def download_folder(user_id, collection_name):
+    collection_folder = os.path.join(UPLOAD_DIR, user_id, collection_name)
+    zipped = "%s.zip" % (collection_name)
+    zfile = os.path.join(UPLOAD_DIR, user_id, zipped)
+    zfile = zipfile.ZipFile(zfile, 'w', zipfile.ZIP_DEFLATED)
+
+    for root, dirs, files in os.walk(collection_folder):
+        print root
+        for file in files:
+            zfile.write(os.path.join(root, file), file)
+            print file
+
+    zfile.close()
+    path = os.path.join(UPLOAD_DIR, user_id)
+    return send_from_directory(path, zipped, as_attachment=True)
 
 # Register blueprint
 app.register_blueprint(admin_blueprint)
