@@ -24,12 +24,12 @@ from collections import OrderedDict
 from nilearn.image import resample_img
 
 
-def load_image(masker, movie, filename, save_resampled=True):
+def load_image(masker, collection, filename, save_resampled=True):
     """ Load an image, resampling into MNI space if needed. """
     f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
     anatomical = nb.load(f)
 
-    filename = join(settings.DECODED_IMAGE_DIR, movie, filename)
+    filename = join(settings.DECODED_IMAGE_DIR, collection, filename)
     img = nb.load(filename)
     if img.shape[:3] != (91, 109, 91):
         img = resample_img(
@@ -65,6 +65,7 @@ class Reference(object):
 
 
 def decode_folder(directory):
+
     decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
     for folder in listdir(directory):
@@ -98,7 +99,38 @@ def decode_folder(directory):
                     db.session.commit()
 
 
-def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
+def decode_collection(directory, collection, movie_name):
+
+    decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
+
+    if isdir(join(directory, collection)):
+
+        decode_movie_folder = join(settings.DECODING_RESULTS_DIR, collection)
+
+        if not exists(decode_movie_folder):
+            mkdir(decode_movie_folder)
+
+        decodings = Decoding.query.filter_by(movie=movie_name)
+        for a in decodings:
+            db.session.delete(a)
+        db.session.commit()
+
+        time = datetime.utcnow()
+        for filename in listdir(join(directory, collection)):
+            decoding = Decoding(filename=filename, uuid=uuid4().hex,
+                                decoding_set=decoding_set, movie=movie_name)
+            decoding = decode_image(
+                decoding,
+                decoding_set,
+                collection,
+                filename)
+            if decoding is not None:
+                decoding.image_decoded_at = time
+                db.session.add(decoding)
+                db.session.commit()
+
+
+def decode_image(decoding, decoding_set, collection, filename, drop_zeros=False):
 
     print 'Decoding ' + filename + '...'
     mm_dir = settings.MEMMAP_DIR
@@ -111,7 +143,7 @@ def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
         ref = memmaps[decoding_set.name]
 
         masker = Masker(join(settings.IMAGE_DIR, 'anatomical.nii.gz'))
-        data = load_image(masker, movie, filename)
+        data = load_image(masker, collection, filename)
 
         # Select voxels in sampling mask if it exists
         if ref.is_subsampled:
@@ -131,7 +163,7 @@ def decode_image(decoding, decoding_set, movie, filename, drop_zeros=False):
         # standardize image and get correlation
         data = (data - data.mean()) / data.std()
         r = np.dot(ref.data[voxels].T, data) / ref.n_voxels
-        outfile = join(settings.DECODING_RESULTS_DIR, movie, filename + '.txt')
+        outfile = join(settings.DECODING_RESULTS_DIR, collection, filename + '.txt')
         labels = ref.labels.keys()
         series = pd.Series(r, index=labels).sort_values(ascending=False)
         series.to_csv(outfile, sep='\t')
