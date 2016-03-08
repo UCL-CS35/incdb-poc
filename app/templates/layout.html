@@ -70,9 +70,12 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu">
-                <li> <a href="{{ url_for('user.user_collections') }}">my collections</a></li>
-                <li> <a href="{{ url_for('user.user_account') }}">account</a></li>
-                <li> <a href="{{ url_for('user.logout') }}">sign out</a></li>
+                <li><a href="{{ url_for('user.user_collections') }}">my collections</a></li>
+                {% if current_user.has_roles('admin') %}
+                <li><a href="{{ url_for('admin.index') }}">manage INcDb</a></li>
+                {% endif %}
+                <li><a href="{{ url_for('user.user_account') }}">account</a></li>
+                <li><a href="{{ url_for('user.logout') }}">sign out</a></li>
               </ul>
             </li>
           {% else %}

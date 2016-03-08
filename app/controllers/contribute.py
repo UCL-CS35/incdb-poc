@@ -1,5 +1,5 @@
 from flask import redirect, render_template, Blueprint
-from flask import request, url_for
+from flask import request, url_for, abort
 from flask_user import current_user, login_required
 
 from app import app, db
@@ -137,6 +137,11 @@ def collection(collection_name):
 
     collection = Collection.query.filter_by(name=collection_name).first()
     user = User.query.filter_by(id=collection.user_id).first()
+
+    # only admin and owner can view
+    if user != current_user and not current_user.has_roles('admin'):
+        abort(404)
+
     files = dict()
 
     # Get their files.

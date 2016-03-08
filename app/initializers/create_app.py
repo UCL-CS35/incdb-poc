@@ -75,7 +75,9 @@ def create_app(extra_config_settings={}):
 
     # Load all blueprints with their manager commands, models and views
     from app import core, models
-    from app.controllers import components, contribute, home, movies, terms, user
+    from app.controllers import home, contribute
+    from app.controllers import movies, terms, components
+    from app.controllers import user, admin
 
     return app
 

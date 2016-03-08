@@ -1,6 +1,6 @@
 from flask import redirect, render_template, Blueprint
 from flask import request, url_for
-from flask_user import current_user, login_required, roles_accepted
+from flask_user import current_user, login_required
 
 from app import app, db
 from app.core.forms import UserProfileForm
@@ -9,13 +9,6 @@ from app.models import *
 from sqlalchemy import *
 
 user_blueprint = Blueprint('user', __name__, url_prefix='/user')
-
-
-# The Admin page is accessible to users with the 'admin' role
-@user_blueprint.route('admin/')
-@roles_accepted('admin')  # Limits access to users with the 'admin' role
-def admin_page():
-    return render_template('admin/admin_page.html')
 
 
 @user_blueprint.route('/account/', methods=['GET', 'POST'])
