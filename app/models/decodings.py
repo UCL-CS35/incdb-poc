@@ -22,6 +22,7 @@ class Decoding(db.Model):
     filename = db.Column(db.String(200))
     uuid = db.Column(db.String(32), unique=True)
     movie = db.Column(db.String(200))
+    collection = db.Column(db.String(200))
     term = db.Column(db.String(200))
     correlation = db.Column(db.Float)
     created_at = db.Column(db.DateTime, default=datetime.datetime.utcnow)

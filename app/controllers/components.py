@@ -1,10 +1,11 @@
 from flask import render_template, Blueprint
-from flask import send_from_directory
+from flask import send_from_directory, abort
 from sqlalchemy import *
 
 from app import app
 from app.models import *
 from app.models.decodings import Decoding
+from app.models.collections import Collection
 from app.initializers import settings
 from app.initializers.settings import *
 
@@ -19,10 +20,12 @@ components_blueprint = Blueprint(
 @components_blueprint.route('/<component_uuid>')
 def select_component(component_uuid):
     component = Decoding.query.filter_by(uuid=component_uuid).first()
+    if component is None:
+        abort(404)
 
     filename = os.path.join(
         settings.DECODING_RESULTS_DIR,
-        component.movie,
+        component.collection,
         component.filename + '.txt')
     terms = []
     with open(filename, 'r') as f:
@@ -30,18 +33,20 @@ def select_component(component_uuid):
             termPair = line.split('\t')
             termPair[1] = termPair[1].strip('\n')
             terms.append(termPair)
-    print terms
 
+    collection = Collection.query.filter_by(movie_name=component.movie)
+    collection = collection.first()
     return render_template(
         "components/selected_component.html",
         selected_component=component,
+        collection=collection,
         terms=terms)
 
 
-@app.route('/data/images/decoded/<path:movie_name>/<path:file_name>')
-def load_component(movie_name, file_name):
+@app.route('/data/images/decoded/<path:collection>/<path:file_name>')
+def load_component(collection, file_name):
     return send_from_directory(
-        os.path.join(DECODED_IMAGE_DIR, movie_name),
+        os.path.join(DECODED_IMAGE_DIR, collection),
         file_name,
         as_attachment=True)
 

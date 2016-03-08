@@ -118,7 +118,8 @@ def decode_collection(directory, collection, movie_name):
         time = datetime.utcnow()
         for filename in listdir(join(directory, collection)):
             decoding = Decoding(filename=filename, uuid=uuid4().hex,
-                                decoding_set=decoding_set, movie=movie_name)
+                                decoding_set=decoding_set, movie=movie_name,
+                                collection=collection)
             decoding = decode_image(
                 decoding,
                 decoding_set,
