@@ -1,4 +1,5 @@
 from app import db
+from app.models.users import *
 
 
 class Collection(db.Model):
@@ -50,3 +51,7 @@ class Collection(db.Model):
     repetition_time = db.Column(db.String(255), nullable=True, server_default='')
     echo_time = db.Column(db.String(255), nullable=True, server_default='')
     flip_angle = db.Column(db.String(255), nullable=True, server_default='')
+
+    def get_username(self):
+        username = User.query.get(self.user_id).first_name
+        return username
