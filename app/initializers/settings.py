@@ -55,6 +55,8 @@ STATIC_FOLDER = join(ROOT_DIR, 'nsweb', 'static')
 # Templates
 TEMPLATE_FOLDER = join(ROOT_DIR, 'nsweb', 'templates')
 
+# Path to uploaded raw images 
+UPLOAD_DIR = join(ROOT_DIR, 'uploads')
 
 ### DECODER-RELATED PATHS ###
 # Path to decoded images

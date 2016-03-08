@@ -1,0 +1,186 @@
+{% macro render_collection(collection) %}
+
+<h3>{{ collection.name }}</h3>
+<p>{{ collection.description }}</p>
+
+<hr>
+
+<h4>Essential</h4>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th width="50%">Full Dataset URL</th>
+			<td>{{ collection.dataseturl }}</td>
+		</tr>
+		<tr>
+			<th>Contributors</th>
+			<td>{{ collection.contributors }}</td>
+		</tr>
+		<tr>
+			<th>Accessibility</th>
+			<td>{{ collection.accessibility }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h4>Movie</h4>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th width="50%">Movie Name</th>
+			<td>{{ collection.movie_name }}</td>
+		</tr>
+		<tr>
+			<th>Number of Times previously viewed</th>
+			<td>{{ collection.viewed_times }}</td>
+		</tr>
+		<tr>
+			<th>Method of Video Presentation</th>
+			<td>{{ collection.presentation_method }}</td>
+		</tr>
+		<tr>
+			<th>Method of Audio Presentation</th>
+			<td>{{ collection.audio_method }}</td>
+		</tr>
+		<tr>
+			<th>Size of Display Window</th>
+			<td>{{ collection.window_size }}</td>
+		</tr>
+		<tr>
+			<th>Visual Angle</th>
+			<td>{{ collection.visual_angle }}</td>
+		</tr>
+			<tr>
+			<th>Triggered?</th>
+			<td>{{ collection.triggered }}</td>
+		</tr>
+		<tr>
+			<th>Video Resolution</th>
+			<td>{{ collection.video_resolution }}</td>
+		</tr>
+		<tr>
+			<th>Video Codec</th>
+			<td>{{ collection.video_codec }}</td>
+		</tr>
+		<tr>
+			<th>Audio Quality (Hz)</th>
+			<td>{{ collection.audio_quality }}</td>
+		</tr>
+		<tr>
+			<th>Audio Codec</th>
+			<td>{{ collection.audio_codec }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h4>Participant</h4>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th width="50%">Age of Participant</th>
+			<td>{{ collection.participant_age }}</td>
+		</tr>
+		<tr>
+			<th>Handedness</th>
+			<td>{{ collection.handedness }}</td>
+		</tr>
+		<tr>
+			<th>Inclusion/Exclusion Criteria</th>
+			<td>{{ collection.criteria }}</td>
+		</tr>
+		<tr>
+			<th>Normal (corrected) vision?</th>
+			<td>{{ collection.vision }}</td>
+		</tr>
+		<tr>
+			<th>Normal (corrected) hearing?</th>
+			<td>{{ collection.hearing }}</td>
+		</tr>
+		<tr>
+			<th>Native Languages(s)</th>
+			<td>{{ collection.native_languages }}</td>
+		</tr>
+		<tr>
+			<th>Language Proficiency</th>
+			<td>{{ collection.language_proficiency }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h4>Design</h4>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th width="50%">Number of Imaging Runs</th>
+			<td>{{ collection.imaging_runs }}</td>
+		</tr>
+		<tr>
+			<th>Length of Runs</th>
+			<td>{{ collection.length_of_runs }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<h4>Acquisition</h4>
+<table class="table table-bordered">
+	<tbody>
+		<tr>
+			<th width="50%">Scanner Make</th>
+			<td>{{ collection.scanner_make }}</td>
+		</tr>
+		<tr>
+			<th>Scanner Model</th>
+			<td>{{ collection.scanner_model }}</td>
+		</tr>
+		<tr>
+			<th>Field Strength</th>
+			<td>{{ collection.field_strength }}</td>
+		</tr>
+		<tr>
+			<th>Pulse Sequence</th>
+			<td>{{ collection.pulse_sequence }}</td>
+		</tr>
+		<tr>
+			<th>Parallel Imaging</th>
+			<td>{{ collection.parallel_imaging }}</td>
+		</tr>
+		<tr>
+			<th>Field of View</th>
+			<td>{{ collection.field_of_view }}</td>
+		</tr>
+		<tr>
+			<th>Matrix Size</th>
+			<td>{{ collection.matrix_size }}</td>
+		</tr>
+		<tr>
+			<th>Slice Thickness</th>
+			<td>{{ collection.slice_thickness }}</td>
+		</tr>
+		<tr>
+			<th>Skip Distance</th>
+			<td>{{ collection.skip_distance }}</td>
+		</tr>
+		<tr>
+			<th>Acquisition of Orientation</th>
+			<td>{{ collection.acquisition_orientation }}</td>
+		</tr>
+		<tr>
+			<th>Order of Acquisition</th>
+			<td>{{ collection.order_of_acquisition }}</td>
+		</tr>
+		<tr>
+			<th>Order of Acquisition</th>
+			<td>{{ collection.repetition_time }}</td>
+		</tr>
+		<tr>
+			<th>Echo Time</th>
+			<td>{{ collection.echo_time }}</td>
+		</tr>
+		<tr>
+			<th>Flip Angle</th>
+			<td>{{ collection.flip_angle }}</td>
+		</tr>
+	</tbody>
+</table>
+
+{% endmacro %}

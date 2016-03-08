@@ -68,6 +68,8 @@
 		</div>
 
 		<div role="tabpanel" id="details" class="tab-pane in">
+			{% from "common/collection_details.html" import render_collection %}
+			{{ render_collection(collection)}}
 		</div>
 
 	</div><!-- tab-content -->
