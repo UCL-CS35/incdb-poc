@@ -7,6 +7,7 @@ class Collection(db.Model):
     __tablename__ = 'collections'
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    decoded = db.Column(db.Boolean, default=False)
 
     name = db.Column(db.String(100), nullable=False, server_default='', unique=True)
     description = db.Column(db.String(255), nullable=True, server_default='')

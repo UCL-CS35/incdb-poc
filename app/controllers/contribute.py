@@ -6,6 +6,7 @@ from app import app, db
 from app.core.forms import CollectionForm
 from app.models.collections import Collection
 from app.models.users import User
+from app.initializers import settings
 
 import os
 import time
@@ -25,18 +26,14 @@ def new_collection():
 
     form = CollectionForm(request.form)
 
-    # Process valid POST
     if request.method == 'POST' and form.validate():
 
-        # Copy form fields to collection fields
         collection = Collection()
         form.populate_obj(collection)
 
         current_user.collections.append(collection)
 
         db.session.add(collection)
-
-        # Save collection
         db.session.commit()
 
         return redirect(
@@ -65,10 +62,8 @@ def upload():
     """Handle the upload of a file."""
     form = request.form
 
-    # Create a unique "session ID" for this particular batch of uploads.
-    uuid = str(request.args.get('collection'))
-    # uuid = str(uuid4())
-    upload_key = str(current_user.id) + "/" + uuid
+    c = str(request.args.get('collection'))
+    upload_key = str(current_user.id) + "/" + c
 
     # Is the upload using Ajax, or a direct POST by the form?
     is_ajax = False
@@ -104,13 +99,13 @@ def upload():
     for upload in request.files.getlist("file"):
         filename = upload.filename.rsplit("/")[0]
         destination = "/".join([target, filename])
-        # unzip(upload, target)
         upload.save(destination)
+        # unzip(upload, target)
 
     if is_ajax:
-        return ajax_response(True, uuid)
+        return ajax_response(True, c)
     else:
-        return redirect(url_for("contribute.collection") + '/' + uuid)
+        return redirect(url_for("contribute.collection") + '/' + c)
 
 
 def unzip(source_filename, dest_dir):
@@ -143,44 +138,56 @@ def ajax_response(status, msg):
 def collection(collection_name):
 
     collection = Collection.query.filter_by(name=collection_name).first()
-    user = User.query.filter_by(id=collection.user_id).first()
+    if collection is None:
+        abort(404)
 
+    user = User.query.filter_by(id=collection.user_id).first()
     # only admin and owner can view
     if user != current_user and not current_user.has_roles('admin'):
         abort(404)
 
-    files = dict()
+    template = "contribute/collection.html"
+    if current_user.has_roles('admin'):
+        template = "admin/collection.html"
 
-    # Get their files.
+    raw_files = dict()
+    processed_files = dict()
+
     user_dir = "uploads/{}".format(collection.user_id)
-    if not os.path.isdir(user_dir):
+    raw_dataset = user_dir + '/' + str(collection_name)
+    if not os.path.isdir(raw_dataset):
         return render_template(
-            "contribute/collection.html",
+            template,
             collection=collection,
-            files=files,
+            files=raw_files,
+            processed_files=processed_files,
             user=user)
 
-    # Get their files.
-    collection_dir = user_dir + '/' + str(collection_name)
-    if not os.path.isdir(collection_dir):
-        return render_template(
-            "contribute/collection.html",
-            collection=collection,
-            files=files,
-            user=user)
-
-    for file in glob.glob("{}/*".format(collection_dir)):
+    for file in glob.glob("{}/*".format(raw_dataset)):
         fname = file.split(os.sep)[-1]
         modified_time = time.ctime(os.path.getmtime(file))
-        if fname in files:
-            files[fname].append(modified_time)
+        if fname in raw_files:
+            raw_files[fname].append(modified_time)
         else:
-            files[fname] = modified_time
+            raw_files[fname] = modified_time
+
+    collection_dir = settings.DECODED_IMAGE_DIR + '/' + str(collection_name)
+    if not os.path.isdir(collection_dir):
+        return render_template(
+            template,
+            collection=collection,
+            files=raw_files,
+            processed_files=processed_files,
+            user=user)
+
+    modified_time = time.ctime(os.path.getmtime(collection_dir))
+    processed_files[collection_name] = modified_time
 
     return render_template(
-        "contribute/collection.html",
+        template,
         collection=collection,
-        files=files,
+        files=raw_files,
+        processed_files=processed_files,
         user=user)
 
 

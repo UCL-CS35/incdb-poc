@@ -8,15 +8,15 @@
 
 <div class="container body_container">
 
-	<h1>My Collections</h1>
+	<h1>my collections</h1>
 	<hr>
 
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<th>Name of Collection</th>
-				<th>Movie</th>
-				<th>Description</th>
+				<th>name of collection</th>
+				<th>movie</th>
+				<th>decoded?</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -27,10 +27,14 @@
 				<a href='{{ url_for('contribute.collection', collection_name=collection.name) }}'>{{ collection.name }}</a>
 			</td>
 			<td>
+				{% if collection.decoded %}
+				<a href='/movies/{{ collection.movie_name }}'>{{ collection.movie_name }}</a>
+				{% else %}
 				{{ collection.movie_name }}
+				{% endif %}
 			</td>
 			<td>
-				{{ collection.description }}
+				{{ collection.decoded }}
 			</td>
 		</tr>
 		{% endfor %}

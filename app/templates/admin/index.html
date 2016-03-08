@@ -8,19 +8,19 @@
 
 <div class="container body_container">
 
-	<h1>Manage INcDb</h1>
+	<h1>manage INcDb</h1>
 
 	<p>This page is accessible to authenticated users with the 'admin' role.</p>
 
 	<hr>
 
-	<h3>Collections</h3>
+	<h3>collections</h3>
 	<table class="table table-bordered table-hover">
 		<thead>
 			<tr>
-				<th>Name of Collection</th>
-				<th>Movie</th>
-				<th>Uploaded by</th>
+				<th>name of collection</th>
+				<th>movie</th>
+				<th>uploaded by</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +31,11 @@
 				<a href='{{ url_for('contribute.collection', collection_name=collection.name) }}'>{{ collection.name }}</a>
 			</td>
 			<td>
+				{% if collection.decoded %}
+				<a href='/movies/{{ collection.movie_name }}'>{{ collection.movie_name }}</a>
+				{% else %}
 				{{ collection.movie_name }}
+				{% endif %}
 			</td>
 			<td>
 				{{ collection.get_username() }}
@@ -41,33 +45,6 @@
 		{% else %}
 		<tr>
 			<td colspan="3">No collection uploaded</td>
-		</tr>
-		{% endif %}
-		</tbody>
-	</table>
-
-	<hr>
-	
-	<h3>Movies</h3>
-
-	<table class="table table-bordered table-hover">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Added Date</th>
-			</tr>
-		</thead>
-		<tbody>
-		{% if movies.count() > 0 %}
-		{% for movie in movies %}
-		<tr>
-			<td><a href="/movies/{{movie.movie}}">{{ movie.movie }}</a></td>
-			<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
-		</tr>
-		{% endfor %}
-		{% else %}
-		<tr>
-			<td colspan="3">No movies uploaded</td>
 		</tr>
 		{% endif %}
 		</tbody>

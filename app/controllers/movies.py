@@ -4,6 +4,7 @@ from flask import request, abort
 from app import app, db
 from app.models import *
 from app.models.decodings import Decoding
+from app.models.collections import Collection
 from app.controllers.home import paginate
 
 from sqlalchemy import *
@@ -27,12 +28,14 @@ def select_movie(selected_movie, page=1):
     tmp = request.args.get('page')
     if tmp is not None:
         page = int(tmp)
-    components = Decoding.query.filter_by(movie=selected_movie)
 
+    components = Decoding.query.filter_by(movie=selected_movie)
     if components.count() == 0:
         abort(404)
-
     components = components.paginate(page, 10, False)
+
+    collection = Collection.query.filter_by(movie_name=selected_movie).first()
+
     terms = Decoding.query.filter_by(movie=selected_movie)
     total_count = terms.count()
     decodings = terms
@@ -55,6 +58,7 @@ def select_movie(selected_movie, page=1):
         "movies/select_movie.html",
         components=components,
         selected_movie=selected_movie,
+        collection=collection,
         terms=finalterms)
 
 
