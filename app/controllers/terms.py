@@ -57,7 +57,8 @@ def search():
 @app.route('/data/images/analyses/<path:term_name>')
 def load_term(term_name):
     return send_from_directory(
-        LOCATION_ANALYSIS_DIR,term_name,
+        LOCATION_ANALYSIS_DIR,
+        term_name,
         as_attachment=True)
 
 

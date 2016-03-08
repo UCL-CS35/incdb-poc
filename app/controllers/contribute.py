@@ -151,11 +151,15 @@ def collection(collection_name):
 
     files = dict()
 
+    template =  "contribute/collection.html"
+    if current_user.has_roles('admin'):
+        template = "admin/collection.html"
+
     # Get their files.
     user_dir = "uploads/{}".format(collection.user_id)
     if not os.path.isdir(user_dir):
         return render_template(
-            "contribute/collection.html",
+            template,
             collection=collection,
             files=files,
             user=user)
@@ -164,7 +168,7 @@ def collection(collection_name):
     collection_dir = user_dir + '/' + str(collection_name)
     if not os.path.isdir(collection_dir):
         return render_template(
-            "contribute/collection.html",
+            template,
             collection=collection,
             files=files,
             user=user)
@@ -178,7 +182,7 @@ def collection(collection_name):
             files[fname] = modified_time
 
     return render_template(
-        "contribute/collection.html",
+        template,
         collection=collection,
         files=files,
         user=user)
