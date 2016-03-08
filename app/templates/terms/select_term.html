@@ -88,14 +88,19 @@
   viewer.clear()   // Paint canvas background while images load
   images = [
   {
-    'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
-    'name': 'anatomical',
-    'colorPalette': 'grayscale',
-    'cache': false,
+  	'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
+  	'name': 'anatomical',
+  	'colorPalette': 'grayscale',
+  	'cache': false
+  },
+  {
+  	'url': "{{ url_for('load_term',term_name = selected_term + '_pAgF_z_FDR_0.01.nii.gz') }}",
+  	'name': 'selected_term forward analysis',
+  	'colorPalette': 'green'
   },
   {
   	'url': "{{ url_for('load_term',term_name = selected_term + '_pFgA_z_FDR_0.01.nii.gz') }}",
-  	'name': 'selected_term + "_pFgA_z_FDR_0.01"',
+  	'name': 'selected_term backward analysis',
   	'colorPalette': 'blue',
   },
   { 
