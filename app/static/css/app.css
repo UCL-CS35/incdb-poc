@@ -4,8 +4,9 @@
 }
 @font-face{
     font-family: Gill Sans Light;
-    src: url('GillSans.ttc');;
+    src: url('GillSans.ttc');
 }
+
 html {
   position: relative;
   min-height: 100%;
@@ -122,29 +123,28 @@ hr {
     color: #ecf0f1;
 }
 .brain_scans{
-    padding-top: 20px;
     padding-bottom: 20px;
-    padding-left: 7.5%;
-    padding-right: 7.5%;
-    height: 100%;
-    text-align: center;
-    display: inline-block;
+    width: 100vw;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
 }
 
 .brain_section{
-    float: left;
+    padding-top: 20px;
 }
 
 #xImage{
-    padding-right: 2em;
+    order: 1;
 }
 
 #yImage{
-    padding-right: 2em;
+    order: 2;
 }
 
 #zImage{
-    padding-right: 0;
+    order: 3;
 }
 
 .ui-autocomplete {

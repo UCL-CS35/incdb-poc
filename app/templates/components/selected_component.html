@@ -97,8 +97,8 @@
     viewer.addSlider('pos-threshold', '.slider#pos-threshold', 'horizontal', 0, 1, 0, 0.01);
     viewer.addSlider('neg-threshold', '.slider#neg-threshold', 'horizontal', 0, 1, 0, 0.01);
     viewer.addSlider("nav-xaxis", ".slider#nav-xaxis", "horizontal", 0, 1, 0.5, 0.01, Viewer.XAXIS);
-    viewer.addSlider("nav-yaxis", ".slider#nav-yaxis", "vertical", 0, 1, 0.5, 0.01, Viewer.YAXIS);
-    viewer.addSlider("nav-zaxis", ".slider#nav-zaxis", "vertical", 0, 1, 0.5, 0.01, Viewer.ZAXIS);
+    viewer.addSlider("nav-yaxis", ".slider#nav-yaxis", "horizontal", 0, 1, 0.5, 0.01, Viewer.YAXIS);
+    viewer.addSlider("nav-zaxis", ".slider#nav-zaxis", "horizontal", 0, 1, 0.5, 0.01, Viewer.ZAXIS);
 
     viewer.addColorSelect('#select_color');
     viewer.addSignSelect('#select_sign')
@@ -109,30 +109,14 @@
   images = [
   {
     'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
-    'name': 'anatomical',
+    'name': 'brain overlay',
     'colorPalette': 'grayscale',
     'cache': false,
   },
   {
     'url': "{{ url_for('load_component',movie_name = selected_component.movie, file_name = selected_component.filename) }}",
-    'name': 'selected_component.filename',
+    'name': '{{selected_component.filename}}',
     'colorPalette': 'blue',
-  },
-  { 
-    'name': 'spherical ROI',
-    'colorPalette': 'yellow',
-    'data': {
-      'dims': [91, 109, 91],
-      'peaks': [
-      {
-        'x': -48,
-        'y': 20,
-        'z': 20, 
-        'r': 6, 
-        'value': 1
-      }
-      ]
-    }
   }
   ]
   viewer.loadImages(images);

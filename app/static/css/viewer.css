@@ -52,8 +52,8 @@ canvas {
 }
 
 #layer_list_panel {
-	/*width: 215px;*/
-	float: left;
+	text-align: center;
+	display: inline-block;
 }
 
 #layer_list {
@@ -137,29 +137,26 @@ canvas {
 }
 
 ul#layer_list li {
-	border-width: 1px 1px 1px 1px;
-	border-style: solid;
-	border-color: #ddb #999 #999 #ddb;
 	font-size: 12px;
-	background: white;
-	/*padding: 3px;*/
+	padding-left: 10px;
+	padding-right: 10px;
 	margin: 0px;
 	float: left;
 }
 
 .layer_label {
 	float: left;
-	width: 150px;
-	background: #ccc;
+	width: auto;
+	background: #20374D;
 	padding: 3px;
 }
 
 ul#layer_list {
 	margin: 0px;
-	padding: 0px;
+	padding-top: 10px;
 	list-style: none;
 }
 
 .selected {
-	background: #cff;
+	background: #4A6075;
 }
