@@ -44,3 +44,7 @@ def setup_database():
 
     from .create_users import create_users
     create_users()
+
+    print "Clear uploads..."
+    import shutil
+    shutil.rmtree('uploads', ignore_errors=True)
