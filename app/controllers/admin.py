@@ -40,6 +40,7 @@ def upload():
             unzip(file, path)
             collection = Collection.query
             collection = collection.filter_by(name=collection_name).first()
+            # TODO: move to a background thread
             decode_collection(
                 settings.DECODED_IMAGE_DIR,
                 collection_name,

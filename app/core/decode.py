@@ -65,7 +65,7 @@ class Reference(object):
 
 
 def decode_folder(directory):
-
+    # TODO: Match decode_collection()
     decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
     for folder in listdir(directory):
@@ -131,7 +131,9 @@ def decode_collection(directory, collection, movie_name):
                 db.session.commit()
 
 
-def decode_image(decoding, decoding_set, collection, filename, drop_zeros=False):
+def decode_image(
+    decoding, decoding_set, collection,
+        filename, drop_zeros=False):
 
     print 'Decoding ' + filename + '...'
     mm_dir = settings.MEMMAP_DIR
@@ -164,7 +166,8 @@ def decode_image(decoding, decoding_set, collection, filename, drop_zeros=False)
         # standardize image and get correlation
         data = (data - data.mean()) / data.std()
         r = np.dot(ref.data[voxels].T, data) / ref.n_voxels
-        outfile = join(settings.DECODING_RESULTS_DIR, collection, filename + '.txt')
+        outfile = join(settings.DECODING_RESULTS_DIR, collection)
+        outfile = join(outfile, filename + '.txt')
         labels = ref.labels.keys()
         series = pd.Series(r, index=labels).sort_values(ascending=False)
         series.to_csv(outfile, sep='\t')
@@ -178,5 +181,6 @@ def decode_image(decoding, decoding_set, collection, filename, drop_zeros=False)
         return decoding
 
     except Exception, e:
+        print e
         print traceback.format_exc()
         return None

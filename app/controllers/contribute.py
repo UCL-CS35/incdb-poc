@@ -26,18 +26,14 @@ def new_collection():
 
     form = CollectionForm(request.form)
 
-    # Process valid POST
     if request.method == 'POST' and form.validate():
 
-        # Copy form fields to collection fields
         collection = Collection()
         form.populate_obj(collection)
 
         current_user.collections.append(collection)
 
         db.session.add(collection)
-
-        # Save collection
         db.session.commit()
 
         return redirect(
@@ -157,7 +153,6 @@ def collection(collection_name):
     raw_files = dict()
     processed_files = dict()
 
-    # Get their files.
     user_dir = "uploads/{}".format(collection.user_id)
     raw_dataset = user_dir + '/' + str(collection_name)
     if not os.path.isdir(raw_dataset):
@@ -176,7 +171,6 @@ def collection(collection_name):
         else:
             raw_files[fname] = modified_time
 
-    # Get their files.
     collection_dir = settings.DECODED_IMAGE_DIR + '/' + str(collection_name)
     if not os.path.isdir(collection_dir):
         return render_template(

@@ -20,6 +20,7 @@ def setup_database():
         reset_db=True,
         reset_dataset=False)
 
+    # TODO: all analyses
     analyses = ['emotion',
                 'language',
                 'memory',
@@ -27,8 +28,6 @@ def setup_database():
                 'visual',
                 'attention',
                 'sensory']
-
-    # analyses = None
 
     print "Adding analyses..."
     builder.add_term_analyses(analyses=analyses, add_images=True, reset=True)

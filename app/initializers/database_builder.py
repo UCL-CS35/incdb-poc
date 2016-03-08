@@ -45,8 +45,8 @@ class DatabaseBuilder:
                 incrementally.
             reset_dataset: if True, will regenerate the pickled Neurosynth
                 dataset.
-            download_data: if True, ignores any existing files and downloads the
-                latest Neurosynth data files from GitHub.
+            download_data: if True, ignores any existing files and downloads
+                the latest Neurosynth data files from GitHub.
         """
 
         if (studies is not None and not os.path.exists(studies)) \
@@ -58,6 +58,7 @@ class DatabaseBuilder:
         if dataset is None or reset_dataset or (isinstance(dataset, basestring)
                                                and not os.path.exists(dataset)
                                                ):
+
            print "\tInitializing a new Dataset..."
            if (studies is None) or (features is None):
                raise ValueError(
@@ -94,6 +95,11 @@ class DatabaseBuilder:
             settings.TOPIC_DIR,
             settings.MEMMAP_DIR
         ]
+
+        import shutil
+        shutil.rmtree(settings.DECODED_IMAGE_DIR, ignore_errors=True)
+        shutil.rmtree(settings.DECODING_RESULTS_DIR, ignore_errors=True)
+
         for d in check_dirs:
             if not exists(d):
                 os.makedirs(d)
