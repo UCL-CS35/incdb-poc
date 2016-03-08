@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint
-from flask import request
+from flask import request, abort
 
 from app import app, db
 from app.models import *
@@ -28,6 +28,10 @@ def select_movie(selected_movie, page=1):
     if tmp is not None:
         page = int(tmp)
     components = Decoding.query.filter_by(movie=selected_movie)
+
+    if components.count() == 0:
+        abort(404)
+
     components = components.paginate(page, 10, False)
     terms = Decoding.query.filter_by(movie=selected_movie)
     total_count = terms.count()
@@ -60,6 +64,8 @@ def select_movie_term(selected_movie, selected_term, page=1):
     condition = Decoding.movie == selected_movie
     condition = and_(condition, Decoding.term == selected_term)
     components = Decoding.query.filter(condition)
+    if components.count() == 0:
+        abort(404)
     components = components.paginate(page, 10, False)
     return render_template(
         "movies/select_term.html",
