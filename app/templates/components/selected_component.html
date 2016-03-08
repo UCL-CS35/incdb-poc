@@ -57,7 +57,8 @@
     </div>
 
     <div role="tabpanel" id="details" class="tab-pane fade in">
-      {{ collection }}
+      {% from "common/collection_details.html" import render_collection %}
+      {{ render_collection(collection)}}
     </div>
 
   </div>
