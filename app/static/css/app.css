@@ -124,7 +124,7 @@ hr {
 }
 .brain_scans{
     padding-bottom: 20px;
-    width: 100vw;
+    width: 100%;
     height: auto;
     display: flex;
     justify-content: space-around;
