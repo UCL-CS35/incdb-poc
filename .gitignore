@@ -66,8 +66,6 @@ target/
 #
 # Application specific settings
 #
-.idea/
 app.sqlite
-app/app.sqlite
 uploads/*
 data/*
