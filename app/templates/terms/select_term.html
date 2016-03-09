@@ -14,6 +14,7 @@
 	<ul class="nav nav-tabs" role="tablist">
 		<li role = "presentation" class="active"><a href="#movies" data-toggle="tab">movies</a></li>
 		<li role = "presentation"><a href="#components" data-toggle="tab">components</a></li>
+		<li role = "presentation"><a href="#details" data-toggle="tab">details</a></li>
 	</ul>
 
 	<div class="tab-content">
@@ -56,6 +57,9 @@
 			{{ render_term_pagination(components, 'terms.select_term', selected_term) }}
 		</div>
 
+		<div role="tabpanel" id="details" class="tab-pane in">
+		</div>
+
 	</div><!-- tab-content -->
 	
 </div>
@@ -85,7 +89,7 @@
   images = [
   {
   	'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
-  	'name': 'anatomical',
+  	'name': 'brain overlay',
   	'colorPalette': 'grayscale',
   	'cache': false
   },
