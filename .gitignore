@@ -69,3 +69,4 @@ target/
 app.sqlite
 uploads/*
 data/*
+dump.rdb
