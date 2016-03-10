@@ -30,7 +30,7 @@ def search_movie():
     search = request.args.get('term')
     results = db.session.query(Decoding.movie, Decoding.movie)
     results = results.filter(Decoding.movie.like('%' + search + '%'))
-    results = results.distinct()
+    results = results.distinct(Decoding.movie).group_by(Decoding.movie)
     return jsonify(results)
 
 
@@ -39,7 +39,7 @@ def search():
     search = request.args.get('movie')
     results = db.session.query(Decoding.movie, Decoding.movie)
     results = results.filter(Decoding.movie.like('%' + search + '%'))
-    results = results.distinct()
+    results = results.distinct(Decoding.movie).group_by(Decoding.movie)
     return render_template('search.html', movies=list(results))
 
 
