@@ -31,7 +31,8 @@
             </tr>
             <tr>
               {% set field = form.password %}
-              <td style="padding-top:10px">        {{ field(class_='form-control input-lg', tabindex=120, placeholder="Password", style="width:30vw") }}
+              <td style="padding-top:10px">        
+                {{ field(class_='form-control input-lg', tabindex=120, placeholder="Password", style="width:30vw") }}
                 {% if field.errors %}
                 {% for e in field.errors %}
                 <p class="help-block">{{ e }}</p>
