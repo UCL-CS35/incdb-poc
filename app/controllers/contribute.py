@@ -201,7 +201,7 @@ def collection(collection_name):
         else:
             raw_files[fname] = modified_time
 
-    collection_dir = settings.DECODED_IMAGE_DIR + '/' + str(collection_name)
+    collection_dir = settings.PROCESSED_IMAGE_DIR + '/' + str(collection_name)
     if not os.path.isdir(collection_dir):
         return render_template(
             template,

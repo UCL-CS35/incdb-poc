@@ -11,13 +11,15 @@ from flask_wtf.csrf import CsrfProtect
 
 from app.initializers import settings
 
+from celery import Celery
+
+
 import os
 
 
 app = Flask(__name__)           # The WSGI compliant web application object
 db = SQLAlchemy(app)            # Setup Flask-SQLAlchemy
 manager = Manager(app)          # Setup Flask-Script
-
 
 @app.before_first_request
 def initialize_app_on_first_request():
@@ -130,3 +132,16 @@ def init_email_error_handler(app):
     app.logger.addHandler(mail_handler)
 
     # Log errors using: app.logger.error('Some error message')
+
+def make_celery(app):
+    celery = Celery(app.import_name, broker=settings['CELERY_BROKER_URL'])
+    celery.conf.update(app.config)
+    TaskBase = celery.Task
+    class ContextTask(TaskBase):
+        abstract = True
+        def __call__(self, *args, **kwargs):
+            with app.app_context():
+                return TaskBase.__call__(self, *args, **kwargs)
+    celery.Task = ContextTask
+    return celery
+

@@ -46,7 +46,7 @@ def select_component(component_uuid):
 @app.route('/data/images/decoded/<path:collection>/<path:file_name>')
 def load_component(collection, file_name):
     return send_from_directory(
-        os.path.join(DECODED_IMAGE_DIR, collection),
+        os.path.join(PROCESSED_IMAGE_DIR, collection),
         file_name,
         as_attachment=True)
 

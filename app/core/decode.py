@@ -29,7 +29,7 @@ def load_image(masker, collection, filename, save_resampled=True):
     f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
     anatomical = nb.load(f)
 
-    filename = join(settings.DECODED_IMAGE_DIR, collection, filename)
+    filename = join(settings.PROCESSED_IMAGE_DIR, collection, filename)
     img = nb.load(filename)
     if img.shape[:3] != (91, 109, 91):
         img = resample_img(
