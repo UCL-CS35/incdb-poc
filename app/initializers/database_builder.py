@@ -89,14 +89,14 @@ class DatabaseBuilder:
             join(settings.IMAGE_DIR, 'custom'),
             settings.DECODING_RESULTS_DIR,
             settings.DECODING_SCATTERPLOTS_DIR,
-            settings.DECODED_IMAGE_DIR,
+            settings.PROCESSED_IMAGE_DIR,
             settings.MASK_DIR,
             settings.TOPIC_DIR,
             settings.MEMMAP_DIR
         ]
 
         import shutil
-        shutil.rmtree(settings.DECODED_IMAGE_DIR, ignore_errors=True)
+        shutil.rmtree(settings.PROCESSED_IMAGE_DIR, ignore_errors=True)
         shutil.rmtree(settings.DECODING_RESULTS_DIR, ignore_errors=True)
 
         for d in check_dirs:

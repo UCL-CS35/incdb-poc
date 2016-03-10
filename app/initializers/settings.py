@@ -57,8 +57,8 @@ TEMPLATE_FOLDER = join(ROOT_DIR, 'nsweb', 'templates')
 UPLOAD_DIR = join(ROOT_DIR, 'uploads')
 
 # DECODER-RELATED PATHS
-# Path to decoded images
-DECODED_IMAGE_DIR = join(DATA_DIR, 'images', 'decoded')
+# Path to processed images to be decoded
+PROCESSED_IMAGE_DIR = join(DATA_DIR, 'images', 'processed')
 
 # Path to saved decoding image array--this is kept active in memory
 DECODING_DATA = join(ASSET_DIR, 'decoding.msg')

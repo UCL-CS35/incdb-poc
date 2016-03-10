@@ -36,13 +36,13 @@ def upload():
         collection_name = str(request.args.get('collection'))
         file = request.files['file']
         if file:
-            path = os.path.join(settings.DECODED_IMAGE_DIR, collection_name)
+            path = os.path.join(settings.PROCESSED_IMAGE_DIR, collection_name)
             unzip(file, path)
             collection = Collection.query
             collection = collection.filter_by(name=collection_name).first()
             # TODO: move to a background thread
             decode_collection(
-                settings.DECODED_IMAGE_DIR,
+                settings.PROCESSED_IMAGE_DIR,
                 collection_name,
                 collection.movie_name)
             collection.decoded = True
