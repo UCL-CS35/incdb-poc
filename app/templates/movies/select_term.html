@@ -20,12 +20,14 @@
 		<thead>
 		<tr>
 			<th>name</th>
+			<th>collection</th>
 		</tr>
 		</thead>
 		<tbody>
 		{% for component in components.items %}
 		<tr>
 			<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+			<td>{{ component.collection }}</td>
 		</tr>
 		{% endfor %}
 		</tbody>

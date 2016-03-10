@@ -34,7 +34,7 @@ def select_component(component_uuid):
             termPair[1] = termPair[1].strip('\n')
             terms.append(termPair)
 
-    collection = Collection.query.filter_by(movie_name=component.movie)
+    collection = Collection.query.filter_by(name=component.collection)
     collection = collection.first()
     return render_template(
         "components/selected_component.html",

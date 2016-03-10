@@ -6,7 +6,9 @@
 
 
 {% block title %}
-<h2 class = "title_banner">{{selected_component.filename}}</h2>
+<h2 class = "title_banner">{{selected_component.filename}}
+  <br><small><span style="color:white">({{ selected_component.collection }})</span></small>
+</h2>
 {% endblock %}
 
 {% block content %}

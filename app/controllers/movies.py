@@ -15,8 +15,10 @@ movies_blueprint = Blueprint('movies', __name__, url_prefix='/movies')
 @movies_blueprint.route('/', methods=['GET', 'POST'])
 @movies_blueprint.route('/<int:page>', methods=['GET', 'POST'])
 def index(page=1):
-    movies = db.session.query(Decoding.movie, Decoding.image_decoded_at)
-    movies = movies.distinct()
+    movies = db.session.query(
+        Decoding.movie,
+        Decoding.image_decoded_at)
+    movies = movies.distinct(Decoding.movie).group_by(Decoding.movie)
     movies = paginate(movies, page, 10, False)
     return render_template(
       "movies/index.html",
@@ -34,7 +36,7 @@ def select_movie(selected_movie, page=1):
         abort(404)
     components = components.paginate(page, 10, False)
 
-    collection = Collection.query.filter_by(movie_name=selected_movie).first()
+    collections = Collection.query.filter_by(movie_name=selected_movie)
 
     terms = Decoding.query.filter_by(movie=selected_movie)
     total_count = terms.count()
@@ -58,7 +60,7 @@ def select_movie(selected_movie, page=1):
         "movies/select_movie.html",
         components=components,
         selected_movie=selected_movie,
-        collection=collection,
+        collections=collections,
         terms=finalterms)
 
 
