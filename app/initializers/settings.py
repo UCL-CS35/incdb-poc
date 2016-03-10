@@ -1,14 +1,14 @@
 import os
 from os.path import join
 
-### SETTINGS THAT SHOULD ALWAYS BE UPDATED ###
+# SETTINGS THAT SHOULD ALWAYS BE UPDATED
 
 # The root location of the app. Should not need to be changed.
 ROOT_DIR = os.path.realpath(
     join(join(os.path.dirname(__file__), os.path.pardir), os.path.pardir))
 
 # Root path for generated data
-DATA_DIR = join(ROOT_DIR,'data')
+DATA_DIR = join(ROOT_DIR, 'data')
 
 # ***********************************
 # Settings common to all environments
@@ -34,8 +34,6 @@ USER_ENABLE_USERNAME = False  # Register and Login with username
 USER_AFTER_LOGIN_ENDPOINT = 'home.index'
 USER_AFTER_LOGOUT_ENDPOINT = 'home.index'
 
-### SHOULD NOT NEED TO BE UPDATED ###
-
 # Path to main assets (pickled Dataset, study files, etc.)
 ASSET_DIR = join(DATA_DIR, 'assets')
 RESET_ASSETS = False
@@ -55,10 +53,10 @@ STATIC_FOLDER = join(ROOT_DIR, 'nsweb', 'static')
 # Templates
 TEMPLATE_FOLDER = join(ROOT_DIR, 'nsweb', 'templates')
 
-# Path to uploaded raw images 
+# Path to uploaded raw images
 UPLOAD_DIR = join(ROOT_DIR, 'uploads')
 
-### DECODER-RELATED PATHS ###
+# DECODER-RELATED PATHS
 # Path to decoded images
 DECODED_IMAGE_DIR = join(DATA_DIR, 'images', 'decoded')
 
@@ -82,36 +80,27 @@ CACHE_DECODINGS = True
 # local disk image rather than the host.
 MEMMAP_DIR = join(DATA_DIR, 'memmaps')
 
-
-### CONTENT-SPECIFIC DIRECTORIES ###
+# CONTENT-SPECIFIC DIRECTORIES
 MASK_DIR = join(IMAGE_DIR, 'masks')
 TOPIC_DIR = join(DATA_DIR, 'topics')
 GENE_IMAGE_DIR = join(IMAGE_DIR, 'genes')
 
-
-### DATABASE CONFIGURATION ###
+# DATABASE CONFIGURATION
 # Adapter to use--either 'mysql' or 'sqlite'
 SQL_ADAPTER = 'sqlite'
 
 # SQLite pat
 SQLALCHEMY_DATABASE_URI = 'sqlite:///../app.sqlite'
 
-### Logging ###
+# Logging
 LOGGING_PATH = join(DATA_DIR, 'log.txt')
 LOGGING_LEVEL = 'DEBUG'
 
-### Celery settings for background tasks ###
+# Celery settings for background tasks
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
-# Error logging with Opbeat
-OPBEAT_ENABLED = False
-OPBEAT_ORGANIZATION_ID = "..."
-OPBEAT_APP_ID = "..."
-OPBEAT_SECRET_TOKEN = "..."
-OPBEAT_DEBUG = True
-
-### Flask-Mail settings ###
+# Flask-Mail settings
 MAIL_ENABLE = False
 MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'email@example.com')
 MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'password')
@@ -121,6 +110,6 @@ MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
 MAIL_PORT = int(os.getenv('MAIL_PORT', '465'))
 MAIL_USE_SSL = int(os.getenv('MAIL_USE_SSL', True))
 
-### App-level configuration ###
+# App-level configuration
 DEBUG = True
 PROTOTYPE = True

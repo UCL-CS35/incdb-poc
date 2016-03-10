@@ -110,7 +110,7 @@ def decode_collection(directory, collection, movie_name):
         if not exists(decode_movie_folder):
             mkdir(decode_movie_folder)
 
-        decodings = Decoding.query.filter_by(movie=movie_name)
+        decodings = Decoding.query.filter_by(collection=collection)
         for a in decodings:
             db.session.delete(a)
         db.session.commit()

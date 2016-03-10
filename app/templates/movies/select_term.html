@@ -19,13 +19,15 @@
 	<table class="table">
 		<thead>
 		<tr>
-			<th>name</th>
+			<th>Name</th>
+			<th>Collection</th>
 		</tr>
 		</thead>
 		<tbody>
 		{% for component in components.items %}
 		<tr>
 			<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+			<td>{{ component.collection }}</td>
 		</tr>
 		{% endfor %}
 		</tbody>

@@ -18,6 +18,12 @@
 
 	<hr>
 
+	{% if collection.decoded %}
+		<p class="alert alert-info">Collection has been decoded by INcDb. View the <a href="/movies/{{ collection.movie_name }}">decoded movie.</a></p>
+	{% endif %}
+
+	<h4>Files Uploaded</h4>
+
 	<table class="table table-bordered table-hover">
 
 		<thead>
@@ -43,10 +49,12 @@
 		{% endif %}
 		</tbody>
 	</table>
-	{% if collection.decoded %}
-		<p class="alert alert-info">Collection has been decoded by INcDb. View the <a href="/movies/{{ collection.movie_name }}">decoded movie.</a</p>
-	{% endif %}
 
+	<hr>
+
+	{% from "common/collection_details.html" import render_collection %}
+	{{ render_collection(collection) }}
+ 
 </div>
 
 {% endblock %}

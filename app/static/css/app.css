@@ -301,3 +301,12 @@ hr {
 .tab-pane {
     padding: 10px 0 0px;
 }
+.panel-group .panel-incdb {
+    border-color: #34495e;
+    border-radius: 0;
+}
+.panel-incdb .panel-heading {
+    color: white;
+    background-color: #34495e;
+    border-color: #34495e;
+}

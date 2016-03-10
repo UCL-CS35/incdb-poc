@@ -17,8 +17,11 @@ home_blueprint = Blueprint('home', __name__, url_prefix='/')
 # The Index page is accessible to anyone
 @home_blueprint.route('')
 def index():
-    movies = db.session.query(Decoding.movie, Decoding.image_decoded_at)
-    movies = movies.distinct().limit(10)
+    movies = db.session.query(
+        Decoding.movie,
+        Decoding.image_decoded_at)
+    movies = movies.distinct(Decoding.movie).group_by(Decoding.movie)
+    movies = movies.limit(10)
     return render_template('index.html', movies=movies)
 
 
