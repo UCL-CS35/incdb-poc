@@ -1,0 +1,80 @@
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>Edit Collection | Internet Neurocinematics Database</title>
+{% endblock %}
+
+{% block content %}
+
+{% from "common/form_macros.html" import render_field, render_checkbox_field, render_radio_field %}
+
+<div class="container body_container">
+
+  <h1>Edit Collection - {{ collection.name }}</h1>
+
+  <p>Only the starred fields* are mandatory, but please try to provide as much information as you can. Read the <a href="{{ url_for('home.faq') }}">FAQ</a> if you have any doubt.</p>
+  <hr>
+
+  <form class="form" action="{{ url_for('contribute.edit_collection', collection_name=collection.name) }}" method="POST" enctype="multipart/form-data">
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+
+    <div class="row">
+
+      <div class="col-xs-12"> 
+
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="active"><a href="#essential" data-toggle="tab">Essential</a></li>
+              <li role = "presentation"><a href="#movie" data-toggle="tab">Movie</a></li>
+              <li role = "presentation"><a href="#participant" data-toggle="tab">Participant</a></li>
+              <li role = "presentation"><a href="#design" data-toggle="tab">Design</a></li>
+              <li role = "presentation"><a href="#acquisition" data-toggle="tab">Acquisition</a></li>
+          </ul>
+
+          <div class="tab-content" style="padding:20px 10px 0px;">    
+            <div role="tabpanel" id="essential" class="tab-pane fade active in">
+
+              {% for f in form %}
+
+                {% if f.type == 'BooleanField' %}
+                    {{ render_checkbox_field(f) }}
+                {% elif f.type == 'RadioField' %}
+                    {{ render_radio_field(f) }}
+                {% else %}
+                    {{ render_field(f) }}
+                {% endif %}
+
+            {% if f.label.text == 'Accessibility' %}
+            </div><!-- #essential -->
+
+            <div role="tabpanel" id="movie" class="tab-pane fade in">
+            {% elif f.label.text == 'Audio Codec' %}
+            </div><!-- #movie -->
+            <div role="tabpanel" id="participant" class="tab-pane fade in">
+            {% elif f.label.text == 'Language Proficiency' %}
+            </div><!-- #participant -->
+            <div role="tabpanel" id="design" class="tab-pane fade in">
+            {% elif f.label.text == 'Length of Runs' %}
+            </div><!-- #design -->
+            <div role="tabpanel" id="acquisition" class="tab-pane fade in">
+            {% endif %}
+                
+            {% endfor %}
+
+            </div><!-- #acquisition -->
+          </div><!-- tab-content -->
+
+        <hr>
+
+        <div class="form-group">
+          <input type="submit" value="Update Collection" class="btn btn-primary">
+        </div>
+
+      </div><!-- col-xs-12 -->
+
+    </div><!-- row -->
+
+  </form>
+</div>
+
+{% endblock %}
