@@ -1,22 +1,25 @@
 {% macro render_field(field, label=None, label_visible=true, right_url=None, right_label=None) -%}
-{% if field.type !='CSRFTokenField' %}
-<div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
-    {% if (field.type != 'HiddenField') and label_visible %}
-    {% if not label %}{% set label=field.label.text %}{% endif %}
-    <label for="{{ field.id }}" class="control-label">{{ label|safe }}{% if field.flags.required %}*{% endif %}</label>
-    {% endif %}
+  {% if field.type !='CSRFTokenField' %}
+    <div class="form-group {% if field.errors %}has-error{% endif %} {{ kwargs.pop('class_', '') }}">
 
-    {% if field.description %}
-    <span class="help-block"><small>{{ field.description }}</small></span>
-    {% endif %}
-    {{ field(class_='form-control', **kwargs) }}
-    {% if field.errors %}
-    {% for e in field.errors %}
-    <span style="margin-top: 5px;" class="help-block">{{ e }}</span>
-    {% endfor %}
-    {% endif %}
-</div>
-{% endif %}
+      {% if (field.type != 'HiddenField') and label_visible %}
+        {% if not label %}{% set label=field.label.text %}{% endif %}
+        <label for="{{ field.id }}" class="control-label">{{ label|safe }}{% if field.flags.required %}*{% endif %}</label>
+      {% endif %}
+
+      {% if field.description %}
+      <span class="help-block"><small>{{ field.description }}</small></span>
+      {% endif %}
+
+      {{ field(class_='form-control', **kwargs) }}
+
+      {% if field.errors %}
+        {% for e in field.errors %}
+          <span style="margin-top: 5px;" class="help-block">{{ e }}</span>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
 {%- endmacro %}
 
 {% macro render_checkbox_field(field, label=None) -%}
