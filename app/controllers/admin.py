@@ -41,7 +41,7 @@ def upload():
             collection = Collection.query
             collection = collection.filter_by(name=collection_name).first()
             # TODO: move to a background thread
-            decode_collection(
+            decode_collection.delay(
                 settings.PROCESSED_IMAGE_DIR,
                 collection_name,
                 collection.movie_name)

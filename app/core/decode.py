@@ -1,4 +1,4 @@
-from app import db
+from app import db, celery, DBTask
 
 from app.models.decodings import Decoding, DecodingSet
 from app.models.images import TermAnalysisImage
@@ -22,6 +22,7 @@ import traceback
 from collections import OrderedDict
 
 from nilearn.image import resample_img
+
 
 
 def load_image(masker, collection, filename, save_resampled=True):
@@ -98,9 +99,9 @@ def decode_folder(directory):
                     db.session.add(decoding)
                     db.session.commit()
 
-
+@celery.task(base=DBTask)
 def decode_collection(directory, collection, movie_name):
-
+    
     decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
     if isdir(join(directory, collection)):
