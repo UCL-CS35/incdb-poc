@@ -42,6 +42,36 @@ def new_collection():
     return render_template("contribute/new.html", form=form)
 
 
+@contribute_blueprint.route(
+    'collection/<collection_name>/edit',
+    methods=["POST", "GET"])
+@login_required  # Limits access to authenticated users
+def edit_collection(collection_name):
+
+    collection = Collection.query.filter_by(name=collection_name).first()
+    if collection is None:
+        abort(404)
+
+    user = User.query.filter_by(id=collection.user_id).first()
+    # only admin and owner can view
+    if user != current_user:
+        abort(404)
+
+    form = CollectionForm(obj=collection)
+    del form.name
+    if request.method == 'POST' and form.validate():
+        form.populate_obj(collection)
+        db.session.commit()
+
+        return redirect(
+            url_for("contribute.collection", collection_name=collection.name))
+
+    return render_template(
+        "contribute/edit.html",
+        collection=collection,
+        form=form)
+
+
 @contribute_blueprint.route('contribute/upload/')
 @login_required  # Limits access to authenticated users
 def upload_files():

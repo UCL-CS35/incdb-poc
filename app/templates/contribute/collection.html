@@ -15,7 +15,9 @@
 		Upload an archive with images (.zip or .tar.gz)
 	</a>
 	{% endif %}
-
+	<a href="{{ url_for('contribute.edit_collection', collection_name=collection.name )}}" class="btn btn-primary">
+		Edit Collection
+	</a>
 	<hr>
 
 	{% if collection.decoded %}

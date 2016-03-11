@@ -1,12 +1,14 @@
 {% macro render_collection(collection) %}
 
-<p>{{ collection.description }}</p>
-
 <h4>Essential</h4>
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<th width="50%">Full Dataset URL</th>
+			<th width="40%">Description</th>
+			<td>{{ collection.description }}</td>
+		</tr>
+		<tr>
+			<th width="40%">Full Dataset URL</th>
 			<td>{{ collection.dataseturl }}</td>
 		</tr>
 		<tr>
@@ -24,7 +26,7 @@
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<th width="50%">Movie Name</th>
+			<th width="40%">Movie Name</th>
 			<td>{{ collection.movie_name }}</td>
 		</tr>
 		<tr>
@@ -74,7 +76,7 @@
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<th width="50%">Age of Participant</th>
+			<th width="40%">Age of Participant</th>
 			<td>{{ collection.participant_age }}</td>
 		</tr>
 		<tr>
@@ -108,7 +110,7 @@
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<th width="50%">Number of Imaging Runs</th>
+			<th width="40%">Number of Imaging Runs</th>
 			<td>{{ collection.imaging_runs }}</td>
 		</tr>
 		<tr>
@@ -122,7 +124,7 @@
 <table class="table table-bordered">
 	<tbody>
 		<tr>
-			<th width="50%">Scanner Make</th>
+			<th width="40%">Scanner Make</th>
 			<td>{{ collection.scanner_make }}</td>
 		</tr>
 		<tr>
