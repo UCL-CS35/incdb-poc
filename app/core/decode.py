@@ -24,6 +24,10 @@ from collections import OrderedDict
 from nilearn.image import resample_img
 
 
+from sqlalchemy import *
+
+
+
 
 def load_image(masker, collection, filename, save_resampled=True):
     """ Load an image, resampling into MNI space if needed. """
@@ -101,8 +105,9 @@ def decode_folder(directory):
 
 @celery.task(base=DBTask)
 def decode_collection(directory, collection, movie_name):
-    
-    decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
+    session1 = db.create_scoped_session()
+    test = session1.query(Decoding).first()
+    decoding_set = decode_collection.session.query(DecodingSet).filter_by(name='terms_20k').first()
 
     if isdir(join(directory, collection)):
 
