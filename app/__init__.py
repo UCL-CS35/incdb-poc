@@ -161,9 +161,9 @@ class DBTask(Task):
     @property
     def session(self):
         if self._session is None:
-        	self._session = db.create_scoped_session()
+            _, self._session = _get_engine_session(self.conf['db_uri'],
+                                                   verbose=False)
 
         return self._session
-
 
 celery = make_celery(app)

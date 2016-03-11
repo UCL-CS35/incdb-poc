@@ -41,10 +41,6 @@ def upload():
             collection = Collection.query
             collection = collection.filter_by(name=collection_name).first()
             # TODO: move to a background thread
-            db.session.remove()
-            session1 = db.create_scoped_session()
-            test = session1.query(Decoding).first()
-            print test
             decode_collection.delay(
                 settings.PROCESSED_IMAGE_DIR,
                 collection_name,
