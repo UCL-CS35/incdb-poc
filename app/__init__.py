@@ -11,7 +11,6 @@ from flask_wtf.csrf import CsrfProtect
 
 from app.initializers import settings
 
-from celery import Celery,Task
 
 
 import os
@@ -64,8 +63,6 @@ def create_app(extra_config_settings={}):
     # Setup WTForms CsrfProtect
     CsrfProtect(app)
 
-
-    celery = Celery(app.name, broker=settings.CELERY_BROKER_URL)
 
     # Define bootstrap_is_hidden_field for flask-bootstrap's bootstrap_wtf.html
     from wtforms.fields import HiddenField
@@ -137,33 +134,3 @@ def init_email_error_handler(app):
     app.logger.addHandler(mail_handler)
 
     # Log errors using: app.logger.error('Some error message')
-
-def make_celery(app):
-    celery = Celery(app.import_name, broker=settings.CELERY_BROKER_URL)
-    celery.conf.update(app.config)
-    celery.conf.update(CELERY_IMPORTS='app.core.decode')
-    TaskBase = celery.Task
-    class ContextTask(TaskBase):
-        abstract = True
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return TaskBase.__call__(self, *args, **kwargs)
-    celery.Task = ContextTask
-    return celery
-
-class DBTask(Task):
-    _session = None
-
-    def after_return(self, *args, **kwargs):
-        if self._session is not None:
-            self._session.remove()
-
-    @property
-    def session(self):
-        if self._session is None:
-        	self._session = db.create_scoped_session()
-
-        return self._session
-
-
-celery = make_celery(app)
