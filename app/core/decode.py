@@ -24,9 +24,6 @@ from collections import OrderedDict
 
 from nilearn.image import resample_img
 
-
-from sqlalchemy import *
-
 import celery
 
 
@@ -118,13 +115,10 @@ class SqlAlchemyTask(celery.Task):
 @celery.task(base=SqlAlchemyTask)
 def decode_collection(directory, collection, movie_name):
 	
-	from sqlalchemy import inspect
-	inspector = inspect(db_session.bind)
-	print len(inspector.get_table_names())
-	for table_name in inspector.get_table_names():
-		print "table_name: " + table_name
+	
 	decoding_set = db_session.query(DecodingSet).filter_by(name='terms_20k').first()
-
+	print directory
+	print collection
 	if isdir(join(directory, collection)):
 
 		decode_movie_folder = join(settings.DECODING_RESULTS_DIR, collection)
@@ -132,10 +126,10 @@ def decode_collection(directory, collection, movie_name):
 		if not exists(decode_movie_folder):
 			mkdir(decode_movie_folder)
 
-		decodings = Decoding.query.filter_by(collection=collection)
+		decodings = db_session.query(Decoding).filter_by(collection=collection)
 		for a in decodings:
-			db.session.delete(a)
-		db.session.commit()
+			db_session.delete(a)
+		db_session.commit()
 
 		time = datetime.utcnow()
 		for filename in listdir(join(directory, collection)):
@@ -149,8 +143,8 @@ def decode_collection(directory, collection, movie_name):
 				filename)
 			if decoding is not None:
 				decoding.image_decoded_at = time
-				db.session.add(decoding)
-				db.session.commit()
+				db_session.add(decoding)
+				db_session.commit()
 
 
 def decode_image(
