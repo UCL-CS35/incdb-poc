@@ -66,15 +66,10 @@
     'cache': false,
   },
   {
-  	'url': "{{ url_for('load_term',term_name = selected_term + '_pAgF_z_FDR_0.01.nii.gz') }}",
-  	'name': '{{selected_term}} forward analysis',
+  	'url': "{{ url_for('load_term_component', selected_movie = collection.name, term_name = (selected_term + '.nii.gz')) }}",
+  	'name': '{{selected_term}}',
   	'colorPalette': 'green'
   },
-  {
-  	'url': "{{ url_for('load_term',term_name = selected_term + '_pFgA_z_FDR_0.01.nii.gz') }}",
-  	'name': '{{selected_term}} backward analysis',
-  	'colorPalette': 'blue',
-  }
   ]
   viewer.loadImages(images);
 });

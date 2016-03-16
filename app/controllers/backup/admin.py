@@ -5,14 +5,11 @@ from flask_user import roles_accepted
 from app.initializers.settings import *
 from app import app
 from app.controllers import contribute
-from app.controllers.components import component_directory
 from app.models.decodings import *
 from app.models.collections import *
-from app.models.analysis import *
 from app.initializers import settings
 
 from app.core.decode import decode_collection
-from app.core.decode import concat_components
 
 from sqlalchemy import *
 
@@ -39,18 +36,17 @@ def upload():
         collection_name = str(request.args.get('collection'))
         file = request.files['file']
         if file:
-            path = os.path.join(settings.PROCESSED_IMAGE_DIR, collection_name)
+            path = os.path.join(settings.DECODED_IMAGE_DIR, collection_name)
             unzip(file, path)
             collection = Collection.query
             collection = collection.filter_by(name=collection_name).first()
             # TODO: move to a background thread
-            decode_collection.delay(
-                settings.PROCESSED_IMAGE_DIR,
+            decode_collection(
+                settings.DECODED_IMAGE_DIR,
                 collection_name,
                 collection.movie_name)
             collection.decoded = True
             db.session.commit()
-
             # file.save(path)
         else:
             print "No file found"

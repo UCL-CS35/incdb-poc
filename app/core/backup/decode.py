@@ -1,13 +1,8 @@
-from app import db, celery, DBTask
+from app import db
 
 from app.models.decodings import Decoding, DecodingSet
-from app.models.decodings import *
-from app.models.collections import *
-from app.models.analysis import *
-from app.controllers.components import component_directory
 from app.models.images import TermAnalysisImage
 from app.initializers import settings
-from app.initializers.settings import *
 
 from uuid import uuid4
 
@@ -20,19 +15,13 @@ import pandas as pd
 import nibabel as nb
 
 from datetime import datetime
-
-import os
 from os import unlink, listdir, mkdir
 from os.path import join, exists, isdir
-import shutil
 
 import traceback
 from collections import OrderedDict
 
 from nilearn.image import resample_img
-
-from nipype.interfaces import afni as afni
-
 
 
 def load_image(masker, collection, filename, save_resampled=True):
@@ -40,7 +29,7 @@ def load_image(masker, collection, filename, save_resampled=True):
     f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
     anatomical = nb.load(f)
 
-    filename = join(settings.PROCESSED_IMAGE_DIR, collection, filename)
+    filename = join(settings.DECODED_IMAGE_DIR, collection, filename)
     img = nb.load(filename)
     if img.shape[:3] != (91, 109, 91):
         img = resample_img(
@@ -109,9 +98,9 @@ def decode_folder(directory):
                     db.session.add(decoding)
                     db.session.commit()
 
-@celery.task(base=DBTask)
+
 def decode_collection(directory, collection, movie_name):
-    
+
     decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
     if isdir(join(directory, collection)):
@@ -121,7 +110,7 @@ def decode_collection(directory, collection, movie_name):
         if not exists(decode_movie_folder):
             mkdir(decode_movie_folder)
 
-        decodings = Decoding.query.filter_by(collection=collection)
+        decodings = Decoding.query.filter_by(movie=movie_name)
         for a in decodings:
             db.session.delete(a)
         db.session.commit()
@@ -140,27 +129,6 @@ def decode_collection(directory, collection, movie_name):
                 decoding.image_decoded_at = time
                 db.session.add(decoding)
                 db.session.commit()
-        
-        collection_list = Collection.query
-        collection_list = collection_list.filter_by(name=collection).first()
-        analysis = db.session.query(Analysis.name)   
-        movie_decode = db.session.query(Decoding.filename,Decoding.movie,Decoding.term)
-        movie_decode = Decoding.query.filter_by(movie = collection_list.movie_name)
-
-        for term in analysis:
-            print term.name
-            movie_decode_term = movie_decode.filter_by(term = term.name)
-            if movie_decode_term.count() == 0:
-                print 'There are no components for this term'
-            else:
-                imgs = []
-                collection_name = collection_list.name
-                movie_name = collection_list.movie_name
-                for component in movie_decode_term:
-                    file = component_directory(collection_name, component.filename)
-                    print "Now decoding for" + term.name
-                    imgs.append(file)
-                concat_components(imgs,term.name,collection_name)
 
 
 def decode_image(
@@ -216,18 +184,3 @@ def decode_image(
         print e
         print traceback.format_exc()
         return None
-
-def concat_components(componentList,term,movie):
-    term_name = term
-    movie_name = movie
-    merge = afni.Merge()
-    merge.inputs.in_files = componentList
-    merge.inputs.doall = True
-    merge.inputs.out_file = term_name + '.nii.gz'
-    res = merge.run()
-
-    filename = os.path.join(ROOT_DIR,term_name + '.nii.gz')
-    source_dir = os.path.join(DECODED_IMAGE_DIR, movie_name)
-    shutil.move(filename,source_dir)
-    # filename = os.path.join(DECODED_IMAGE_DIR, movie_name, term_name)
-    # nib.save(image4D, filename)

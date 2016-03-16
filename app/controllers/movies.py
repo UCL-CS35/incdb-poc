@@ -1,13 +1,17 @@
 from flask import render_template, Blueprint
-from flask import request, abort
+from flask import send_from_directory,request, abort
 
 from app import app, db
 from app.models import *
 from app.models.decodings import Decoding
 from app.models.collections import Collection
 from app.controllers.home import paginate
+from app.initializers import settings
+from app.initializers.settings import *
 
 from sqlalchemy import *
+
+import os
 
 movies_blueprint = Blueprint('movies', __name__, url_prefix='/movies')
 
@@ -70,14 +74,23 @@ def select_movie_term(selected_movie, selected_term, page=1):
     condition = Decoding.movie == selected_movie
     condition = and_(condition, Decoding.term == selected_term)
     components = Decoding.query.filter(condition)
+    collection = Collection.query.filter_by(movie_name=selected_movie).first()
     if components.count() == 0:
         abort(404)
     components = components.paginate(page, 10, False)
     return render_template(
         "movies/select_term.html",
+        collection = collection,
         components=components,
         selected_term=selected_term,
         selected_movie=selected_movie)
+
+@app.route('/data/images/decoded/<path:selected_movie>/<path:term_name>')
+def load_term_component(selected_movie, term_name):
+    return send_from_directory(
+        os.path.join(DECODED_IMAGE_DIR,selected_movie),
+        term_name,
+        as_attachment=True)
 
 
 @movies_blueprint.route('/search_movie')

@@ -34,6 +34,8 @@ def new_collection():
         current_user.collections.append(collection)
 
         db.session.add(collection)
+        collection = Collection.query.filter_by(name = collection.name).first()
+        collection.name = collection.name.replace(" ", "_")
         db.session.commit()
 
         return redirect(
