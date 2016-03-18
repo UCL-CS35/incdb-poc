@@ -1,4 +1,4 @@
-from app import db, celery, DBTask
+from app import db
 
 from app.models.decodings import Decoding, DecodingSet
 from app.models.decodings import *
@@ -6,8 +6,10 @@ from app.models.collections import *
 from app.models.analysis import *
 from app.controllers.components import component_directory
 from app.models.images import TermAnalysisImage
-from app.initializers import settings
+
+from app.initializers import settings, mycelery
 from app.initializers.settings import *
+from app.initializers.celerydb import db_session
 
 from uuid import uuid4
 
@@ -33,113 +35,123 @@ from nilearn.image import resample_img
 
 from nipype.interfaces import afni as afni
 
-
+import celery
 
 def load_image(masker, collection, filename, save_resampled=True):
-    """ Load an image, resampling into MNI space if needed. """
-    f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
-    anatomical = nb.load(f)
+	""" Load an image, resampling into MNI space if needed. """
+	f = join(settings.IMAGE_DIR, 'anatomical.nii.gz')
+	anatomical = nb.load(f)
 
-    filename = join(settings.PROCESSED_IMAGE_DIR, collection, filename)
-    img = nb.load(filename)
-    if img.shape[:3] != (91, 109, 91):
-        img = resample_img(
-            img, target_affine=anatomical.get_affine(),
-            target_shape=(91, 109, 91), interpolation='nearest')
-        if save_resampled:
-            unlink(filename)
-            img.to_filename(filename)
-    return masker.mask(img)
+	filename = join(settings.PROCESSED_IMAGE_DIR, collection, filename)
+	img = nb.load(filename)
+	if img.shape[:3] != (91, 109, 91):
+		img = resample_img(
+			img, target_affine=anatomical.get_affine(),
+			target_shape=(91, 109, 91), interpolation='nearest')
+		if save_resampled:
+			unlink(filename)
+			img.to_filename(filename)
+	return masker.mask(img)
 
 
 class Reference(object):
 
-    def __init__(self, name, n_voxels, n_images, is_subsampled):
+	def __init__(self, name, n_voxels, n_images, is_subsampled):
 
-        self.name = name
-        self.n_voxels = n_voxels
-        self.n_images = n_images
-        self.is_subsampled = is_subsampled
+		self.name = name
+		self.n_voxels = n_voxels
+		self.n_images = n_images
+		self.is_subsampled = is_subsampled
 
-        # Link to memmap data
-        mm_file = join(settings.MEMMAP_DIR, name + '_images.dat')
-        self.data = np.memmap(mm_file, dtype='float32', mode='r',
-                              shape=(n_voxels, n_images))
-        # Link to labels
-        lab_file = join(settings.MEMMAP_DIR, name + '_labels.txt')
-        _labels = open(lab_file).read().splitlines()
-        self.labels = OrderedDict(zip(_labels, range(len(_labels))))
+		# Link to memmap data
+		mm_file = join(settings.MEMMAP_DIR, name + '_images.dat')
+		self.data = np.memmap(mm_file, dtype='float32', mode='r',
+							  shape=(n_voxels, n_images))
+		# Link to labels
+		lab_file = join(settings.MEMMAP_DIR, name + '_labels.txt')
+		_labels = open(lab_file).read().splitlines()
+		self.labels = OrderedDict(zip(_labels, range(len(_labels))))
 
-        # Image stats
-        stat_file = join(settings.MEMMAP_DIR, name + '_stats.txt')
-        self.stats = pd.read_csv(stat_file, sep='\t')
+		# Image stats
+		stat_file = join(settings.MEMMAP_DIR, name + '_stats.txt')
+		self.stats = pd.read_csv(stat_file, sep='\t')
 
 
 def decode_folder(directory):
-    # TODO: Match decode_collection()
-    decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
+	# TODO: Match decode_collection()
+	decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
-    for folder in listdir(directory):
+	for folder in listdir(directory):
 
-        print folder
+		print folder
 
-        if isdir(join(directory, folder)):
+		if isdir(join(directory, folder)):
 
-            decode_movie_folder = join(settings.DECODING_RESULTS_DIR, folder)
+			decode_movie_folder = join(settings.DECODING_RESULTS_DIR, folder)
 
-            if not exists(decode_movie_folder):
-                mkdir(decode_movie_folder)
+			if not exists(decode_movie_folder):
+				mkdir(decode_movie_folder)
 
-            decodings = Decoding.query.filter_by(movie=folder)
-            for a in decodings:
-                db.session.delete(a)
-            db.session.commit()
+			decodings = Decoding.query.filter_by(movie=folder)
+			for a in decodings:
+				db.session.delete(a)
+			db.session.commit()
 
-            time = datetime.utcnow()
-            for filename in listdir(join(directory, folder)):
-                decoding = Decoding(filename=filename, uuid=uuid4().hex,
-                                    decoding_set=decoding_set, movie=folder)
-                decoding = decode_image(
-                    decoding,
-                    decoding_set,
-                    folder,
-                    filename)
-                if decoding is not None:
-                    decoding.image_decoded_at = time
-                    db.session.add(decoding)
-                    db.session.commit()
+			time = datetime.utcnow()
+			for filename in listdir(join(directory, folder)):
+				decoding = Decoding(filename=filename, uuid=uuid4().hex,
+									decoding_set=decoding_set, movie=folder)
+				decoding = decode_image(
+					decoding,
+					decoding_set,
+					folder,
+					filename)
+				if decoding is not None:
+					decoding.image_decoded_at = time
+					db.session.add(decoding)
+					db.session.commit()
 
-@celery.task(base=DBTask)
+class SqlAlchemyTask(celery.Task):
+	"""An abstract Celery Task that ensures that the connection the the
+	database is closed on task completion"""
+	abstract = True
+
+	def after_return(self, status, retval, task_id, args, kwargs, einfo):
+		db_session.remove()
+
+
+@celery.task(base=SqlAlchemyTask)
 def decode_collection(directory, collection, movie_name):
-    
-    decoding_set = DecodingSet.query.filter_by(name='terms_20k').first()
 
-    if isdir(join(directory, collection)):
+	decoding_set = db_session.query(DecodingSet).filter_by(name='terms_20k').first()
+	print directory
+	print collection
+	if isdir(join(directory, collection)):
 
-        decode_movie_folder = join(settings.DECODING_RESULTS_DIR, collection)
+		decode_movie_folder = join(settings.DECODING_RESULTS_DIR, collection)
 
-        if not exists(decode_movie_folder):
-            mkdir(decode_movie_folder)
+		if not exists(decode_movie_folder):
+			mkdir(decode_movie_folder)
 
-        decodings = Decoding.query.filter_by(collection=collection)
-        for a in decodings:
-            db.session.delete(a)
-        db.session.commit()
+		decodings = db_session.query(Decoding).filter_by(collection=collection)
+		for a in decodings:
+			db_session.delete(a)
+		db_session.commit()
 
-        time = datetime.utcnow()
-        for filename in listdir(join(directory, collection)):
-            decoding = Decoding(filename=filename, uuid=uuid4().hex,
-                                decoding_set=decoding_set, movie=movie_name,
-                                collection=collection)
-            decoding = decode_image(
-                decoding,
-                decoding_set,
-                collection,
-                filename)
-            if decoding is not None:
-                decoding.image_decoded_at = time
-                db.session.add(decoding)
-                db.session.commit()
+		time = datetime.utcnow()
+		for filename in listdir(join(directory, collection)):
+			decoding = Decoding(filename=filename, uuid=uuid4().hex,
+								decoding_set=decoding_set, movie=movie_name,
+								collection=collection)
+			decoding = decode_image(
+				decoding,
+				decoding_set,
+				collection,
+				filename)
+			if decoding is not None:
+				decoding.image_decoded_at = time
+				db_session.add(decoding)
+				db_session.commit()
         
         collection_list = Collection.query
         collection_list = collection_list.filter_by(name=collection).first()

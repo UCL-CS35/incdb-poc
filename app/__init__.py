@@ -11,7 +11,6 @@ from flask_wtf.csrf import CsrfProtect
 
 from app.initializers import settings
 
-from celery import Celery,Task
 
 
 import os
@@ -64,8 +63,6 @@ def create_app(extra_config_settings={}):
     # Setup WTForms CsrfProtect
     CsrfProtect(app)
 
-
-    celery = Celery(app.name, broker=settings.CELERY_BROKER_URL)
 
     # Define bootstrap_is_hidden_field for flask-bootstrap's bootstrap_wtf.html
     from wtforms.fields import HiddenField

@@ -48,7 +48,7 @@ def upload():
                 settings.PROCESSED_IMAGE_DIR,
                 collection_name,
                 collection.movie_name)
-            collection.decoded = True
+            collection.decoded = False
             db.session.commit()
 
             # file.save(path)

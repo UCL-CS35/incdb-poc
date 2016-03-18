@@ -46,6 +46,15 @@ Before we deploying this application, we will have to configure the database URL
     # Create DB tables and populate the roles and users tables
     python manage.py init_db
 
+## Run Celery Worker and Redis Server
+    
+    # Run Celery Worker
+    celery worker -A app.initializers.mycelery --loglevel=debug
+
+    # Run Redis Server
+    redis-server
+    (if redis-server is not installed, do brew install redis-server)
+
 ## Running the app
 
     # Start the Flask development web server
