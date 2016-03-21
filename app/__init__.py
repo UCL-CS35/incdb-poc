@@ -134,33 +134,3 @@ def init_email_error_handler(app):
     app.logger.addHandler(mail_handler)
 
     # Log errors using: app.logger.error('Some error message')
-
-def make_celery(app):
-    celery = Celery(app.import_name, broker=settings.CELERY_BROKER_URL)
-    celery.conf.update(app.config)
-    celery.conf.update(CELERY_IMPORTS='app.core.decode')
-    TaskBase = celery.Task
-    class ContextTask(TaskBase):
-        abstract = True
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return TaskBase.__call__(self, *args, **kwargs)
-    celery.Task = ContextTask
-    return celery
-
-class DBTask(Task):
-    _session = None
-
-    def after_return(self, *args, **kwargs):
-        if self._session is not None:
-            self._session.remove()
-
-    @property
-    def session(self):
-        if self._session is None:
-            _, self._session = _get_engine_session(self.conf['db_uri'],
-                                                   verbose=False)
-
-        return self._session
-
-celery = make_celery(app)

@@ -9,6 +9,7 @@ from app.models.collections import Collection
 from app.initializers import settings
 from app.initializers.settings import *
 
+
 import os
 
 components_blueprint = Blueprint(
@@ -52,7 +53,7 @@ def load_component(collection, file_name):
 
 @app.route('/data/images/decoded/<path:collection>/<path:file_name>')
 def component_directory(collection, file_name):
-    return os.path.join(DECODED_IMAGE_DIR, collection, file_name)
+    return os.path.join(PROCESSED_IMAGE_DIR, collection, file_name)
 
 @app.route('/data/images/<path:comp_name>')
 def load_brain_def(comp_name):

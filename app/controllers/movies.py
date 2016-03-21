@@ -88,7 +88,7 @@ def select_movie_term(selected_movie, selected_term, page=1):
 @app.route('/data/images/decoded/<path:selected_movie>/<path:term_name>')
 def load_term_component(selected_movie, term_name):
     return send_from_directory(
-        os.path.join(DECODED_IMAGE_DIR,selected_movie),
+        os.path.join(PROCESSED_IMAGE_DIR,selected_movie),
         term_name,
         as_attachment=True)
 

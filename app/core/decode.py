@@ -3,7 +3,9 @@ from app import db
 from app.models.decodings import Decoding, DecodingSet
 from app.models.decodings import *
 from app.models.collections import *
+from app.models.collections import Collection
 from app.models.analysis import *
+from app.models.analysis import Analysis
 from app.controllers.components import component_directory
 from app.models.images import TermAnalysisImage
 
@@ -153,11 +155,8 @@ def decode_collection(directory, collection, movie_name):
 				db_session.add(decoding)
 				db_session.commit()
         
-        collection_list = Collection.query
-        collection_list = collection_list.filter_by(name=collection).first()
-        analysis = db.session.query(Analysis.name)   
-        movie_decode = db.session.query(Decoding.filename,Decoding.movie,Decoding.term)
-        movie_decode = Decoding.query.filter_by(movie = collection_list.movie_name)
+        analysis = db_session.query(Analysis.name)   
+        movie_decode = db_session.query(Decoding.filename,Decoding.movie,Decoding.term).filter_by(movie = movie_name)
 
         for term in analysis:
             print term.name
@@ -166,8 +165,7 @@ def decode_collection(directory, collection, movie_name):
                 print 'There are no components for this term'
             else:
                 imgs = []
-                collection_name = collection_list.name
-                movie_name = collection_list.movie_name
+                collection_name = collection
                 for component in movie_decode_term:
                     file = component_directory(collection_name, component.filename)
                     print "Now decoding for" + term.name
@@ -239,7 +237,7 @@ def concat_components(componentList,term,movie):
     res = merge.run()
 
     filename = os.path.join(ROOT_DIR,term_name + '.nii.gz')
-    source_dir = os.path.join(DECODED_IMAGE_DIR, movie_name)
+    source_dir = os.path.join(PROCESSED_IMAGE_DIR, movie_name)
     shutil.move(filename,source_dir)
     # filename = os.path.join(DECODED_IMAGE_DIR, movie_name, term_name)
     # nib.save(image4D, filename)
