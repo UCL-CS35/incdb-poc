@@ -24,6 +24,8 @@ opbeat
 pandas
 simplejson
 
+nipype
+
 # Development tools
 pytest
 pytest-flask
