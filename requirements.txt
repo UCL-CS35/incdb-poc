@@ -25,6 +25,8 @@ pandas
 simplejson
 
 nipype
+celery
+redis
 
 # Development tools
 pytest
