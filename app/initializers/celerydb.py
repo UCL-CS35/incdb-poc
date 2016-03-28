@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.orm import sessionmaker
-from app.initializers import settings
 
 engine = create_engine(
     'sqlite:///app.sqlite', convert_unicode=True,
