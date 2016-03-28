@@ -3,7 +3,7 @@ $(document).ready(function() {
 
         source: function(request, response) {
             $.getJSON($SCRIPT_ROOT + "/_search_movie", 
-                { term: request.term }, 
+                { movie: request.movie }, 
                 response);
         },
         minLength: 2,

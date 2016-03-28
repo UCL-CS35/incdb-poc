@@ -3,9 +3,9 @@ from wtforms import StringField, SubmitField, validators, SelectField
 from flask_user.forms import RegisterForm
 
 
-# Define the User Registration form
 # It augments the Flask-User RegisterForm with additional fields
 class MyRegisterForm(RegisterForm):
+    """ Form for User Registration """
     title = StringField('Title')
     first_name = StringField('First Name', validators=[
         validators.DataRequired('First Name is required')])
@@ -13,8 +13,8 @@ class MyRegisterForm(RegisterForm):
         validators.DataRequired('Last Name is required')])
 
 
-# Define the User Profile form
 class UserProfileForm(Form):
+    """ Form for User Account """
     title = StringField('Title')
     first_name = StringField('First Name', validators=[
         validators.DataRequired('First Name is required')])
@@ -24,8 +24,8 @@ class UserProfileForm(Form):
     submit = SubmitField('Save')
 
 
-# Define the Collecetion form
 class CollectionForm(Form):
+    """ Form for Collection """
 
     # Essential
     name = StringField('Name', validators=[
@@ -39,6 +39,7 @@ class CollectionForm(Form):
         description='Public (The collection will be accessible by anyone and all the data in it will be distributed under CC0 license). Private (The collection will be not listed in the INcDb index).')
 
     # Movie
+    # TODO(Donovan) Set Movie Name to cannot be blank
     movie_name = StringField('Movie Name')
     viewed_times = StringField('Number of Times previously viewed',
         description=u'The number of times the participant has seen the movie before')

@@ -4,8 +4,8 @@ from app import app
 
 @manager.command
 def list_routes():
+    """ List all routes defined """
     import urllib
-
     output = []
     for rule in app.url_map.iter_rules():
         methods = ','.join(rule.methods)
@@ -19,5 +19,6 @@ def list_routes():
 
 @manager.command
 def init_db():
+    """ Run to setup database """
     from app.initializers.setup_database import setup_database
     setup_database()

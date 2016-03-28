@@ -5,19 +5,15 @@ from app.models.users import User, Role
 
 def create_users():
     """ Create users when app starts """
-
     print 'Create users...'
 
-    # Adding roles
     admin_role = find_or_create_role('admin', u'Admin')
 
-    # Add users
     jeremy = find_or_create_user(u'Jeremy', u'Skipper', u'Dr', u'jeremy@incdb.com', 'Password1', admin_role)
     ong = find_or_create_user(u'Yong Lin', u'Ong', u'Mr', u'ong@incdb.com', 'Password1')
     johnson = find_or_create_user(u'Johnson', u'Cheung', u'Mr', u'johnson@incdb.com', 'Password1')
     rajind = find_or_create_user(u'Rajind', u'Karunaratne', u'Mr', u'rajind@incdb.com', 'Password1')
 
-    # Save to DB
     db.session.commit()
 
 
@@ -27,6 +23,7 @@ def find_or_create_role(name, label):
     if not role:
         role = Role(name=name, label=label)
         db.session.add(role)
+
     return role
 
 
@@ -44,4 +41,5 @@ def find_or_create_user(first_name, last_name, title, email, password, role=None
         if role:
             user.roles.append(role)
         db.session.add(user)
+
     return user

@@ -14,7 +14,7 @@ user_blueprint = Blueprint('user', __name__, url_prefix='/user')
 @user_blueprint.route('/account/', methods=['GET', 'POST'])
 @login_required
 def user_account():
-
+    """ Fetch and update user account """
     form = UserProfileForm(request.form, current_user)
 
     if request.method == 'POST' and form.validate():
@@ -22,7 +22,6 @@ def user_account():
         db.session.commit()
         return redirect(url_for('home.index'))
 
-    # Process GET or invalid POST
     return render_template(
         'user/account.html',
         form=form)
@@ -31,7 +30,7 @@ def user_account():
 @user_blueprint.route('/collections/')
 @login_required  # Limits access to authenticated users
 def user_collections():
-
+    """ Fetch current user's collections """
     return render_template(
         "user/collections.html",
         collections=current_user.collections)

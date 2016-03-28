@@ -6,16 +6,14 @@ from app import app, db
 from app.core.forms import CollectionForm
 from app.models.collections import Collection
 from app.models.users import User
-from app.initializers import settings
+from app.initializers.settings import *
+
+from sqlalchemy import *
 
 import os
 import time
 import json
 import glob
-
-from sqlalchemy import *
-
-import zipfile
 
 contribute_blueprint = Blueprint('contribute', __name__, url_prefix='/')
 
@@ -23,7 +21,7 @@ contribute_blueprint = Blueprint('contribute', __name__, url_prefix='/')
 @contribute_blueprint.route('contribute/new', methods=["POST", "GET"])
 @login_required  # Limits access to authenticated users
 def new_collection():
-
+    """ Allow user to create new collection """
     form = CollectionForm(request.form)
 
     if request.method == 'POST' and form.validate():
@@ -32,9 +30,9 @@ def new_collection():
         form.populate_obj(collection)
 
         current_user.collections.append(collection)
-
         db.session.add(collection)
-        collection = Collection.query.filter_by(name = collection.name).first()
+
+        collection = Collection.query.filter_by(name=collection.name).first()
         collection.name = collection.name.replace(" ", "_")
         db.session.commit()
 
@@ -49,13 +47,13 @@ def new_collection():
     methods=["POST", "GET"])
 @login_required  # Limits access to authenticated users
 def edit_collection(collection_name):
-
+    """ Allow owner to edit collection """
     collection = Collection.query.filter_by(name=collection_name).first()
     if collection is None:
         abort(404)
 
     user = User.query.filter_by(id=collection.user_id).first()
-    # only admin and owner can view
+    # only owner can view
     if user != current_user:
         abort(404)
 
@@ -77,6 +75,7 @@ def edit_collection(collection_name):
 @contribute_blueprint.route('contribute/upload/')
 @login_required  # Limits access to authenticated users
 def upload_files():
+    """ Upload raw dataset by collection's owner """
     c = request.args.get('collection')
 
     # Only owner can add files to collection
@@ -91,7 +90,7 @@ def upload_files():
 @contribute_blueprint.route('upload', methods=["POST"])
 @login_required  # Limits access to authenticated users
 def upload():
-    """Handle the upload of a file."""
+    """ Handle the upload raw dataset """
     form = request.form
 
     c = str(request.args.get('collection'))
@@ -102,7 +101,7 @@ def upload():
     if form.get("__ajax", None) == "true":
         is_ajax = True
 
-    # Target folder for these uploads.
+    # Target user folder for these uploads
     target = "uploads/{}".format(current_user.id)
     if not os.path.exists(target):
         try:
@@ -115,7 +114,7 @@ def upload():
             else:
                 return "Couldn't create user directory: {}".format(target)
 
-    # Target folder for these uploads.
+    # Target collection folder for these uploads.
     target = "uploads/{}".format(upload_key)
     if not os.path.exists(target):
         try:
@@ -140,25 +139,10 @@ def upload():
         return redirect(url_for("contribute.collection") + '/' + c)
 
 
-def unzip(source_filename, dest_dir):
-    with zipfile.ZipFile(source_filename) as zf:
-        for member in zf.infolist():
-            # Path traversal defense copied from
-            # http://hg.python.org/cpython/file/tip/Lib/http/server.py#l789
-            words = member.filename.split('/')
-            if words[0] == '__MACOSX':
-                continue
-            path = dest_dir
-            for word in words[:-1]:
-                drive, word = os.path.splitdrive(word)
-                head, word = os.path.split(word)
-                if word in (os.curdir, os.pardir, ''):
-                    continue
-            zf.extract(member, path)
-
-
 def ajax_response(status, msg):
+    """ AJAX response for upload() """
     status_code = "ok" if status else "error"
+
     return json.dumps(dict(
         status=status_code,
         msg=msg,
@@ -168,7 +152,7 @@ def ajax_response(status, msg):
 @contribute_blueprint.route('collection/<collection_name>/')
 @login_required  # Limits access to authenticated users
 def collection(collection_name):
-
+    """ Fetch collection from Collection table """
     collection = Collection.query.filter_by(name=collection_name).first()
     if collection is None:
         abort(404)
@@ -203,7 +187,7 @@ def collection(collection_name):
         else:
             raw_files[fname] = modified_time
 
-    collection_dir = settings.PROCESSED_IMAGE_DIR + '/' + str(collection_name)
+    collection_dir = PROCESSED_IMAGE_DIR + '/' + str(collection_name)
     if not os.path.isdir(collection_dir):
         return render_template(
             template,
@@ -222,5 +206,5 @@ def collection(collection_name):
         processed_files=processed_files,
         user=user)
 
-
+# Register blueprint
 app.register_blueprint(contribute_blueprint)

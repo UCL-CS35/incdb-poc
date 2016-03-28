@@ -11,21 +11,16 @@ from flask_wtf.csrf import CsrfProtect
 
 from app.initializers import settings
 
-
-
 import os
-
 
 app = Flask(__name__)           # The WSGI compliant web application object
 db = SQLAlchemy(app)            # Setup Flask-SQLAlchemy
 manager = Manager(app)          # Setup Flask-Script
 
 
-
 @app.before_first_request
 def initialize_app_on_first_request():
     """ Before the first request to this instance of the application """
-
     print "First request..."
 
 

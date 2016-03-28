@@ -4,9 +4,10 @@ from app.initializers import database_builder
 from app.initializers import settings
 
 import os
-
+import shutil
 
 def setup_database():
+    """ Create dataset, database and users """
 
     print "Setting up database..."
 
@@ -20,7 +21,7 @@ def setup_database():
         reset_db=True,
         reset_dataset=False)
 
-    # TODO: all analyses
+    # TODO(all) all analyses
     analyses = ['emotion',
                 'language',
                 'memory',
@@ -45,6 +46,5 @@ def setup_database():
     create_users()
 
     print "Clear uploads..."
-    import shutil
     shutil.rmtree('uploads', ignore_errors=True)
     os.mkdir('uploads')

@@ -44,6 +44,7 @@ class Analysis(db.Model):
 
 
 class TermAnalysis(Analysis):
+
     __tablename__ = 'term_analysis'
     id = db.Column(db.Integer, db.ForeignKey('analysis.id'), primary_key=True)
     images = db.relationship(

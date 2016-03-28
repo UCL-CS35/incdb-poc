@@ -6,5 +6,6 @@ from app.initializers import settings
 engine = create_engine(
     'sqlite:///app.sqlite', convert_unicode=True,
     pool_recycle=3600)
+
 db_session = scoped_session(sessionmaker(
     autocommit=False, autoflush=False, bind=engine))
