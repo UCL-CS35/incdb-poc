@@ -8,83 +8,80 @@
 
 <div class="container body_container">
 
-	<h1>{{ collection.name }} <br> <small> contributed by {{ user.first_name + ' ' + user.last_name }} </small></h1>
+  <h1>{{ collection.name }} <br> <small> contributed by {{ user.first_name + ' ' + user.last_name }} </small></h1>
 
-	<hr>
+  <hr>
 
-	<h3>
-		Raw Dataset 
-	</h3>
-	<table class="table table-bordered table-hover">
+  <h3>Raw Dataset</h3>
 
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Last Modified Time</th>
-			</tr>
-		</thead>
+  <table class="table table-bordered table-hover">
 
-		<tbody>
-		{% if files|length > 0 %}
-		<!-- Table -->
-			{% for file, modified in files.iteritems() %}
-			<tr>
-				<td>{{ file }}</td>
-				<td>{{ modified }}</td>
-			</tr>
-			{% endfor %}
-		{% else %}
-			<tr>
-				<td colspan="2">The collection is empty.</td>
-			</tr>
-		{% endif %}
-		</tbody>
-	</table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Modified Time</th>
+      </tr>
+    </thead>
 
-	<a href="/admin/download/{{collection.user_id}}/{{collection.name}}" class="btn btn-default">
-		Download Raw Dataset
-	</a>
+    <tbody>
+      {% if files|length > 0 %}
+        {% for file, modified in files.iteritems() %}
+        <tr>
+          <td>{{ file }}</td>
+          <td>{{ modified }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2">The collection is empty.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
 
-	<hr>
+  <a href="/admin/download/{{collection.user_id}}/{{collection.name}}" class="btn btn-default">
+    Download Raw Dataset
+  </a>
 
-	<h3>
-		Processed Dataset by Dr. Jeremy Skipper
-	</h3>
+  <hr>
 
-	<table class="table table-bordered table-hover">
+  <h3>
+    Processed Dataset by Dr. Jeremy Skipper
+  </h3>
 
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Last Modified Time</th>
-			</tr>
-		</thead>
+  <table class="table table-bordered table-hover">
 
-		<tbody>
-		{% if processed_files|length > 0 %}
-		<!-- Table -->
-			{% for file, modified in processed_files.iteritems() %}
-			<tr>
-				<td>{{ file }}</td>
-				<td>{{ modified }}</td>
-			</tr>
-			{% endfor %}
-		{% else %}
-			<tr>
-				<td colspan="2">No processed dataset is uploaded.</td>
-			</tr>
-		{% endif %}
-		</tbody>
-	</table>
-	
-	<form action="{{ url_for('admin.upload', collection=collection.name) }}" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Modified Time</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% if processed_files|length > 0 %}
+        {% for file, modified in processed_files.iteritems() %}
+          <tr>
+            <td>{{ file }}</td>
+            <td>{{ modified }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2">No processed dataset is uploaded.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  
+  <form action="{{ url_for('admin.upload', collection=collection.name) }}" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
     <div class="form-group">
-    	<input type="file" name="file"><br>
-    	<input class="btn btn-default" type="submit" value="Upload Processed Dataset">
+      <input type="file" name="file"><br>
+      <input class="btn btn-default" type="submit" value="Upload Processed Dataset">
     </div>
   </form>
-  
+
 </div>
 
 {% endblock %}

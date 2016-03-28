@@ -8,55 +8,56 @@
 
 <div class="container body_container">
 
-	<h1>{{ collection.name }} <br> <small> Contributed by {{ user.first_name + ' ' + user.last_name }} </small></h1>
+  <h1>{{ collection.name }} <br> <small> Contributed by {{ user.first_name + ' ' + user.last_name }} </small></h1>
 
-	{% if not collection.decoded %}
-	<a href="{{ url_for('contribute.upload_files', collection=collection.name)}}" class="btn btn-primary">
-		Upload an archive with images (.zip or .tar.gz)
-	</a>
-	{% endif %}
-	<a href="{{ url_for('contribute.edit_collection', collection_name=collection.name )}}" class="btn btn-primary">
-		Edit Collection
-	</a>
-	<hr>
+  {% if not collection.decoded %}
+    <a href="{{ url_for('contribute.upload_files', collection=collection.name)}}" class="btn btn-primary">
+      Upload an archive with images (.zip or .tar.gz)
+    </a>
+  {% endif %}
+  <a href="{{ url_for('contribute.edit_collection', collection_name=collection.name )}}" class="btn btn-primary">
+    Edit Collection
+  </a>
+  <hr>
 
-	{% if collection.decoded %}
-		<p class="alert alert-info">Collection has been decoded by INcDb. View the <a href="/movies/{{ collection.movie_name }}">decoded movie.</a></p>
-	{% endif %}
+  {% if collection.decoded %}
+    <p class="alert alert-info">
+      Collection has been decoded by INcDb. View the <a href="/movies/{{ collection.movie_name }}">decoded movie.</a>
+    </p>
+  {% endif %}
 
-	<h4>Files Uploaded</h4>
+  <h4>Files Uploaded</h4>
 
-	<table class="table table-bordered table-hover">
+  <table class="table table-bordered table-hover">
 
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Last Modified Time</th>
-			</tr>
-		</thead>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Last Modified Time</th>
+      </tr>
+    </thead>
 
-		<tbody>
-		{% if files|length > 0 %}
-		<!-- Table -->
-			{% for file, modified in files.iteritems() %}
-			<tr>
-				<td>{{ file }}</td>
-				<td>{{ modified }}</td>
-			</tr>
-			{% endfor %}
-		{% else %}
-			<tr>
-				<td colspan="2">The collection is empty.</td>
-			</tr>
-		{% endif %}
-		</tbody>
-	</table>
+    <tbody>
+      {% if files|length > 0 %}
+        {% for file, modified in files.iteritems() %}
+          <tr>
+            <td>{{ file }}</td>
+            <td>{{ modified }}</td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="2">The collection is empty.</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
 
-	<hr>
+  <hr>
 
-	{% from "common/collection_details.html" import render_collection %}
-	{{ render_collection(collection) }}
- 
+  {% from "common/collection_details.html" import render_collection %}
+  {{ render_collection(collection) }}
+
 </div>
 
 {% endblock %}

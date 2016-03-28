@@ -18,18 +18,18 @@
 
 	<table class="table">
 		<thead>
-		<tr>
-			<th>Name</th>
-			<th>Collection</th>
-		</tr>
+			<tr>
+				<th>Name</th>
+				<th>Collection</th>
+			</tr>
 		</thead>
 		<tbody>
-		{% for component in components.items %}
-		<tr>
-			<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
-			<td>{{ component.collection }}</td>
-		</tr>
-		{% endfor %}
+			{% for component in components.items %}
+			<tr>
+				<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+				<td>{{ component.collection }}</td>
+			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 	{% from "common/pagination.html" import render_movie_term_pagination %}
@@ -60,10 +60,10 @@
   viewer.clear()   // Paint canvas background while images load
   images = [
   {
-    'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
-    'name': 'brain overlay',
-    'colorPalette': 'grayscale',
-    'cache': false,
+  	'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
+  	'name': 'brain overlay',
+  	'colorPalette': 'grayscale',
+  	'cache': false,
   },
   {
   	'url': "{{ url_for('load_term_component', selected_movie = collection.name, term_name = (selected_term + '.nii.gz')) }}",

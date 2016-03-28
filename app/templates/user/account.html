@@ -9,14 +9,14 @@
 
 <div class="container body_container">
 
-    <h1>Account</h1>
-    <hr>
+  <h1>Account</h1>
+  <hr>
 
-    {% from "flask_user/_macros.html" import render_field, render_submit_field %}
+  {% from "flask_user/_macros.html" import render_field, render_submit_field %}
 
-    <form action="" method="POST" class="form" role="form">
-      <div class="row">
-        <div class="col-sm-12">
+  <form action="" method="POST" class="form" role="form">
+    <div class="row">
+      <div class="col-sm-12">
         {{ form.hidden_tag() }}
 
         {{ render_field(form.title, tabindex=240) }}
@@ -29,11 +29,11 @@
 
         {{ render_submit_field(form.submit, tabindex=280) }}
 
-        </div>
       </div>
-    </form>
+    </div>
+  </form>
 
-    <p style="margin-top: 10px;"><a href="{{ url_for('user.change_password') }}">Change Password</a></p>
+  <p style="margin-top: 10px;"><a href="{{ url_for('user.change_password') }}">Change Password</a></p>
 
 </div>
 

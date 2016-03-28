@@ -9,9 +9,13 @@
 
 <div style="width:50%;float:left;background-color:#34495e;background-repeat:no-repeat;background-image:url(../static/images/background.jpg);height:85vh;">
 </div>
+
 <div style="background-color:#34495e;height:85vh;padding-top:10%;width:50%;float:right;padding-left:60px;">
+
   <h1 style="text-align:left;color:white;">Login to iNCDb</h1>
+
   {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
+
   <form action="" method="POST" role="form" class="form-inline" style="margin-top:30px;">
     {{ form.hidden_tag() }}
 
@@ -22,35 +26,38 @@
         <table>
           <tr>
             {% set field = form.username if user_manager.enable_username else form.email %}
-            <td>{{ field(class_='form-control input-lg', tabindex=110, placeholder="Username", style="width:30vw;") }}
+            <td>
+              {{ field(class_='form-control input-lg', tabindex=110, placeholder="Username", style="width:30vw;") }}
               {% if field.errors %}
-              {% for e in field.errors %}
-              <p class="help-block">{{ e }}</p>
-              {% endfor %}
-              {% endif %}</td>
-            </tr>
-            <tr>
-              {% set field = form.password %}
-              <td style="padding-top:10px">        
-                {{ field(class_='form-control input-lg', tabindex=120, placeholder="Password", style="width:30vw") }}
-                {% if field.errors %}
                 {% for e in field.errors %}
                 <p class="help-block">{{ e }}</p>
                 {% endfor %}
-                {% endif %}</td>
-              </tr>
-              <tr>
-                <td style="padding-top:30px">{{ render_submit_field(form.submit, tabindex=180) }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </form>
-      <div style="padding-top:30px">
-      {% if user_manager.enable_register and not user_manager.require_invitation %}
-        <a href="{{ url_for('user.register') }}" tabindex='190' class="body" style="color:white">{%trans%}Don't have an account? Click here{%endtrans%}</a>
-      {% endif %}
+              {% endif %}
+            </td>
+          </tr>
+          <tr>
+            {% set field = form.password %}
+            <td style="padding-top:10px">        
+              {{ field(class_='form-control input-lg', tabindex=120, placeholder="Password", style="width:30vw") }}
+              {% if field.errors %}
+                {% for e in field.errors %}
+                  <p class="help-block">{{ e }}</p>
+                {% endfor %}
+              {% endif %}<
+            </td>
+          </tr>
+            <tr>
+            <td style="padding-top:30px">{{ render_submit_field(form.submit, tabindex=180) }}</td>
+          </tr>
+        </table>
       </div>
     </div>
+  </form>
+  <div style="padding-top:30px">
+    {% if user_manager.enable_register and not user_manager.require_invitation %}
+    <a href="{{ url_for('user.register') }}" tabindex='190' class="body" style="color:white">{%trans%}Don't have an account? Click here{%endtrans%}</a>
+    {% endif %}
   </div>
-  {% endblock %}
+</div>
+
+{% endblock %}
