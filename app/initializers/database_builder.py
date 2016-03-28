@@ -54,23 +54,21 @@ class DatabaseBuilder:
             self.reset_assets(download_data)
 
         # Load or create Neurosynth Dataset instance
-        if dataset is None or reset_dataset or (isinstance(dataset, basestring)
-                                               and not os.path.exists(dataset)
-                                               ):
+        if dataset is None or reset_dataset or (isinstance(dataset, basestring) and not os.path.exists(dataset)):
 
-           print "\tInitializing a new Dataset..."
-           if (studies is None) or (features is None):
-               raise ValueError(
-                   "To generate a new Dataset instance, both studies and "
-                   "analyses must be provided.")
-           dataset = Dataset(studies)
-           dataset.add_features(features)
-           dataset.save(settings.PICKLE_DATABASE, keep_mappables=True)
+            print "\tInitializing a new Dataset..."
+            if (studies is None) or (features is None):
+                raise ValueError(
+                    "To generate a new Dataset instance, both studies and "
+                    "analyses must be provided.")
+            dataset = Dataset(studies)
+            dataset.add_features(features)
+            dataset.save(settings.PICKLE_DATABASE, keep_mappables=True)
         else:
             print "\tLoading existing Dataset..."
             dataset = Dataset.load(dataset)
             if features is not None:
-               dataset.add_features(features)
+                dataset.add_features(features)
 
         self.dataset = dataset
         self.db = db
@@ -109,7 +107,7 @@ class DatabaseBuilder:
                 if not exists(filename) or settings.RESET_ASSETS:
                     urllib.urlretrieve(url, filename)
             except:
-                raise ValueError("Could not save remote URL %s to local path %s. ")
+                raise ValueError("Could not save remote URL %s to local path %s.")
 
         for u, f in {
             'ftp://ftp.ebi.ac.uk/pub/databases/genenames/hgnc_complete_set.txt.gz':
@@ -167,18 +165,18 @@ class DatabaseBuilder:
         self.db.drop_all()
         self.db.create_all()
 
-    def add_term_analyses(self, analyses=None, add_images=False,
-                          image_dir=None, reset=False):
-        ''' Add Analysis records to the DB.
+    def add_term_analyses(self, analyses=None, add_images=False, image_dir=None, reset=False):
+        """Add Analysis records to the DB.
+
         Args:
             analyses: A list of analysis names to add to the db. If None,
                 will use all analyses in the Dataset.
             image_dir: folder to save generated analysis images in. If None,
                 do not save any images.
-        '''
+        """
         if reset:
             for a in TermAnalysis.query.all():
-                self.db.session.delete(a)
+                self.db.session.delte(a)
             for s in AnalysisSet.query.filter_by(type='terms').all():
                 self.db.session.delete(s)
 
@@ -215,13 +213,6 @@ class DatabaseBuilder:
         """
         Create DB records for the reverse and forward meta-analysis images for
         the given analysis.
-        Args:
-            analysis: Either a Analysis instance or the (string) name of an
-                analysis to update. If a string, first check self.analyses, and
-                only retrieve from DB if not found.
-            image_dir: Location to find images in
-            reset: If True, deletes any existing AnalysisImages before adding
-                new ones
         """
 
         if isinstance(analysis, basestring):
@@ -280,7 +271,9 @@ class DatabaseBuilder:
 
     def generate_analysis_images(self, image_dir=None, analyses=None,
                                  add_to_db=True, overwrite=True, **kwargs):
-        """ Create a full set of analysis meta-analysis images via Neurosynth.
+        """
+        Create a full set of analysis meta-analysis images via Neurosynth.
+
         Args:
             image_dir: Folder in which to store images. If None, uses default
                 location specified in SETTINGS.
@@ -293,6 +286,7 @@ class DatabaseBuilder:
             kwargs: optional keyword arguments to pass onto the Neurosynth
                 meta-analysis.
         """
+
         # Set up defaults
         if image_dir is None:
             image_dir = join(settings.IMAGE_DIR, 'analyses')
