@@ -19,6 +19,7 @@ matplotlib
 neurosynth
 nibabel
 nilearn
+nipype
 numpy>=1.8
 opbeat
 pandas
@@ -29,4 +30,3 @@ pytest
 pytest-flask
 pytest-cov
 selenium
-

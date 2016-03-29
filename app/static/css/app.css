@@ -7,6 +7,15 @@
     src: url('GillSans.ttc');
 }
 
+@font-face{
+    font-family: 'Antic', sans-serif;
+    font-family: 'Titillium Web', sans-serif;
+}
+@font-face{
+    font-family: Gill Sans Light;
+    src: url('GillSans.ttc');
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -113,6 +122,15 @@ hr {
 }
 .jumbotron input {
     border-radius: 0;
+}
+.title {
+    color: #ffffff;
+    font-size: 5em;
+}
+.subtitle{
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: 200;
 }
 .index_help{
     margin-top: 20px;
@@ -286,6 +304,334 @@ hr {
 }
 
 @media screen and (max-width: 50em) {
+    .inputfile-upload + label strong {
+        display: block;
+    }
+}
+
+#file-picker, #file-label, #file-span {
+    color: black;
+}
+.pagination {
+    border-radius: 0px;
+    margin: 0;
+}
+.tab-pane {
+    padding: 10px 0 0px;
+}
+.panel-group .panel-incdb {
+    border-color: #34495e;
+    border-radius: 0;
+}
+.panel-incdb .panel-heading {
+    color: white;
+    background-color: #34495e;
+    border-color: #34495e;
+}
+
+li.layer_list_item {
+    line-height: 1.2em;
+    height: 30px
+}
+
+
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+    font-family: Titillium Web;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
+}
+hr {
+    border-top: 1px solid #ddd;
+}
+.btn-primary{
+    background-color: #205380;
+    border-radius: 0;
+}
+.btn-primary:hover{
+    border: 1px solid #fff;
+}
+.body_container {
+    padding-bottom: 60px;
+    padding-top: 30px;
+}
+.navbar{
+    border: 0;
+}
+.navbar-collapse {
+    background-color: #2c3e50;
+}
+.navbar-inverse{
+    background-color: #2c3e50;
+    font-size: 1.6em;
+}
+.navbar-static-top{
+    font-weight: 200;
+    margin-bottom: 0;
+    padding-top: 2px;
+    height: 100px;
+}
+.navbar-inverse .navbar-nav>li>a{
+    color: white;
+    background-color: #2c3e50;
+}
+.navbar-inverse .navbar-nav>li>a:hover{
+    text-decoration: underline;
+}
+
+.navbar-nav>li>a{
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.navbar-collapse.collapsing>.navbar-nav>li>a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-collapse.collapse.in>.navbar-nav>li>a{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #34495e;
+  border: 1px solid black;
+}
+.footer .container {
+    padding-top: 20px;
+    color: #fff;
+    text-align: center;
+}
+.footer .container a{
+    color: #fff;
+    margin: 0 10px;
+}
+.jumbotron {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 400;
+    text-align: center;
+    background: #34495e;
+    margin-bottom: 0px;
+}
+.index_jumbotron {
+    background: #000 url(/static/images/banner.jpg) center center;
+    background-size: cover;
+}
+.jumbotron h2 {
+    margin: 0 0 10px;
+}
+.jumbotron h3 {
+    margin: 0;
+}
+.jumbotron h1 {
+    margin: 0 0 10px;
+}
+.jumbotron input {
+    border-radius: 0;
+}
+.title {
+    color: #ffffff;
+    font-size: 5em;
+}
+.subtitle{
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: 200;
+}
+.index_help{
+    margin-top: 20px;
+}
+.index_help a{
+    font-weight: 400;
+    text-align: center;
+    color: #ecf0f1;
+}
+.brain_scans{
+    padding-bottom: 20px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.brain_section{
+    padding-top: 20px;
+}
+
+#xImage{
+    order: 1;
+}
+
+#yImage{
+    order: 2;
+}
+
+#zImage{
+    order: 3;
+}
+
+.ui-autocomplete {
+    position: absolute;
+    z-index: 1000;
+    cursor: default;
+    padding: 0;
+    margin-top: 2px;
+    list-style: none;
+    background-color: #ffffff;
+    border: 1px solid #000;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+.ui-autocomplete > li.ui-menu-item {
+  padding: 10px 14px;
+}
+.ui-autocomplete > li.ui-state-focus {
+  background-color: #DDD;
+  border: 0;
+  color: #34495e;
+}
+.ui-helper-hidden-accessible {
+  display: none;
+}
+
+.help-block {
+    margin-top: -5px;
+}
+
+.progress-trough {
+    border: 1px solid #000000;
+    height: 24px;
+    width: 100%;
+    position: relative;
+}
+
+.progress-bar {
+    width: 50%;
+    height: 100%;
+    background-color: #0099FF;
+}
+
+.js .inputfile {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.inputfile + label {
+    max-width: 100%;
+    font-size: 1.25rem;
+    /* 20px */
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    padding: 0.625rem 1.25rem;
+    /* 10px 20px */
+}
+
+.no-js .inputfile + label {
+    display: none;
+}
+
+.inputfile:focus + label,
+.inputfile.has-focus + label {
+    outline: 1px dotted #000;
+    outline: -webkit-focus-ring-color auto 5px;
+}
+
+.inputfile + label * {
+    /* pointer-events: none; */
+    /* in case of FastClick lib use */
+}
+
+.inputfile + label svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    fill: currentColor;
+    margin-top: -0.25em;
+    /* 4px */
+    margin-right: 0.25em;
+    /* 4px */
+}
+
+.inputfile-upload + label {
+    color: black;
+}
+
+.inputfile-upload + label {
+    border: 1px solid #34495e;
+    padding: 0;
+}
+
+.inputfile-upload:focus + label,
+.inputfile-upload.has-focus + label,
+.inputfile-upload + label:hover {
+    border-color: #34495e;
+}
+
+.inputfile-upload + label span {
+    padding: 1.2rem 2rem;
+    /* 10px 20px */
+}
+.inputfile-upload + label strong {
+    padding: 1.2rem 4.25rem;
+    /* 10px 20px */
+}
+
+.inputfile-upload + label span {
+    width: 600px;
+    min-height: 2em;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    vertical-align: top;
+}
+
+.visibility_icon{
+    color: black;
+}
+
+.deletion_icon{
+    color: black;
+}
+
+.inputfile-upload + label strong {
+    height: 100%;
+    color: white;
+    background-color: #205380;
+    display: inline-block;
+}
+
+.inputfile-upload:focus + label strong,
+.inputfile-upload.has-focus + label strong,
+.inputfile-upload + label:hover strong {
+    background-color: #4f6f8f;
+}
+
+@media screen and (max-width: 50em) {
 	.inputfile-upload + label strong {
 		display: block;
 	}
@@ -309,4 +655,13 @@ hr {
     color: white;
     background-color: #34495e;
     border-color: #34495e;
+}
+
+li.layer_list_item {
+    line-height: 1.2em;
+    height: 30px;
+}
+
+.form-control{
+    border-radius: 0px;
 }
