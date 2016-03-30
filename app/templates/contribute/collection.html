@@ -18,6 +18,9 @@
   <a href="{{ url_for('contribute.edit_collection', collection_name=collection.name )}}" class="btn btn-primary">
     Edit Collection
   </a>
+  {% if not collection.decoded %}
+  <a href="{{ url_for('user.refresh_user_collections', user=user.id, collection=collection.name) }}" class="btn btn-primary">Delete Collection</a>
+  {% endif %}
   <hr>
 
   {% if collection.decoded %}
