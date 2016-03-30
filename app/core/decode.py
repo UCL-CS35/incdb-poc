@@ -112,6 +112,8 @@ def decode_collection(directory, collection, movie_name):
 
         time = datetime.utcnow()
         for filename in listdir(join(directory, collection)):
+            if filename == ".DS_Store":
+                continue
             decoding = Decoding(filename=filename, uuid=uuid4().hex,
                         decoding_set=decoding_set, movie=movie_name,
                         collection=collection)
@@ -209,6 +211,11 @@ def concat_components(componentList, term, movie):
 
     filename = join(ROOT_DIR, term_name + '.nii.gz')
     source_dir = join(PROCESSED_IMAGE_DIR, movie_name)
+    file_dir = os.path.join(source_dir,term_name + '.nii.gz')
+    if os.path.exists(file_dir):
+        print file_dir
+        print "Removing existing file"
+        os.remove(file_dir)
     shutil.move(filename, source_dir)
     # filename = join(DECODED_IMAGE_DIR, movie_name, term_name)
     # nib.save(image4D, filename)
