@@ -90,35 +90,35 @@ class SqlAlchemyTask(celery.Task):
 
 
 @celery.task(base=SqlAlchemyTask)
-def decode_collection(directory, collection, movie_name):
+def decode_collection(directory, collection_name, movie_name):
     """ Celery task to decode processed dataset """
     decoding_set = db_session.query(DecodingSet).filter_by(name='terms_20k')
     decoding_set = decoding_set.first()
 
     print directory
-    print collection
+    print collection_name
 
-    if isdir(join(directory, collection)):
+    if isdir(join(directory, collection_name)):
 
-        decode_movie_folder = join(DECODING_RESULTS_DIR, collection)
+        decode_movie_folder = join(DECODING_RESULTS_DIR, collection_name)
 
         if not exists(decode_movie_folder):
             mkdir(decode_movie_folder)
 
-        decodings = db_session.query(Decoding).filter_by(collection=collection)
+        decodings = db_session.query(Decoding).filter_by(collection=collection_name)
         for a in decodings:
             db_session.delete(a)
         db_session.commit()
 
         time = datetime.utcnow()
-        for filename in listdir(join(directory, collection)):
+        for filename in listdir(join(directory, collection_name)):
             if filename == ".DS_Store":
                 continue
             decoding = Decoding(filename=filename, uuid=uuid4().hex,
                         decoding_set=decoding_set, movie=movie_name,
-                        collection=collection)
+                        collection=collection_name)
             decoding = decode_image(decoding, decoding_set,
-                        collection, filename)
+                        collection_name, filename)
             if decoding is not None:
                 decoding.image_decoded_at = time
                 db_session.add(decoding)
@@ -135,13 +135,16 @@ def decode_collection(directory, collection, movie_name):
             print 'There are no components for this term'
         else:
             imgs = []
-            collection_name = collection
+            collection_name = collection_name
             for component in movie_decode_term:
                 file = component_directory(collection_name, component.filename)
                 print "Now decoding for" + term.name
                 imgs.append(file)
             concat_components(imgs, term.name, collection_name)
 
+    collection = db_session.query(Collection).filter_by(name=collection_name).first()
+    collection.decoded = True
+    db.session.commit()
 
 def decode_image(
     decoding, decoding_set, collection,

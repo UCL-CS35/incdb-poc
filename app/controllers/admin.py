@@ -46,7 +46,7 @@ def upload():
                 collection_name,
                 collection.movie_name)
             # TODO(Johnson) Set collection.decoded to true after the celery task
-            collection.decoded = False
+            
             db.session.commit()
         else:
             print "No file found"
