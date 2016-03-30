@@ -6,25 +6,25 @@ from app.initializers.create_users import find_or_create_user
 
 def test_user_management(client):
 
-    # allows user to register
+    # Allows User to Register
     user = find_or_create_user(u'User2', u'Example', u'Mr', u'user2@example.com', 'Password1')
     assert user
 
-    # allows user to reset password 
+    # Allows User to Reset Password 
     new_user = find_or_create_user(u'User2', u'Example', u'Mr', u'user2@example.com', 'Password1')
     new_user.password = u'Password2'
     db.session.commit()
     user = User.query.filter(User.email == u'user2@example.com').first()
     assert user.password == 'Password2'
 
-    # allow user to edit title
+    # Allow User to Edit Title
     new_user = find_or_create_user(u'User2', u'Example', u'Mr', u'user2@example.com', 'Password1')
     new_user.title = u'Dr'
     db.session.commit()
     user = User.query.filter(User.email == u'user2@example.com').first()
     assert user.title == 'Dr'
 
-    # allow user to edit first_name and last_name
+    # Allow User to Edit first_name and last_name
     new_user = find_or_create_user(u'User2', u'Example', u'Mr', u'user2@example.com', 'Password1')
     new_user.first_name = u'Jeremy'
     new_user.last_name = u'Skipper'
