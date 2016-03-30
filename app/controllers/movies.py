@@ -96,7 +96,7 @@ def select_movie_term(selected_movie, selected_term, page=1):
 def load_term_component(selected_movie, term_name):
     """ Fetch Component from Processed Image folder """
     return send_from_directory(
-        os.path.join(PROCESSED_IMAGE_DIR, selected_movie),
+        os.path.join(PROCESSED_IMAGE_DIR, selected_movie, "terms"),
         term_name,
         as_attachment=True)
 
