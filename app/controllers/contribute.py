@@ -17,7 +17,6 @@ import glob
 
 contribute_blueprint = Blueprint('contribute', __name__, url_prefix='/')
 
-
 @contribute_blueprint.route('contribute/new', methods=["POST", "GET"])
 @login_required  # Limits access to authenticated users
 def new_collection():
@@ -147,7 +146,6 @@ def ajax_response(status, msg):
         status=status_code,
         msg=msg,
     ))
-
 
 @contribute_blueprint.route('collection/<collection_name>/')
 @login_required  # Limits access to authenticated users
