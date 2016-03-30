@@ -1,5 +1,5 @@
 from __future__ import print_function  # Use print() instead of print
-from app.models.users import User, Role
+from app.models.users import User
 from app import db
 from app.initializers.create_users import find_or_create_user
 
