@@ -4,6 +4,7 @@ from app.models.analysis import TermAnalysis
 
 
 class Image(db.Model):
+    __tablename__ = 'image'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200))
     label = db.Column(db.String(200))

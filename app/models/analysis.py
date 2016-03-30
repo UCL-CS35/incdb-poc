@@ -3,6 +3,7 @@ from app import db
 
 
 class AnalysisSet(db.Model):
+    __tablename__ = 'analysis_set'
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=False)

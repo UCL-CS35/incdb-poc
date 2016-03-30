@@ -4,6 +4,7 @@ from app.models.analysis import AnalysisSet
 
 
 class DecodingSet(db.Model):
+    __tablename__ = 'decoding_set'
 
     id = db.Column(db.Integer, primary_key=True)
     analysis_set_id = db.Column(db.Integer,
@@ -17,6 +18,7 @@ class DecodingSet(db.Model):
 
 
 class Decoding(db.Model):
+    __tablename__ = 'decoding'
 
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(200))
