@@ -6,6 +6,7 @@ from app.initializers import settings
 import os
 import shutil
 
+
 def setup_database():
     """ Create dataset, database and users """
 

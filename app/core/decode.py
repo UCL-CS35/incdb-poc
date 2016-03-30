@@ -38,6 +38,7 @@ from nipype.interfaces import afni as afni
 
 import celery
 
+
 def load_image(masker, collection, filename, save_resampled=True):
     """ Load an image, resampling into MNI space if needed. """
     f = join(IMAGE_DIR, 'anatomical.nii.gz')
@@ -67,8 +68,8 @@ class Reference(object):
 
         # Link to memmap data
         mm_file = join(MEMMAP_DIR, name + '_images.dat')
-        self.data = np.memmap(mm_file, dtype='float32', mode='r',
-            shape=(n_voxels, n_images))
+        self.data = np.memmap(mm_file, dtype='float32',
+                            mode='r', shape=(n_voxels, n_images))
         # Link to labels
         lab_file = join(MEMMAP_DIR, name + '_labels.txt')
         _labels = open(lab_file).read().splitlines()
@@ -91,7 +92,8 @@ class SqlAlchemyTask(celery.Task):
 @celery.task(base=SqlAlchemyTask)
 def decode_collection(directory, collection, movie_name):
     """ Celery task to decode processed dataset """
-    decoding_set = db_session.query(DecodingSet).filter_by(name='terms_20k').first()
+    decoding_set = db_session.query(DecodingSet).filter_by(name='terms_20k')
+    decoding_set = decoding_set.first()
 
     print directory
     print collection
@@ -119,13 +121,14 @@ def decode_collection(directory, collection, movie_name):
                 decoding.image_decoded_at = time
                 db_session.add(decoding)
                 db_session.commit()
-            
-    analysis = db_session.query(Analysis.name)   
-    movie_decode = db_session.query(Decoding.filename, Decoding.movie, Decoding.term).filter_by(movie = movie_name)
+
+    analysis = db_session.query(Analysis.name)
+    movie_decode = db_session.query(Decoding.filename, Decoding.movie, Decoding.term)
+    movie_decode = movie_decode.filter_by(movie=movie_name)
 
     for term in analysis:
         print term.name
-        movie_decode_term = movie_decode.filter_by(term = term.name)
+        movie_decode_term = movie_decode.filter_by(term=term.name)
         if movie_decode_term.count() == 0:
             print 'There are no components for this term'
         else:
@@ -135,7 +138,7 @@ def decode_collection(directory, collection, movie_name):
                 file = component_directory(collection_name, component.filename)
                 print "Now decoding for" + term.name
                 imgs.append(file)
-            concat_components(imgs,term.name,collection_name)
+            concat_components(imgs, term.name, collection_name)
 
 
 def decode_image(
@@ -195,7 +198,7 @@ def decode_image(
 
 
 def concat_components(componentList, term, movie):
-    # TODO(Rajind) Describe function for documentation 
+    # TODO(Rajind) Describe function for documentation
     term_name = term
     movie_name = movie
     merge = afni.Merge()

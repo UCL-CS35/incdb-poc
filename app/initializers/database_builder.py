@@ -29,6 +29,7 @@ class DatabaseBuilder:
         """
         Initialize instance from a pickled Neurosynth Dataset instance or a
         pair of study and analysis .txt files.
+
         Args:
             db: the SQLAlchemy database connection to use.
             dataset: an optional filename of a pickled neurosynth Dataset
