@@ -1,9 +1,6 @@
-from app import db
-
 from app.models.decodings import Decoding, DecodingSet
 from app.models.decodings import *
 from app.models.collections import *
-from app.models.collections import Collection
 from app.models.analysis import *
 from app.models.analysis import Analysis
 from app.models.images import TermAnalysisImage
@@ -214,11 +211,15 @@ def concat_components(componentList, term, movie):
 
     filename = join(ROOT_DIR, term_name + '.nii.gz')
     source_dir = join(PROCESSED_IMAGE_DIR, movie_name)
-    file_dir = os.path.join(source_dir,term_name + '.nii.gz')
+    term_folder = join(source_dir, "terms")
+    print term_folder
+    if not os.path.exists(term_folder):
+        os.mkdir(term_folder)
+    file_dir = os.path.join(term_folder,term_name + '.nii.gz')
     if os.path.exists(file_dir):
         print file_dir
         print "Removing existing file"
         os.remove(file_dir)
-    shutil.move(filename, source_dir)
+    shutil.move(filename, term_folder)
     # filename = join(DECODED_IMAGE_DIR, movie_name, term_name)
     # nib.save(image4D, filename)

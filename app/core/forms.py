@@ -39,8 +39,8 @@ class CollectionForm(Form):
         description='Public (The collection will be accessible by anyone and all the data in it will be distributed under CC0 license). Private (The collection will be not listed in the INcDb index).')
 
     # Movie
-    # TODO(Donovan) Set Movie Name to cannot be blank
-    movie_name = StringField('Movie Name')
+    movie_name = StringField('Movie Name', validators=[
+        validators.DataRequired('Movie Name is required.')])
     viewed_times = StringField('Number of Times previously viewed',
         description=u'The number of times the participant has seen the movie before')
     presentation_method = SelectField('Method of Video Presentation',
