@@ -1,0 +1,52 @@
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>Terms | Internet Neurocinematics Database</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<div class="container">
+
+		<h2>Terms</h2>
+
+		<form action="{{ url_for('terms.search') }}" method="GET" enctype="multipart/form-data">
+			<div class="input-group">
+				<input type="text" class="form-control input-lg" name="term" placeholder="Search for term (e.g: angry)" required>
+				<span class="input-group-btn">
+					<button class="btn btn-primary btn-lg" type="submit">Search</button>
+				</span>
+			</div>
+		</form>
+
+	</div>
+
+</div>
+
+<div class="container body_container">
+
+	{% if terms|length > 1 %}
+	<h2>We have found {{terms|length}} terms that matches your search.</h2>
+	{% else %}
+	<h2>We have found {{terms|length}} term that matches your search.</h2>
+	{% endif %}
+	
+	<hr>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for term in terms %}
+			<tr>
+				<td><a href="{{term.term}}">{{ term.term }}</a></td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+{% endblock %}

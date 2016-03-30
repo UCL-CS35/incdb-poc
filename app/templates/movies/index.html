@@ -1,0 +1,52 @@
+{% extends "common/page_base.html" %} 
+
+{% block HTMLtitle %}
+<title>Movies | Internet Neurocinematics Database</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<div class="container">
+
+		<h2>Movies</h2>
+
+		<form action="{{ url_for('movies.search') }}" method="GET" enctype="multipart/form-data" style="padding-top:20px">
+			<div class="input-group">
+				<input type="text" class="form-control input-lg" name="movie" placeholder="Search for movie name (e.g: The Avengers)" required>
+				<span class="input-group-btn">
+					<button class="btn btn-primary btn-lg" type="submit">Search</button>
+				</span>
+			</div>
+		</form>
+
+	</div>
+
+</div>
+
+<div class="container body_container">
+
+	<h2>All Movies</h2>
+	<hr>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Added Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for movie in movies.items %}
+			<tr>
+				<td><a href="{{movie.movie}}">{{ movie.movie }}</a></td>
+				<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% from "common/pagination.html" import render_pagination %}
+	{{ render_pagination(movies, 'movies.select_movie') }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "common/page_base.html" %} 
+
+{% block HTMLtitle %}
+<title>Manage INcDb | Internet Neurocinematics Database</title>
+{% endblock %}
+
+{% block content %}
+
+<div class="container body_container">
+
+  <h1>Manage INcDb</h1>
+
+  <p>This page is accessible to authenticated users with the 'admin' role.</p>
+
+  <hr>
+
+  <h3>Collections</h3>
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Name of Collection</th>
+        <th>Movie</th>
+        <th>Uploaded by</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if collections.count() > 0 %}
+        {% for collection in collections %}
+        <tr>
+          <td>
+            <a href='{{ url_for('contribute.collection', collection_name=collection.name) }}'>{{ collection.name }}</a>
+          </td>
+          <td>
+            {% if collection.decoded %}
+              <a href='/movies/{{ collection.movie_name }}'>{{ collection.movie_name }}</a>
+            {% else %}
+              {{ collection.movie_name }}
+            {% endif %}
+          </td>
+          <td>
+            {{ collection.get_username() }}
+          </td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <tr>
+          <td colspan="3">No collection uploaded</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

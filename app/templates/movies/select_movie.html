@@ -1,0 +1,100 @@
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>{{selected_movie}} | Movie </title>
+{% endblock %}
+
+{% block title %}
+<h2 class = "title_banner">{{selected_movie}} </h2>
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+	<div class="container">
+
+		<h2>{{selected_movie}} </h2>
+
+	</div>
+
+</div>
+
+<div class="container body_container">
+
+	<ul class="nav nav-tabs" role="tablist">
+		<li role="presentation" class="active"><a href="#terms" data-toggle="tab">Terms</a></li>
+		<li role="presentation"><a href="#components" data-toggle="tab">Components</a></li>
+		<li role="presentation"><a href="#collections" data-toggle="tab">Collections</a></li>
+	</ul>
+
+	<div class="tab-content">
+
+		<div role="tabpanel" id="terms" class="tab-pane active in">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Terms</th>
+						<th>Correlation</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for term in terms %}
+					<tr>
+						<td><a href="/movies/{{selected_movie}}/{{term[0]}}">{{ term[0] }}</a></td>
+						<td>{{term[1]}}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div role="tabpanel" id="components" class="tab-pane in">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Collection</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for component in components.items %}
+					<tr>
+						<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+						<td>{{ component.collection }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% from "common/pagination.html" import render_movie_pagination %}
+			{{ render_movie_pagination(components, 'movies.select_movie', selected_movie) }}
+		</div>
+
+		<div role="tabpanel" id="collections" class="tab-pane in">
+
+			{% from "common/collection_details.html" import render_collection %}
+			<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+				{% for collection in collections %}
+				<div class="panel panel-incdb">
+					<div class="panel-heading" role="tab" id="headingOne">
+						<h4 class="panel-title">
+							<a role="button" data-toggle="collapse" data-parent="#accordion" href="#{{collection.id}}" aria-expanded="true" aria-controls="collapseOne">
+								{{ collection.name }}
+							</a>
+						</h4>
+					</div>
+					<div id="{{collection.id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+						<div class="panel-body">
+							{{ render_collection(collection) }}
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+			</div>
+			
+		</div>
+
+	</div><!-- tab-content -->
+	
+</div>
+
+{% endblock %}

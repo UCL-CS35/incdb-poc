@@ -1,13 +1,51 @@
-{% extends "common/page_base.html" %}  {# common/page_base.html extends layout.html #}
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>My Collections | Internet Neurocinematics Database</title>
+{% endblock %}
 
 {% block content %}
 
-<h1>My Collections</h1>
+<div class="container body_container">
 
-<ul>
-{% for collection in collections %}
-<li><a href='{{ url_for('core.collection', collection_name=collection.name) }}'>{{ collection.name }}</a></li>
-{% endfor %}
-</ul>
+	<h1>My Collections</h1>
+	<hr>
+
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th>Name of Collection</th>
+				<th>Movie</th>
+				<th>Decoded?</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% if collections.count() > 0 %}
+		{% for collection in collections %}
+		<tr>
+			<td>
+				<a href='{{ url_for('contribute.collection', collection_name=collection.name) }}'>{{ collection.name }}</a>
+			</td>
+			<td>
+				{% if collection.decoded %}
+				<a href='/movies/{{ collection.movie_name }}'>{{ collection.movie_name }}</a>
+				{% else %}
+				{{ collection.movie_name }}
+				{% endif %}
+			</td>
+			<td>
+				{{ collection.decoded }}
+			</td>
+		</tr>
+		{% endfor %}
+		{% else %}
+		<tr>
+			<td colspan="3">No collection uploaded</td>
+		</tr>
+		{% endif %}
+		</tbody>
+	</table>
+
+</div>
 
 {% endblock %}

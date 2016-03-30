@@ -14,17 +14,17 @@ Cloning the app
 
 Create the 'incdb-user' virtual environment
     
-    mkvirtualenv incdb_user_env
+    mkvirtualenv incdb
 
 Install required Python packages
     
     cd /path/to/incdb-user
-    workon incdb_user_env
+    workon incdb
     pip install -r requirements.txt
     
 ## Configuring the app
 
-Settings common to all environments are found in app/startup/common_settings.py
+Settings common to all environments are found in app/initializers/common_settings.py
 
 The example environment-specific settings are found in app/env_settings_example.py
 
@@ -45,6 +45,15 @@ Before we deploying this application, we will have to configure the database URL
 
     # Create DB tables and populate the roles and users tables
     python manage.py init_db
+
+## Run Celery Worker and Redis Server
+    
+    # Run Celery Worker
+    celery worker -A app.initializers.mycelery --loglevel=debug
+
+    # Run Redis Server
+    redis-server
+    (if redis-server is not installed, do brew install redis-server)
 
 ## Running the app
 

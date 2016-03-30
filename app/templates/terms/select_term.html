@@ -1,0 +1,108 @@
+{% extends "common/brain_viewer.html" %} 
+
+{% block HTMLtitle %}
+<title>{{selected_term}} | Term </title>
+{% endblock %}
+
+{% block title %}
+<h2 class = "title_banner" style="margin:0">{{selected_term}} </h2>
+{% endblock %}
+{% block content %}
+
+<div class="container body_container">
+
+	<ul class="nav nav-tabs" role="tablist">
+		<li role = "presentation" class="active"><a href="#movies" data-toggle="tab">Movies</a></li>
+		<li role = "presentation"><a href="#components" data-toggle="tab">Components</a></li>
+	</ul>
+
+	<div class="tab-content">
+
+		<div role="tabpanel" id="movies" class="tab-pane active in">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Movie</th>
+						<th>Added Date</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for movie in movies %}
+					<tr>
+						<td><a href="/movies/{{movie.movie}}">{{ movie.movie }}</a></td>
+						<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+
+		<div role="tabpanel" id="components" class="tab-pane in">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Collection</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for component in components.items %}
+					<tr>
+						<td><a href="/component/{{component.uuid}}">{{ component.filename }}</a></td>
+						<td>{{ component.collection }}</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{% from "common/pagination.html" import render_term_pagination %}
+			{{ render_term_pagination(components, 'terms.select_term', selected_term) }}
+		</div>
+
+	</div><!-- tab-content -->
+	
+</div>
+
+{% endblock %}
+
+{% block load_image %}
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		viewer = new Viewer('#layer_list', '.layer_settings');
+		viewer.addView('#view_axial', Viewer.AXIAL);
+		viewer.addView('#view_coronal', Viewer.CORONAL);
+		viewer.addView('#view_sagittal', Viewer.SAGITTAL);
+		viewer.addSlider('opacity', '.slider#opacity', 'horizontal', 0, 1, 1, 0.05);
+		viewer.addSlider('pos-threshold', '.slider#pos-threshold', 'horizontal', 0, 1, 0, 0.01);
+		viewer.addSlider('neg-threshold', '.slider#neg-threshold', 'horizontal', 0, 1, 0, 0.01);
+		viewer.addSlider("nav-xaxis", ".slider#nav-xaxis", "horizontal", 0, 1, 0.5, 0.01, Viewer.XAXIS);
+		viewer.addSlider("nav-yaxis", ".slider#nav-yaxis", "horizontal", 0, 1, 0.5, 0.01, Viewer.YAXIS);
+		viewer.addSlider("nav-zaxis", ".slider#nav-zaxis", "horizontal", 0, 1, 0.5, 0.01, Viewer.ZAXIS);
+
+		viewer.addColorSelect('#select_color');
+		viewer.addSignSelect('#select_sign')
+		viewer.addDataField('voxelValue', '#data_current_value')
+		viewer.addDataField('currentCoords', '#data_current_coords')
+		viewer.addTextField('image-intent', '#image_intent')
+  viewer.clear()   // Paint canvas background while images load
+  images = [
+  {
+  	'url': "{{ url_for('load_brain_def',comp_name = 'anatomical.nii.gz') }}",
+  	'name': 'brain overlay',
+  	'colorPalette': 'grayscale',
+  	'cache': false
+  },
+  {
+  	'url': "{{ url_for('load_term',term_name = selected_term + '_pAgF_z_FDR_0.01.nii.gz') }}",
+  	'name': '{{selected_term}} forward analysis',
+  	'colorPalette': 'green'
+  },
+  {
+  	'url': "{{ url_for('load_term',term_name = selected_term + '_pFgA_z_FDR_0.01.nii.gz') }}",
+  	'name': '{{selected_term}} backward analysis',
+  	'colorPalette': 'blue',
+  }
+  ]
+  viewer.loadImages(images);
+});
+</script>
+{% endblock %}

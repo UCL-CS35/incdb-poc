@@ -2,5 +2,3 @@
 # a Python package so it can be accessed using the 'import' statement.
 
 from . import manager
-from . import models
-from . import views

@@ -20,8 +20,8 @@ the_app = create_app(dict(
 ))
 
 # Create and populate roles and users tables
-from app.startup.create_users import create_users
-create_users()
+from app.initializers.setup_database import setup_database
+setup_database()
 
 # Setup an application context (since the tests run outside of the webserver context)
 the_app.app_context().push()

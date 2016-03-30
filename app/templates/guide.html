@@ -1,0 +1,135 @@
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>Internet Neurocinematics Database</title>
+{% endblock %}
+
+{% block content %}
+<script type=text/javascript>
+	$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+
+<div style="height:90vh;background-color:#34495E;display:flex;position:relative;">
+	<div style="display:flex;align-items:center;justify-content:center;width:50%">
+		<img src="../static/images/ug_logo.png" width="400px">
+	</div>
+	<div style="display:flex;align-items:center;justify-content:flex-start;width:50%">
+		<table>
+			<thead>
+				<tr>
+					<td>
+						<h1 class="title">Contents</h1>
+					</td>
+				</tr>
+			</thead>
+			<tbody class="subtitle">
+				<tr>
+					<td>
+						<h2>What is INcDb?</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>Search for a movie</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>What are terms?</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>Viewing brain images</h2>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<h2>How to contribute</h2>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div style="height:100vh; background : url(../static/images/ug/1.png) no-repeat center center">
+	<table style="text-align:center; width:75%;position:relative;top:55vh;margin-left:auto;margin-right:auto;">
+		<thead>
+			<tr><td class="title" style="color:black;">What is INcDB?</td></tr>
+		</thead>
+		<tbody>
+			<tr><td>
+				<p>The INcDb (Internet Neurocinematics Database) was conceived as a public repository to allow Neuroscientists to share brain imaging data. The twist here is that this data is read from patients as they watch different movies. Developed by three UCL undergraduate students with the assistance of Dr. Jeremy Skipper (neuroscientist working at University College London), INcDb is an experimental platform with three main goals -</p>
+				<br>
+				<p style="font-weight:600">To allow the general public to browse brain imaging data and discover how the brain reacts to different movies and segments</p>
+				<br>
+				<p style="font-weight:600">To allow other Neuroscientists to make their own contributions of brain imaging data for their own set of movies conducted upon</p>
+				<br>
+				<p style="font-weight:600">To educate the general public on a starting basis on Neuroscience (specifically, the subject og Neurocinematics)</p>
+			</td></tr>
+		</tbody>
+	</table>
+</div>
+
+<div style="height:100vh; background : url(../static/images/ug/2.png) black no-repeat center top; background-size:auto 110vh">
+	<table style="text-align:center; width:75%;position:relative;top:55vh;margin-left:auto;margin-right:auto;">
+		<thead>
+			<tr><td class="title" style="color:white;">Search for a movie</td></tr>
+		</thead>
+		<tbody>
+			<tr><td style="color:white">
+				It’s simple to start searching for a movie. From the home page itself, you can simply experiment by looking through the list of recently added movies to the website, or search for a specific movie of your choice by using the search bar. You can also click here to take you to the movies section of the website. Once you select a movie of your choice, you can browse through the different terms and components (brain images) available to see.
+			</td></tr>
+		</tbody>
+	</table>
+</div>
+
+<div style="height:100vh;display:flex;">
+	<div style="width:50vw; background : url(../static/images/ug/3.png) no-repeat center center; background-size:150% auto">
+	</div>
+	<div style="display:flex;align-items:center;justify-content:flex-start;width:50%">
+		<table style="text-align:left; width:90%;position:relative;">
+			<thead>
+				<tr><td class="title" style="color:#3A495B;">What are terms?</td></tr>
+			</thead>
+			<tbody>
+				<tr><td>
+					Placeholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for description
+				</td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+<div style="height:100vh;background-color:#39485C;position:relative; display:inline-block;text-align:center">
+	<h1 class="title" style="color:white; margin-left:auto;margin-right:auto; margin-top:30px;">Viewing Brain Components</h1>
+	<p style="color:white; width:75%;margin-left:auto; margin-right:auto">You might be intrigued if you were the arrive to this page at some point. This section allows to investigate through the brain images, powered by Neurosynth’s powerful Brain Viewer. For each component, the viewer comprises of 3 brain images (the x-Axis, y-Axis and z-Axis). You can click around different points  the brain image or use the sliders below to adjust the co-ordinates to your liking. 
+	</p>
+	<div>
+		<img src="../static/images/ug/4.png" style="height:auto; max-width:85%; padding-top:10px">
+		<p style="color:white; width:75%;margin-left:auto; margin-right:auto">Below the set of brain images consists the layers displayed. These usually comprise of the brain overlay as a template and the remaining layers relevant to the different regions. When browsing through brain imagery for different terms, you might notice layers that comprise of “forward” and “backward” analysis. What exactly are they? To simply put -</p>
+
+		<p style="font-weight:600; color:white">*Forward Analysis - z-scores corresponding to the likelihood that a region will activate if a movie uses a particular term</p>
+
+		<p style="font-weight:600; color:white">*Backward Analysis - z-scores corresponding to the likelihood that a term is used in a movie given the presence of reported activation</p>
+	</div>
+</div>
+
+<div style="height:100vh;display:flex;">
+<div style="width:50vw; background : url(../static/images/ug/5.png) no-repeat right center; background-size:100% auto">
+	</div>
+	<div style="display:flex;align-items:center;justify-content:flex-start;width:50%">
+		<table style="text-align:left; width:90%;position:relative;">
+			<thead>
+				<tr><td class="title" style="color:#3A495B;">How can you contribute?</td></tr>
+			</thead>
+			<tbody>
+				<tr><td>
+					Placeholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for descriptionPlaceholder for description
+				</td></tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}

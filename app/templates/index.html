@@ -1,9 +1,53 @@
-{% extends "common/page_base.html" %}  
-{# common/page_base.html extends layout.html #}
+{% extends "common/page_base.html" %}
+
+{% block HTMLtitle %}
+<title>Internet Neurocinematics Database</title>
+{% endblock %}
 
 {% block content %}
+<script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+ </script>
 
-	<p>1. Large search bar</p>
-	<p>2. Recently added Movies</p>
+<div class="jumbotron index_jumbotron">
+	<div class="container" style="padding-top:30px; padding-bottom:30px">
 
+		<h3 id="sub_title">Welcome to the</h3>
+		<h1>Internet Neurocinematics Database</h1>
+
+		<form action="{{ url_for('home.search') }}" method="GET" enctype="multipart/form-data" style="padding-top:20px">
+			<div class="input-group">
+				<input type="text" class="form-control input-lg" name="movie" id="search_movie" placeholder="Search for movie name (e.g: The Avengers)" required>
+				<span class="input-group-btn">
+	      	<button class="btn btn-primary btn-lg" type="submit">Search</button>
+	      </span>
+			</div>
+		</form>
+		<p class="index_help"><a href="{{ url_for('home.guide') }}">Not sure where to start?</a></p>
+	</div>
+</div>
+
+<div class="container body_container">
+
+	<h2>Recently Added Movies</h2>
+	<hr>
+
+	<table class="table">
+		<thead>
+		<tr>
+			<th>Title</th>
+			<th>Added Date</th>
+		</tr>
+		</thead>
+		<tbody>
+		{% for movie in movies %}
+		<tr>
+			<td><a href="/movies/{{movie.movie}}">{{ movie.movie }}</a></td>
+			<td>{{ movie.image_decoded_at.strftime('%d-%m-%Y')  }}</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+
+</div>
 {% endblock %}

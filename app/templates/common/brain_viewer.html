@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block pre_content %}
+<div class="jumbotron">
+
+  {% block title %}{% endblock %}
+  <div class="brain_scans">
+
+    <div id="xImage" class="brain_section">
+      <div class="view" id="view_sagittal">
+        <canvas id="sag_canvas" width='350px' height='350px'></canvas>
+        <div class='slider nav-slider-horizontal' style="margin-top:15px" id='nav-xaxis'></div>
+      </div>
+    </div>
+
+    <div id="yImage" class="brain_section">
+      <div class="view" id="view_coronal">
+        <canvas id='cor_canvas' width='350px' height='350px'></canvas>
+        <div class='slider nav-slider-horizontal' style="margin-top:15px" id='nav-yaxis'></div>
+      </div>
+    </div>
+
+    <div id="zImage" class="brain_section">
+      <div class="view" id="view_axial">
+        <canvas id='axial_canvas' width='350px' height='350px'></canvas>
+        <div class='slider nav-slider-horizontal' style="margin-top:15px" id='nav-zaxis'></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div id="layer_list_panel">
+    <div>Layers</div>
+    <ul id="layer_list" class="layer_settings">
+    </ul>
+  </div>
+  
+</div>
+{% endblock %}
