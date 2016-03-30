@@ -26,6 +26,9 @@ def index():
 
     return render_template('index.html', movies=movies)
 
+@home_blueprint.route('guide')
+def guide():
+    return render_template('guide.html')
 
 @home_blueprint.route('_search_movie')
 def search_movie():
