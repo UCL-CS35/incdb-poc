@@ -109,7 +109,8 @@ def decode_collection(directory, collection_name, movie_name):
 
         time = datetime.utcnow()
         for filename in listdir(join(directory, collection_name)):
-            if filename == ".DS_Store":
+            print filename
+            if filename == ".DS_Store" or filename == "terms":
                 continue
             decoding = Decoding(filename=filename, uuid=uuid4().hex,
                         decoding_set=decoding_set, movie=movie_name,
@@ -141,7 +142,7 @@ def decode_collection(directory, collection_name, movie_name):
 
     collection = db_session.query(Collection).filter_by(name=collection_name).first()
     collection.decoded = True
-    db.session.commit()
+    db_session.commit()
 
 def decode_image(
     decoding, decoding_set, collection,
