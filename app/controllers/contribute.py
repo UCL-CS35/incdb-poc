@@ -2,10 +2,11 @@ from flask import redirect, render_template, Blueprint
 from flask import request, url_for, abort
 from flask_user import current_user, login_required
 
-from app import app, db, s3_client
+from app import app, db
 from app.core.forms import CollectionForm
 from app.models.collections import Collection
 from app.models.users import User
+from app.initializers import mys3
 from app.initializers.settings import *
 
 from sqlalchemy import *
@@ -100,9 +101,6 @@ def upload():
 	if form.get("__ajax", None) == "true":
 		is_ajax = True
 
-	from boto3.s3.transfer import S3Transfer
-	transfer = S3Transfer(s3_client)
-
 	# Target user folder for these uploads
 	target = "uploads/{}".format(current_user.id)
 	if not os.path.exists(target):
@@ -136,7 +134,8 @@ def upload():
 		print filename
 		print destination
 		#bucket.upload_file(destination, destination)
-		transfer.upload_file(destination,S3_BUCKET,destination)
+
+		mys3.upload_to_s3(destination, destination)
 		# unzip(upload, target)
 
 	if is_ajax:
@@ -176,6 +175,25 @@ def collection(collection_name):
 
 	user_dir = "uploads/{}".format(collection.user_id)
 	raw_dataset = user_dir + '/' + str(collection_name)
+
+	import boto3
+	s3 = boto3.resource('s3', region_name = 'eu-central-1')
+	bucket =  s3.Bucket(S3_BUCKET)
+	raw_folder = "uploads/" + str(collection.user_id) + "/" + str(collection_name) + "/"
+	raw_s3files = []
+	for file in bucket.objects.filter(Prefix=raw_folder):
+		raw_s3files.append(file)
+		print file.last_modified
+		print file.key
+
+	if not len(raw_s3files) > 0:
+		return render_template(
+			template,
+			collection=collection,
+			files=raw_files,
+			processed_files=processed_files,
+			user=user)
+		"""
 	if not os.path.isdir(raw_dataset):
 		return render_template(
 			template,
@@ -200,8 +218,32 @@ def collection(collection_name):
 			files=raw_files,
 			processed_files=processed_files,
 			user=user)
+"""
+	for file in raw_s3files:
+		fname = file.key.split(os.sep)[-1]
+		modified_time = file.last_modified
+		if fname in raw_files:
+			raw_files[fname].append(modified_time)
+		else:
+			raw_files[fname] = modified_time
 
-	modified_time = time.ctime(os.path.getmtime(collection_dir))
+
+	processed_folder = "data/images/processed" + str(collection_name) + "/"
+	processed_s3files = []
+	for file in bucket.objects.filter(Prefix=processed_folder):
+		processed_s3files.append(file)
+		print file.last_modified
+		print file.key
+
+	if not len(processed_s3files) > 0:
+		return render_template(
+			template,
+			collection=collection,
+			files=raw_files,
+			processed_files=processed_files,
+			user=user)
+
+	modified_time = processed_s3files[0].last_modified
 	processed_files[collection_name] = modified_time
 
 	return render_template(

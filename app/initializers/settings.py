@@ -65,6 +65,7 @@ DECODING_DATA = join(ASSET_DIR, 'decoding.msg')
 
 # Path to output decoding results (flat .txt files)
 DECODING_RESULTS_DIR = join(DATA_DIR, 'decoding', 'results')
+S3_DECODING_RESULTS_DIR = 'data/decoding/results/'
 
 # Path to output decoded image scatter plots
 DECODING_SCATTERPLOTS_DIR = join(DATA_DIR, 'decoding', 'scatterplots')

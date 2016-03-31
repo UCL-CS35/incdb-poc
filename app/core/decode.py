@@ -6,8 +6,7 @@ from app.models.analysis import Analysis
 from app.models.images import TermAnalysisImage
 
 from app.controllers.components import component_directory
-
-from app.initializers import mycelery
+from app.initializers import mycelery, mys3
 from app.initializers.settings import *
 from app.initializers.celerydb import db_session
 
@@ -152,6 +151,7 @@ def decode_image(
     print 'Decoding ' + filename + '...'
     try:
         memmaps = {}
+
         for f in glob.glob(join(MEMMAP_DIR, '*_metadata.json')):
             md = json.load(open(f))
             memmaps[md['name']] = Reference(**md)
@@ -184,6 +184,9 @@ def decode_image(
         labels = ref.labels.keys()
         series = pd.Series(r, index=labels).sort_values(ascending=False)
         series.to_csv(outfile, sep='\t')
+
+        destination = join(S3_DECODING_RESULTS_DIR,collection,filename + '.txt')
+        mys3.upload_to_s3(outfile,destination)
 
         # topFiveTerms = series.tail(5)
         highestCorrelationTerm = labels[np.argmax(r, axis=0)]
