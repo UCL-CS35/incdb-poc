@@ -17,6 +17,9 @@ app = Flask(__name__)           # The WSGI compliant web application object
 db = SQLAlchemy(app)            # Setup Flask-SQLAlchemy
 manager = Manager(app)          # Setup Flask-Script
 
+import boto3
+s3_client = boto3.client('s3', 'eu-central-1')
+
 
 @app.before_first_request
 def initialize_app_on_first_request():

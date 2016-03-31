@@ -113,3 +113,8 @@ MAIL_USE_SSL = int(os.getenv('MAIL_USE_SSL', True))
 # App-level configuration
 DEBUG = True
 PROTOTYPE = True
+
+# S3 Configurations
+S3_KEY = 'AKIAJKCPJAA2ODQANT4A'
+S3_SECRET_KEY = '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'
+S3_BUCKET = 'test-incdb'
