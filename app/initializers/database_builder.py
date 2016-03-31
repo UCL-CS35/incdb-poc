@@ -124,42 +124,42 @@ class DatabaseBuilder:
             ns.dataset.download(path=settings.ASSET_DIR, unpack=True)
 
         # Raise warnings for missing resources we can't retrieve from web
-        assets = [
-            (join(settings.ASSET_DIR, 'misc'), "The misc directory contains "
-                "various support files--e.g., stopword lists for topic "
-                "modeling."),
-            (join(settings.ASSET_DIR, 'abstracts.txt'), "This file is required "
-                "for topic modeling of article abstracts. Without it, the "
-                "topic-based analyses will not appear on the website."),
-            (settings.GENE_IMAGE_DIR, "This directory contains all gene images "
-                "from the Allen Institute for Brain Science's gene expression "
-                "database. Without it, the /genes functionality will not work."),
-            (join(settings.IMAGE_DIR, 'fcmri'), "This directory contains 300 "
-                "GB of functional connectivity images from the Brain "
-                "SuperStruct project, provided courtesy of Thomas Yeo and "
-                "Randy Buckner. These images must be obtained directly. "
-                "Without them, no functional connectivity images will be "
-                "displayed on the website.")
-        ]
+        # assets = [
+        #     (join(settings.ASSET_DIR, 'misc'), "The misc directory contains "
+        #         "various support files--e.g., stopword lists for topic "
+        #         "modeling."),
+        #     (join(settings.ASSET_DIR, 'abstracts.txt'), "This file is required "
+        #         "for topic modeling of article abstracts. Without it, the "
+        #         "topic-based analyses will not appear on the website."),
+        #     (settings.GENE_IMAGE_DIR, "This directory contains all gene images "
+        #         "from the Allen Institute for Brain Science's gene expression "
+        #         "database. Without it, the /genes functionality will not work."),
+        #     (join(settings.IMAGE_DIR, 'fcmri'), "This directory contains 300 "
+        #         "GB of functional connectivity images from the Brain "
+        #         "SuperStruct project, provided courtesy of Thomas Yeo and "
+        #         "Randy Buckner. These images must be obtained directly. "
+        #         "Without them, no functional connectivity images will be "
+        #         "displayed on the website.")
+        # ]
         # for (asset, desc) in assets:
         #     if not exists(asset):
         #         raise RuntimeWarning("Asset %s doesn't seem to exist, and "
         #             "can't be retrieved automatically. %s" % (asset, desc))
 
-        MASK_FILES = {
-            'cortex': 'cortex.nii.gz',
-            'subcortex': 'subcortex_drewUpdated.nii.gz',
-            'hippocampus': 'FSL_BHipp_thr0.nii.gz',
-            'accumbens': 'FSL_BNAcc_thr0.nii.gz',
-            'amygdala': 'FSL_BAmyg_thr0.nii.gz',
-            'putamen': 'FSL_BPut_thr0.nii.gz',
-            'min4': 'voxel_counts_r6.nii.gz'
-        }
-        for k, v in MASK_FILES.items():
-            if not exists(join(settings.MASK_DIR, v)):
-                raise RuntimeWarning("The image file for the '%s' mask "
-                    "cannot be found at %s. This mask will be gracefully "
-                    "ignored in all decoder scatterplots.")
+        # MASK_FILES = {
+        #     'cortex': 'cortex.nii.gz',
+        #     'subcortex': 'subcortex_drewUpdated.nii.gz',
+        #     'hippocampus': 'FSL_BHipp_thr0.nii.gz',
+        #     'accumbens': 'FSL_BNAcc_thr0.nii.gz',
+        #     'amygdala': 'FSL_BAmyg_thr0.nii.gz',
+        #     'putamen': 'FSL_BPut_thr0.nii.gz',
+        #     'min4': 'voxel_counts_r6.nii.gz'
+        # }
+        # for k, v in MASK_FILES.items():
+        #     if not exists(join(settings.MASK_DIR, v)):
+        #         raise RuntimeWarning("The image file for the '%s' mask "
+        #             "cannot be found at %s. This mask will be gracefully "
+        #             "ignored in all decoder scatterplots.")
 
     def reset_database(self):
         ''' Drop and re-create all tables. '''
