@@ -108,7 +108,7 @@ hr {
     margin-bottom: 0px;
 }
 .index_jumbotron {
-    background: #000 url(/static/images/banner.jpg) center center;
+    background: #000 url(https://s3.eu-central-1.amazonaws.com/test-incdb/app/static/images/banner.jpg) center center;
     background-size: cover;
 }
 .jumbotron h2 {
@@ -428,7 +428,7 @@ hr {
     margin-bottom: 0px;
 }
 .index_jumbotron {
-    background: #000 url(/static/images/banner.jpg) center center;
+    background: #000 url(https://s3.eu-central-1.amazonaws.com/test-incdb/app/static/images/banner.jpg) center center;
     background-size: cover;
 }
 .jumbotron h2 {
