@@ -155,11 +155,11 @@ class DatabaseBuilder:
             'putamen': 'FSL_BPut_thr0.nii.gz',
             'min4': 'voxel_counts_r6.nii.gz'
         }
-        # for k, v in MASK_FILES.items():
-        #     if not exists(join(settings.MASK_DIR, v)):
-        #         raise RuntimeWarning("The image file for the '%s' mask "
-        #             "cannot be found at %s. This mask will be gracefully "
-        #             "ignored in all decoder scatterplots.")
+        for k, v in MASK_FILES.items():
+            if not exists(join(settings.MASK_DIR, v)):
+                raise RuntimeWarning("The image file for the '%s' mask "
+                    "cannot be found at %s. This mask will be gracefully "
+                    "ignored in all decoder scatterplots.")
 
     def reset_database(self):
         ''' Drop and re-create all tables. '''
