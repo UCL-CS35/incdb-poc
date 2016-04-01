@@ -68,5 +68,9 @@ target/
 #
 app.sqlite
 uploads/*
-data/*
+data/assets
+data/decoding
+data/images
+data/memmaps
+data/topics
 dump.rdb
