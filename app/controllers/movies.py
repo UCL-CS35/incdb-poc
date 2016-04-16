@@ -92,7 +92,7 @@ def select_movie_term(selected_movie, selected_term, page=1):
         selected_movie=selected_movie)
 
 
-@app.route('/data/images/decoded/<path:selected_movie>/<path:term_name>')
+@app.route('/data/images/processed/<path:selected_movie>/<path:term_name>')
 def load_term_component(selected_movie, term_name):
     """ Fetch Component from Processed Image folder """
     return send_from_directory(
