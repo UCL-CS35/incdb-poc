@@ -32,6 +32,7 @@ from collections import OrderedDict
 
 from nilearn.image import resample_img
 from nipype.interfaces import afni as afni
+from nipype import config
 
 import celery
 

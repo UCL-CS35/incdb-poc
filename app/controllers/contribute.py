@@ -166,26 +166,20 @@ def collection(collection_name):
 
     raw_files = dict()
     processed_files = dict()
-
+    
     user_dir = "uploads/{}".format(collection.user_id)
     raw_dataset = user_dir + '/' + str(collection_name)
-    if not os.path.isdir(raw_dataset):
-        return render_template(
-            template,
-            collection=collection,
-            files=raw_files,
-            processed_files=processed_files,
-            user=user)
-
-    for file in glob.glob("{}/*".format(raw_dataset)):
-        fname = file.split(os.sep)[-1]
-        modified_time = time.ctime(os.path.getmtime(file))
-        if fname in raw_files:
-            raw_files[fname].append(modified_time)
-        else:
-            raw_files[fname] = modified_time
-
+    if os.path.isdir(raw_dataset):
+        for file in glob.glob("{}/*".format(raw_dataset)):
+            fname = file.split(os.sep)[-1]
+            modified_time = time.ctime(os.path.getmtime(file))
+            if fname in raw_files:
+                raw_files[fname].append(modified_time)
+            else:
+                raw_files[fname] = modified_time
+		
     collection_dir = PROCESSED_IMAGE_DIR + '/' + str(collection_name)
+    
     if not os.path.isdir(collection_dir):
         return render_template(
             template,

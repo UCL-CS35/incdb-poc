@@ -58,7 +58,7 @@ UPLOAD_DIR = join(ROOT_DIR, 'uploads')
 
 # DECODER-RELATED PATHS
 # Path to processed images to be decoded
-PROCESSED_IMAGE_DIR = join(DATA_DIR, 'images', 'processed')
+PROCESSED_IMAGE_DIR = join(IMAGE_DIR, 'processed')
 
 # Path to saved decoding image array--this is kept active in memory
 DECODING_DATA = join(ASSET_DIR, 'decoding.msg')
@@ -102,10 +102,10 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 
 # Flask-Mail settings
 MAIL_ENABLE = False
-MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'email@example.com')
-MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'password')
+MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'incdb.ucl@gmail.com')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'JeremySkipper')
 MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER',
-                                '"MyApp" <noreply@example.com>')
+                                '"INcDb" <incdb.ucl@gmail.com>')
 MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
 MAIL_PORT = int(os.getenv('MAIL_PORT', '465'))
 MAIL_USE_SSL = int(os.getenv('MAIL_USE_SSL', True))

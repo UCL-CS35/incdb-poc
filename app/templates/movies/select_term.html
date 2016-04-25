@@ -1,12 +1,12 @@
 {% extends "common/brain_viewer.html" %} 
 
 {% block HTMLtitle %}
-<title>{{selected_term}} | Term </title>
+<title>{{selected_term}} | {{selected_movie}} </title>
 {% endblock %}
 
 {% block title %}
 <h2 class="title_banner">{{selected_term}} 
-	<br><small><span style="color:white">({{ selected_movie }})</span></small>
+	<br><small><span style="color:white">({{ collection.name }})</span></small>
 </h2>
 {% endblock %}
 {% block content %}

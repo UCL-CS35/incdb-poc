@@ -52,7 +52,7 @@ def get_terms(filename):
     return terms
 
 
-@app.route('/data/images/decoded/<path:collection>/<path:file_name>')
+@app.route('/data/images/processed/<path:collection>/<path:file_name>')
 def load_component(collection, file_name):
     """ Fetch Component from Processed Image folder """
     return send_from_directory(
@@ -61,7 +61,7 @@ def load_component(collection, file_name):
         as_attachment=True)
 
 
-@app.route('/data/images/decoded/<path:collection>/<path:file_name>')
+@app.route('/data/images/processed/<path:collection>/<path:file_name>')
 def component_directory(collection, file_name):
     """ Return path for Component """
     return os.path.join(PROCESSED_IMAGE_DIR, collection, file_name)
