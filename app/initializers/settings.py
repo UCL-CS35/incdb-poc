@@ -103,7 +103,7 @@ CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 # Flask-Mail settings
 MAIL_ENABLE = False
 MAIL_USERNAME = os.getenv('MAIL_USERNAME', 'incdb.ucl@gmail.com')
-MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'JeremySkipper')
+MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', 'password')
 MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER',
                                 '"INcDb" <incdb.ucl@gmail.com>')
 MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
