@@ -29,11 +29,29 @@
 
   </div>
 
-  <div id="layer_list_panel">
-    <div>Layers</div>
-    <ul id="layer_list" class="layer_settings">
-    </ul>
+    <div style="display:inline-block;">
+    <div id="layer_list_panel">
+      <div>Layers</div>
+      <ul id="layer_list" class="layer_settings">
+      </ul>
+    </div>
+
+    <div style="display:block">
+      <div style="padding-top:5px;display:inline-block">Color palette: <select id="select_color" class="layer_settings"></select></div>
+      <div style="padding-top:5px;display:inline-block"> Positive/Negative: <select id="select_sign" class="layer_settings"></select></div>
+    </div>
   </div>
-  
+
+  <div style="padding-top:20px">
+    <div style="padding-right:30px; display:inline-block">
+      <p style="font-size:14px; font-weight:400; margin-bottom:5px">Positive threshold</p>
+      <div class='slider nav-slider-horizontal layer_settings' id='pos-threshold' style="width:300px;display:inline-block;"></div>
+    </div>
+
+    <div style="padding:0px; display:inline-block">
+      <p style="font-size:14px; font-weight:400; margin-bottom:5px">Negative threshold</p>
+      <div class='slider nav-slider-horizontal layer_settings' id='neg-threshold' style="width:300px;display:inline-block"></div>
+    </div>
+  </div>  
 </div>
 {% endblock %}

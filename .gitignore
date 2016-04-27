@@ -73,4 +73,5 @@ data/decoding
 data/images
 data/memmaps
 data/topics
+app/initializers/settings.py
 dump.rdb
