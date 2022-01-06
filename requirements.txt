@@ -4,7 +4,7 @@ apt-xapian-index==0.45
 backports-abc==0.4
 backports.ssl-match-hostname==3.5.0.1
 billiard==3.3.0.23
-celery==3.1.6
+celery==5.2.2
 certifi==2016.2.28
 chardet==2.0.1
 Cheetah==2.4.4
